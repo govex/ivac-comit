@@ -37,12 +37,3 @@ policy list show date published and if blank
 
 
 Permissiveness: the most recent entry (by publication - then input date if publication date is missing) for each vaccine at its most permissive level
-
-
-
-
-
-mike.flowers@innovation.nj.gov
-
-one thing to grapple with today
-name a person that the world is more equitable for
