@@ -49,7 +49,7 @@
               </template>
             </b-card-title>
             <b-card-body class="d-flex flex-column">
-              <span v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" class="text-danger">This country appears to provide conflicting information</span>
+              <span v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" class="text-warning">Within the guidance document, there are pieces language that could be interpreted as indicating different policy positions</span>
               <span>Overall recommendation for vaccination while pregnant</span>
             </b-card-body>
             <b-card-footer>
@@ -71,7 +71,7 @@
               </template>
             </b-card-title>
             <b-card-body>
-              <span v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" class="text-danger">This country appears to provide conflicting information</span>
+              <span v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" class="text-danger">Within the guidance document, there are pieces language that could be interpreted as indicating different policy positions</span>
               <span>Overall recommendation for vaccination while lactating</span>
             </b-card-body>
             <b-card-footer>

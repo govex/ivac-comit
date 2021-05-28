@@ -11,7 +11,7 @@
               Vaccination while pregnant
             </b-th>
             <b-th class="text-center">
-              Vaccination while breastfeeding
+              Vaccination while lactating
             </b-th>
             <b-th class="text-center">
               Published/Updated

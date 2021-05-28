@@ -58,6 +58,7 @@
     </section>
     <section>
       <h2>Countries</h2>
+      <span>This list displays the most permissive policy / guidance from each country across amongst all vaccines. Note that the World Health Organization makes recommendations for specific vaccines; you can view them <b-link to="/country/global">here</b-link></span>
       <b-table
         hover
         :items="countryListItems"
@@ -123,8 +124,8 @@ export default {
         { key: 'name', label: 'Country', sortable: true },
         { key: 'publicHealthAuthorityRecommendation', label: 'Official recommendation', class: 'text-center' },
         { key: 'subgroups', class: 'text-center' },
-        { key: 'lactationCounselingAndInformation', class: 'text-center', sortable: true },
-        { key: 'lactationContinuation', class: 'text-center', sortable: true },
+        { key: 'lactationCounselingAndInformation', label: 'Provider visit', class: 'text-center', sortable: true },
+        // { key: 'lactationContinuation', class: 'text-center', sortable: true },
         { key: 'wbRegion', label: 'Region', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
       ],
@@ -171,11 +172,11 @@ export default {
                 : undefined)
             : undefined,
           publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveLactationCode(country),
-          lactationContinuation: country.authorities
-            ? (country.authorities.slice(-1)[0].policies
-                ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationContinuationAfterVaccine
-                : undefined)
-            : undefined,
+          // lactationContinuation: country.authorities
+          //   ? (country.authorities.slice(-1)[0].policies
+          //       ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationContinuationAfterVaccine
+          //       : undefined)
+          //   : undefined,
           lactationCounselingAndInformation: country.authorities
             ? (country.authorities.slice(-1)[0].policies
                 ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
