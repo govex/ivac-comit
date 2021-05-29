@@ -2,7 +2,7 @@ export const state = () => ({})
 
 export const actions = {
   async nuxtServerInit ({ commit }) {
-    const myData = await fetch(`http://localhost:${process.env.PORT}/data/comit-v1.min.json`).then(res => res.json())
+    const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
     await commit('coreData/load', methods.reconstructReferences(myData))
   }
 }
