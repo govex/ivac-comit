@@ -12,7 +12,7 @@
       </b-row>
     </section>
     <section>
-      <b-row>
+      <b-row class="flex-column">
         <h2>Global Map</h2>
         <GlobalMap :country-styles="getMapStylesForPregnancyCode" default-fill-color="#A0A0A0" />
       </b-row>
