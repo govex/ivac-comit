@@ -1,19 +1,16 @@
 <template>
   <div>
-    <div>
-      <b-row>
-        <b-breadcrumb :items="breadcrumbItems" />
-      </b-row>
-    </div>
     <section>
       <b-row class="flex-column">
-        <h2>Filters</h2>
+        <h1>
+          Vaccine policies on lactation
+          <span class="text-muted" style="font-size: 1rem"><b-link to="/pregnancy">(show policies on pregnancy)</b-link></span>
+        </h1>
         <PregnancyFilter />
       </b-row>
     </section>
     <section>
       <b-row class="flex-column">
-        <h2>Global Map</h2>
         <GlobalMap :country-styles="getMapStylesForPregnancyCode" default-fill-color="#A0A0A0" />
       </b-row>
     </section>

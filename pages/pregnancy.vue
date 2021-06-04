@@ -2,7 +2,10 @@
   <div>
     <section>
       <b-row class="flex-column">
-        <h1>Vaccine policies on pregnancy</h1>
+        <h1>
+          Vaccine policies on pregnancy
+          <span class="text-muted" style="font-size: 1rem"><b-link to="/lactation">(show policies on lactation)</b-link></span>
+        </h1>
         <PregnancyFilter :policy-positions-selected="policyPositionsFilters" :vaccines-selected="vaccinesFilters" />
       </b-row>
       <b-row class="flex-column">

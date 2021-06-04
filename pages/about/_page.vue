@@ -1,7 +1,9 @@
 <template>
   <article v-if="page">
-    <h1>{{ page.title }}</h1>
-    <nuxt-content :document="page" />
+    <b-row>
+      <h1>{{ page.title }}</h1>
+      <nuxt-content :document="page" />
+    </b-row>
   </article>
   <div v-else>
     Not found
