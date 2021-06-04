@@ -16,25 +16,25 @@
                 Lactation
               </b-dropdown-item>
             </b-nav-item-dropdown>
-            <b-nav-item-dropdown text="Country Details">
-              <b-dropdown-item href="#">
+            <!-- <b-nav-item-dropdown text="Country Details">
+              <b-dropdown-item to="#">
                 Placeholder
               </b-dropdown-item>
-            </b-nav-item-dropdown>
-            <b-nav-item href="#">
+            </b-nav-item-dropdown> -->
+            <b-nav-item to="/about/methodology">
               Our Approach
             </b-nav-item>
             <b-nav-item-dropdown text="About">
-              <b-dropdown-item href="/about/background">
+              <b-dropdown-item to="/about/background">
                 Background
               </b-dropdown-item>
-              <b-dropdown-item href="#">
+              <b-dropdown-item to="/about/team">
                 Team
               </b-dropdown-item>
-              <b-dropdown-item href="#">
+              <b-dropdown-item to="/about/team/#disclaimer">
                 Disclaimer
               </b-dropdown-item>
-              <b-dropdown-item href="/about/contact">
+              <b-dropdown-item to="/about/contact">
                 Contact Us
               </b-dropdown-item>
             </b-nav-item-dropdown>
