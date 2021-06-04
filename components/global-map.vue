@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 
-svg { fill: lightgray; margin: auto; height: 50vh; position: relative; top: 0; left: 0; }
+svg { fill: lightgray; width: 99% }
 
 /* Circles around small countries and territories */
 .circlexx {opacity: 1.0; stroke: #303030; stroke-width: 0.5;}

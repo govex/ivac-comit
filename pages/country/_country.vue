@@ -20,7 +20,7 @@
           </b-col>
           <b-col v-if="country.wbIncomeLevelName" cols="3">
             <b-card>
-              <b-card-title>{{ country.wbIncomeLevelName }}</b-card-title>
+              <b-card-title>{{ country.wbIncomeLevelName.replace(' income', '') }}</b-card-title>
               <b-card-body>
                 Income Level
                 <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
@@ -45,7 +45,7 @@
                 <span class="mt-3">{{ mostPermissivePregnancyCode | showValues }}</span>
               </template>
               <template v-else>
-                <span><b-icon-question-circle /> unknown</span>
+                <span><b-icon-question-circle /> No policy position found</span>
               </template>
             </b-card-title>
             <b-card-body class="d-flex flex-column">
@@ -67,7 +67,7 @@
                 <span class="mt-3">{{ mostPermissiveLactationCode | showValues }}</span>
               </template>
               <template v-else>
-                <span><b-icon-question-circle /> unknown</span>
+                <span><b-icon-question-circle /> No policy position found</span>
               </template>
             </b-card-title>
             <b-card-body>
@@ -86,7 +86,7 @@
       </div>
       <div class="my-5">
         <template v-if="country.vaccines">
-          <h2>Vaccines Administered</h2>
+          <h2>Vaccines Administered <b-icon-info-circle v-b-popover.hover="'Information about vaccines administered in each country obtained from Our World In Data.'" font-scale="0.5" /></h2>
           <b-table-simple>
             <b-thead>
               <b-tr>
@@ -146,13 +146,13 @@
                 <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
               </div>
               <AuthorityPolicies :policies="authority.policies | sortedByDate">
-                No information available.
+                No documents available.
               </AuthorityPolicies>
             </div>
           </template>
         </template>
         <template v-else>
-          <span>No information available.</span>
+          <span>No documents available.</span>
         </template>
       </div>
     </div>

@@ -2,7 +2,7 @@
   <div class="d-inline">
     <template v-if="codes">
       <template v-for="code of codes">
-        <b-icon-circle-fill :key="code.rank" v-b-popover.hover.top="code.value" :class="code.rank | variant" class="mx-1" />
+        <b-icon-circle-fill :key="code.rank" v-b-popover.hover.top="code.value" :class="code.rank | variantClass" class="mx-1" style="font-size: 1.7rem" />
       </template>
     </template>
   </div>
@@ -11,7 +11,7 @@
 <script>
 export default {
   filters: {
-    variant (value) {
+    variantClass (value) {
       switch (value) {
         case 1:
           return 'recommended'
@@ -25,6 +25,22 @@ export default {
           return 'prohibited'
         default:
           return 'no-language'
+      }
+    },
+    popoverText (value) {
+      switch (value) {
+        case 1:
+          return 'Recommended for some or all'
+        case 2:
+          return 'Permitted'
+        case 3:
+          return 'Permitted with qualifications'
+        case 4:
+          return 'Not recommended with exceptions'
+        case 5:
+          return 'Not recommended'
+        default:
+          return 'No policy position found'
       }
     }
   },

@@ -17,12 +17,12 @@ export default {
     providerVisit (code) {
       if (code) {
         switch (code.rank) {
+          case 1:
           case 2:
+            return 'Optional'
           case 3:
-            return 'Not required'
-          case 4:
             return 'Recommended'
-          case 5:
+          case 4:
             return 'Required'
         }
         return '-'

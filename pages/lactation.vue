@@ -25,31 +25,49 @@
         <div class="d-flex">
           <div class="mx-auto legend-items p-3">
             <div class="d-flex flex-column">
-              <div class="d-flex flex-row align-items-middle">
+              <div class="d-flex flex-row align-items-middle mx-2">
                 <svg class="recommended legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>Recommended</span>
+                <span>
+                  Recommended for some or all
+                  <b-icon-info-circle v-b-popover.hover="'An explicit recommendation that some or all lactating people should receive vaccination.'" />
+                </span>
               </div>
-              <div class="d-flex flex-row align-items-middle">
+              <div class="d-flex flex-row align-items-middle mx-2">
                 <svg class="permitted-for-all legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>Permitted for all</span>
+                <span>
+                  Permitted
+                  <b-icon-info-circle v-b-popover.hover="'All lactating people can receive, may receive, or can choose to receive vaccination.'" />
+                </span>
               </div>
-              <div class="d-flex flex-row align-items-middle">
+              <div class="d-flex flex-row align-items-middle mx-2">
                 <svg class="permitted-with-qualifications legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>Permitted with qualifications</span>
+                <span>
+                  Permitted with qualifications
+                  <b-icon-info-circle v-b-popover.hover="'Only certain groups of lactating people, e.g., those at high risk of exposure, or with underlying conditions, can, may, or can choose to receive vaccination.'" />
+                </span>
               </div>
             </div>
             <div class="d-flex flex-column">
-              <div class="d-flex flex-row align-items-middle">
+              <div class="d-flex flex-row align-items-middle mx-2">
                 <svg class="not-recommended-with-exceptions legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>Not recommended, but with exceptions</span>
+                <span>
+                  Not recommended, but with exceptions
+                  <b-icon-info-circle v-b-popover.hover="'A statement stating lactating people should not receive vaccination, with certain exceptions provided.'" />
+                </span>
               </div>
-              <div class="d-flex flex-row align-items-middle">
+              <div class="d-flex flex-row align-items-middlem mx-2">
                 <svg class="prohibited legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>Prohibited</span>
+                <span>
+                  Not recommended
+                  <b-icon-info-circle v-b-popover.hover="'Lactating people should not receive the vaccine or vaccine is contraindicated.'" />
+                </span>
               </div>
-              <div class="d-flex flex-row align-items-middle">
+              <div class="d-flex flex-row align-items-middle mx-2">
                 <svg class="no-language legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>No language</span>
+                <span>
+                  No policy position found
+                  <b-icon-info-circle v-b-popover.hover="'In instances where no policies or positions regarding lactation and vaccination could be found, or where no position was clearly established, e.g., &quot;if breastfeeding, talk to your doctor.&quot;'" />
+                </span>
               </div>
             </div>
           </div>
@@ -58,7 +76,7 @@
     </section>
     <section>
       <h2>Countries</h2>
-      <span>This list displays the most permissive policy / guidance from each country across amongst all vaccines. Note that the World Health Organization makes recommendations for specific vaccines; you can view them <b-link to="/country/global">here</b-link></span>
+      <span>This list displays the most permissive policy / guidance from each country across amongst all vaccines. Note that the World Health Organization makes recommendations for specific vaccines; <b-link to="/authority/who">view them here</b-link></span>
       <b-table
         hover
         :items="countryListItems"
@@ -67,7 +85,7 @@
         sort-by="name"
         small
         head-variant="dark"
-        :sort-compare="sortComparer"
+        :sort-compare="$root.$listSortComparer"
       >
         <template #cell(name)="data">
           <b-link :to="data | countryUrl">
@@ -77,14 +95,17 @@
         <template #cell(publicHealthAuthorityRecommendation)="data">
           <PregnancyLactationCodeIcons :codes="data.item.publicHealthAuthorityRecommendation" />
         </template>
-        <template #cell(lactationCounselingAndInformation)="data">
+        <template #cell(providerVisit)="data">
           <ProviderVisitLabel :codes="[data.value]" />
         </template>
-        <template #cell(lactationContinuation)="data">
+        <!-- <template #cell(lactationContinuation)="data">
           <LactationContinuationLabel :code="data.value" />
-        </template>
+        </template> -->
         <template #cell(subgroups)="data">
           <PregnancySubgroupsIcons :codes="data | ensureArray" />
+        </template>
+        <template #cell(wbIncomeLevelName)="data">
+          {{ data.value ? data.value.replace(' income', '') : undefined }}
         </template>
       </b-table>
     </section>
@@ -122,9 +143,10 @@ export default {
       ],
       countryListFields: [
         { key: 'name', label: 'Country', sortable: true },
-        { key: 'publicHealthAuthorityRecommendation', label: 'Official recommendation', class: 'text-center' },
+        { key: 'publicHealthAuthorityRecommendation', label: 'Official recommendation', class: 'text-center', sortable: true },
         { key: 'subgroups', class: 'text-center' },
-        { key: 'lactationCounselingAndInformation', label: 'Provider visit', class: 'text-center', sortable: true },
+        { key: 'providerVisit', label: 'Provider visit', class: 'text-center', sortable: true },
+        { key: 'subgroups', label: 'Subgroups', class: 'text-center', sortable: true },
         // { key: 'lactationContinuation', class: 'text-center', sortable: true },
         { key: 'wbRegion', label: 'Region', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
@@ -162,49 +184,35 @@ export default {
   created () {
     this.countryListItems = this.$store.state.coreData.countries
       .reduce((result, country) => {
-        const outputRow = {
-          id: country.id,
-          name: country.name,
-          code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
-          subgroups: country.authorities
-            ? (country.authorities.slice(-1)[0].policies
-                ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
-                : undefined)
-            : undefined,
-          publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveLactationCode(country),
-          // lactationContinuation: country.authorities
-          //   ? (country.authorities.slice(-1)[0].policies
-          //       ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationContinuationAfterVaccine
-          //       : undefined)
-          //   : undefined,
-          lactationCounselingAndInformation: country.authorities
-            ? (country.authorities.slice(-1)[0].policies
-                ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
-                : undefined)
-            : undefined,
-          wbRegion: country.wbRegion,
-          wbIncomeLevelName: country.wbIncomeLevelName,
-          wbIncomeLevelSort: country.wbIncomeLevelSort
+        if (country.wbRegion) {
+          const outputRow = {
+            id: country.id,
+            name: country.name,
+            code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
+            subgroups: country.authorities
+              ? (country.authorities.slice(-1)[0].policies
+                  ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
+                  : undefined)
+              : undefined,
+            publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveLactationCode(country),
+            // lactationContinuation: country.authorities
+            //   ? (country.authorities.slice(-1)[0].policies
+            //       ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationContinuationAfterVaccine
+            //       : undefined)
+            //   : undefined,
+            providerVisit: country.authorities
+              ? (country.authorities.slice(-1)[0].policies
+                  ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
+                  : undefined)
+              : undefined,
+            wbRegion: country.wbRegion,
+            wbIncomeLevelName: country.wbIncomeLevelName,
+            wbIncomeLevelSort: country.wbIncomeLevelSort
+          }
+          result.push(outputRow)
         }
-        result.push(outputRow)
         return result
       }, [])
-  },
-  methods: {
-    sortComparer (aRow, bRow, key, sortDesc, formatter, compareOptions, compareLocale) {
-      switch (key) {
-        case 'name':
-          if (aRow.name === 'Global') { return -1 }
-          if (bRow.name === 'Global') { return 1 }
-          return aRow.name.localeCompare(bRow.name)
-        case 'wbIncomeLevelName':
-          if (aRow.wbIncomeLevelSort < bRow.wbIncomeLevelSort) { return -1 }
-          if (aRow.wbIncomeLevelSort > bRow.wbIncomeLevelSort) { return 1 }
-          return 0
-        default:
-          return undefined
-      }
-    }
   }
 }
 </script>

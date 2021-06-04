@@ -1,14 +1,14 @@
 <template>
   <div>
-    <b-navbar toggleable="md" variant="dark" type="dark" class="mb-5">
+    <b-navbar toggleable="md" variant="dark" type="dark" class="mb-5" style="padding: 0 1rem">
       <div class="container">
         <b-navbar-brand to="/">
-          <img height="50px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
+          <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="w-100 justify-content-around lead">
-            <b-nav-item-dropdown text="Data">
+            <b-nav-item-dropdown text="Vaccine Policies">
               <b-dropdown-item to="/pregnancy">
                 Pregnancy
               </b-dropdown-item>
@@ -24,9 +24,20 @@
             <b-nav-item href="#">
               Our Approach
             </b-nav-item>
-            <b-nav-item href="#">
-              About
-            </b-nav-item>
+            <b-nav-item-dropdown text="About">
+              <b-dropdown-item href="/about/background">
+                Background
+              </b-dropdown-item>
+              <b-dropdown-item href="#">
+                Team
+              </b-dropdown-item>
+              <b-dropdown-item href="#">
+                Disclaimer
+              </b-dropdown-item>
+              <b-dropdown-item href="/about/contact">
+                Contact Us
+              </b-dropdown-item>
+            </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
       </div>
