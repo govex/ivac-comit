@@ -17,7 +17,7 @@ export default (somethingIWontUse, inject) => {
 
     if (phaPolicies.length === 0) { return undefined }
 
-    // gather the vaccineIds from the reuslting policies
+    // gather the vaccineIds from the resulting policies
     const phaPoliciesVaccineIdSet = new Set(phaPolicies
       .flatMap((policy) => {
         if (policy.vaccinesNonSpecific) { return ['vaccines-non-specific'] }
