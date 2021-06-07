@@ -1,5 +1,5 @@
 export default (somethingIWontUse, inject) => {
-  inject('getMostPermissivePregnancyCode', (country) => {
+  inject('getMostPermissivePregnancyCode', (country, vaccines = []) => {
     if (!country) { return undefined }
 
     // filter the authorities

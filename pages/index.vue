@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <h2>Vaccination policies for pregnancy</h2>
+      <h2>Covid-19 vaccination policies for pregnancy</h2>
       <div class="indicators d-flex text-center text-white">
         <div class="indicator recommended-bg">
           <h2>{{ keyIndicators.recommended }}</h2>

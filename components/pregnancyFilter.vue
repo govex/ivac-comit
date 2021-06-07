@@ -12,23 +12,15 @@
         </b-button>
       </div>
     </div>
-    <b-sidebar id="collapse-filter" shadow title="Select filters">
+    <b-sidebar id="collapse-filter" shadow title="Select filters" show>
       <div class="p-3">
         <!-- <div class="row d-flex justify-content-between"> -->
         <div>
           <div class="d-flex justify-content-between align-content-baseline">
-            Vaccines
-            <b-button-group size="sm">
-              <b-button variant="link">
-                select all
-              </b-button> .
-              <b-button variant="link">
-                none
-              </b-button>
-            </b-button-group>
+            <strong>Vaccines</strong>
           </div>
           <b-form-group v-if="vaccineOptions" v-slot="{ ariaDescribedby }">
-            <b-form-checkbox-group
+            <b-form-radio-group
               id="vaccine-selection-filter"
               v-model="vaccinesSelected"
               :options="vaccineOptions"
@@ -52,7 +44,7 @@
         </div> -->
         <div>
           <div class="d-flex justify-content-between align-content-baseline">
-            Policy positions:
+            <strong>Policy positions</strong>
             <b-button-group size="sm">
               <b-button variant="link">
                 select all
@@ -91,20 +83,22 @@
 export default {
   props: {
     vaccinesSelected: {
-      type: Array,
+      type: String,
       required: false,
       default () {
-        return this.$store.state.coreData.vaccines.map(vaccine => vaccine.id)
+        return 'all'
       }
     },
     vaccineOptions: {
       type: Array,
       required: false,
       default () {
-        return this.$store.state.coreData.vaccines
-          .map((vaccine) => {
-            return { value: vaccine.id, text: [vaccine.manufacturer, vaccine.name].join(' ') }
-          })
+        return [{ value: 'all', text: 'All' }]
+          .concat(
+            this.$store.state.coreData.vaccines
+              .map((vaccine) => {
+                return { value: vaccine.id, text: [vaccine.manufacturer, vaccine.name].join(' ') }
+              }))
       }
     },
     policyPositionsSelected: {

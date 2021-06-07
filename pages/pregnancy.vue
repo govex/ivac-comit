@@ -3,7 +3,7 @@
     <section>
       <b-row class="flex-column">
         <h1>
-          Vaccine policies on pregnancy
+          Covid-19 vaccine policies on pregnancy
           <span class="text-muted" style="font-size: 1rem"><b-link to="/lactation">(show policies on lactation)</b-link></span>
         </h1>
         <PregnancyFilter :policy-positions-selected="policyPositionsFilters" :vaccines-selected="vaccinesFilters" />
@@ -155,6 +155,7 @@ export default {
               id: country.id,
               name: country.name,
               code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
+              inTransition: country.inTransition,
               subgroups: country.authorities
                 ? (country.authorities.slice(-1)[0].policies
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
@@ -203,6 +204,9 @@ export default {
                 mapStyles.push({ id: countryListItem.code, style: { fill: '#9B001D' } })
                 break
             }
+          }
+          if (countryListItem.inTransition) {
+            mapStyles.push({ id: countryListItem.code, style: { stroke: '#FF00FF', strokeWidth: 7, strokeDasharray: ['100', '0'] } })
           }
           return mapStyles
         }, [])

@@ -4,6 +4,7 @@
       <div class="container">
         <b-navbar-brand to="/">
           <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
+          <sup><b-badge variant="warning">beta</b-badge></sup>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
@@ -64,7 +65,7 @@
         <b-row class="my-3">
           <b-col>
             <p>CITATION</p>
-            <p>Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.---.org. Accessed: {{ new Date().toLocaleString() }}.</p>
+            <p>Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.comitglobal.org. Accessed: {{ new Date().toLocaleString() }}.</p>
           </b-col>
           <b-col>
             <p>CONTACT</p>

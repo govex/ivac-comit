@@ -3,7 +3,7 @@
     <section>
       <b-row class="flex-column">
         <h1>
-          Vaccine policies on lactation
+          Covid-19 vaccine policies on lactation
           <span class="text-muted" style="font-size: 1rem"><b-link to="/pregnancy">(show policies on pregnancy)</b-link></span>
         </h1>
         <PregnancyFilter />
@@ -174,6 +174,9 @@ export default {
                 break
             }
           }
+          if (countryListItem.inTransition) {
+            mapStyles.push({ id: countryListItem.code, style: { stroke: '#FFFF00', strokeWidth: 7, strokeDasharray: ['10', '10'] } })
+          }
           return mapStyles
         }, [])
     }
@@ -186,6 +189,7 @@ export default {
             id: country.id,
             name: country.name,
             code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
+            inTransition: country.inTransition,
             subgroups: country.authorities
               ? (country.authorities.slice(-1)[0].policies
                   ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
