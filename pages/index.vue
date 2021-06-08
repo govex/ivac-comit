@@ -118,7 +118,7 @@ export default {
       .reduce((result, country) => {
         const outputRow = {
           code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
-          publicHealthAuthorityRecommendation: this.$root.$getMostPermissivePregnancyCode(country)
+          publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveCode(country, 'pregnancyCode')
         }
         result.push(outputRow)
         return result

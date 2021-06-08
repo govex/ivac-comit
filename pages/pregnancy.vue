@@ -161,7 +161,7 @@ export default {
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
                     : undefined)
                 : undefined,
-              publicHealthAuthorityRecommendation: app.$getMostPermissivePregnancyCode(country),
+              publicHealthAuthorityRecommendation: app.$getMostPermissiveCode(country, 'pregnancyCode'),
               pregnancyTest: country.authorities
                 ? (country.authorities.slice(-1)[0].policies
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyTest

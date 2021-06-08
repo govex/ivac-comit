@@ -95,9 +95,6 @@
         <template #cell(providerVisit)="data">
           <ProviderVisitLabel :codes="[data.value]" />
         </template>
-        <!-- <template #cell(lactationContinuation)="data">
-          <LactationContinuationLabel :code="data.value" />
-        </template> -->
         <template #cell(subgroups)="data">
           <PregnancySubgroupsIcons :codes="data | ensureArray" />
         </template>
@@ -144,7 +141,6 @@ export default {
         { key: 'subgroups', class: 'text-center' },
         { key: 'providerVisit', label: 'Provider visit', class: 'text-center', sortable: true },
         { key: 'subgroups', label: 'Subgroups', class: 'text-center', sortable: true },
-        // { key: 'lactationContinuation', class: 'text-center', sortable: true },
         { key: 'wbRegion', label: 'Region', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
       ],
@@ -195,12 +191,7 @@ export default {
                   ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
                   : undefined)
               : undefined,
-            publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveLactationCode(country),
-            // lactationContinuation: country.authorities
-            //   ? (country.authorities.slice(-1)[0].policies
-            //       ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationContinuationAfterVaccine
-            //       : undefined)
-            //   : undefined,
+            publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode'),
             providerVisit: country.authorities
               ? (country.authorities.slice(-1)[0].policies
                   ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation

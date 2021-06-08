@@ -1,6 +1,7 @@
 export default (somethingIWontUse, inject) => {
-  inject('getMostPermissivePregnancyCode', (country, vaccines = []) => {
+  inject('getMostPermissiveCode', (country, code, vaccines = []) => {
     if (!country) { return undefined }
+    if (!code) { return undefined }
 
     // filter the authorities
     const phas = (country.authorities ? country.authorities : [])
@@ -10,7 +11,7 @@ export default (somethingIWontUse, inject) => {
 
     // gather the policies from the filtered authorities, don't nest the arrays, sort them by date published / updated / accessed
     const phaPolicies = phas.flatMap(authority => (authority.policies ? authority.policies : []))
-      .filter(policy => policy.pregnancyCode)
+      .filter(policy => policy[code])
       .sort((policy1, policy2) => {
         return (policy2['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown').localeCompare((policy1['datePublished/lastUpdated'] || policy1.dateAccessed || 'unknown'))
       })
@@ -46,11 +47,11 @@ export default (somethingIWontUse, inject) => {
         return false
       })
       .sort((policy1, policy2) => {
-        return policy1.pregnancyCode[0].rank - policy2.pregnancyCode[0].rank
+        return policy1[code][0].rank - policy2[code][0].rank
       })
 
     if (phaCurrentPolicies.length === 0) { return undefined }
 
-    return phaCurrentPolicies.shift().pregnancyCode
+    return phaCurrentPolicies[0][code]
   })
 }
