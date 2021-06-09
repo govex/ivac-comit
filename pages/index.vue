@@ -28,11 +28,11 @@
     <section>
       <b-overlay show blur="1px" opacity="0.75" class="my-5">
         <b-row class="flex-column">
-          <GlobalMap :country-styles="getMapStylesForPregnancyCode" default-fill-color="#A0A0A0" />
+          <GlobalMap :country-list-items="countryListItems" default-fill-color="#A0A0A0" style-property="publicHealthAuthorityRecommendation" />
         </b-row>
         <template #overlay>
           <div class="text-center">
-            <b-button to="/pregnancy" variant="primary" size="lg">
+            <b-button to="/pregnancy" variant="primary" size="lg" prefetch>
               Explore the Data
             </b-button>
           </div>

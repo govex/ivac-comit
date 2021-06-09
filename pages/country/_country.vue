@@ -226,8 +226,8 @@ export default {
         for (const authorityByType of this.authoritiesByType) {
           authorityByType.authorities = this.country.authorities.filter(authority => authority.authorityType === authorityByType.authorityType)
         }
-        this.mostPermissivePregnancyCode = this.$root.$getMostPermissivePregnancyCode(this.country)
-        this.mostPermissiveLactationCode = this.$root.$getMostPermissiveLactationCode(this.country)
+        this.mostPermissivePregnancyCode = this.$root.$getMostPermissiveCode(this.country, 'pregnancyCode')
+        this.mostPermissiveLactationCode = this.$root.$getMostPermissiveCode(this.country, 'lactationCode')
       }
       // this.breadcrumbItems[2] = { text: this.country.name, to: `/country/${this.country.iso3166Alpha2Code.toLowerCase()}` }
     } else {

@@ -15,6 +15,7 @@
             Countries
           </template>
           Administering
+          <b-icon-info-circle v-b-popover.hover="'Based upon information from Our World In Data'" />
         </h2>
         <b-table
           hover
@@ -73,19 +74,21 @@ export default {
   },
   created () {
     this.vaccine = this.$store.state.coreData.vaccines.find(vaccine => vaccine.id === this.vaccineCode)
-    this.countryListItems = this.vaccine.countries
-      .reduce((result, country) => {
-        const outputRow = {
-          name: country.name,
-          code: country.iso3166Alpha2Code,
-          wbIncomeLevelName: country.wbIncomeLevelName,
-          wbIncomeLevelCode: country.wbIncomeLevelCode,
-          wbRegion: country.wbRegion,
-          publicHealthAuthorityPregnancyRecommendation: this.$root.$getMostPermissivePregnancyCode(country),
-          publicHealthAuthorityLactationRecommendation: this.$root.$getMostPermissiveLactationCode(country)
-        }
-        return result.concat(outputRow)
-      }, [])
+    this.countryListItems = (this.vaccine.countries
+      ? this.vaccine.countries
+        .reduce((result, country) => {
+          const outputRow = {
+            name: country.name,
+            code: country.iso3166Alpha2Code,
+            wbIncomeLevelName: country.wbIncomeLevelName,
+            wbIncomeLevelCode: country.wbIncomeLevelCode,
+            wbRegion: country.wbRegion,
+            publicHealthAuthorityPregnancyRecommendation: this.$root.$getMostPermissiveCode(country, 'pregnancyCode'),
+            publicHealthAuthorityLactationRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode')
+          }
+          return result.concat(outputRow)
+        }, [])
+      : [])
   },
   methods: {
     sortComparer (aRow, bRow, key, sortDesc, formatter, compareOptions, compareLocale) {

@@ -77,18 +77,6 @@
   </div>
 </template>
 
-<script>
-// export default {
-//   data () {
-//     return { countries: [], filters: {} }
-//   },
-//   async fetch () {
-//     console.log('layout fetch called')
-//     await this.$http.$get('/data/comit-v1.min.json')
-//   }
-// }
-</script>
-
 <style>
 html {
   font-family:

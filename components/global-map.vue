@@ -5,24 +5,60 @@
 <script>
 export default {
   props: {
-    countryStyles: {
+    countryListItems: {
       type: Array,
       default () { return [] }
     },
+    styleProperty: {
+      type: String,
+      default () { return 'publicHealthAuthorityRecommendation' }
+    },
+    // countryStyles: {
+    //   type: Array,
+    //   default () { return [] }
+    // },
     defaultFillColor: {
       type: String,
       default () { return '#A0A0A0' }
     }
   },
+  computed: {
+    globalMapStyles () {
+      return this.countryListItems
+        .reduce((mapStyles, countryListItem) => {
+          if (countryListItem[this.styleProperty]) {
+            switch (countryListItem[this.styleProperty][0].rank) {
+              case 1:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#54BCD6' } })
+                break
+              case 2:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#3D7632' } })
+                break
+              case 3:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#FDB430' } })
+                break
+              case 4:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#FA774A' } })
+                break
+              case 5:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#9B001D' } })
+                break
+            }
+          }
+          if (countryListItem.inTransition) {
+            mapStyles.push({ id: countryListItem.code, style: { stroke: '#FF00FF', strokeWidth: 7, strokeDasharray: ['100', '0'] } })
+          }
+          return mapStyles
+        }, [])
+    }
+  },
+  watch: {
+    countryListItems () {
+      this.updateMap()
+    }
+  },
   mounted () {
     this.$el.style.fill = this.defaultFillColor
-    // this.$el.querySelectorAll('.landxx').forEach((element) => {
-    //   console.log(element)
-    //   element.style.fill = this.defaultFillColor
-    // })
-    this.updateMap()
-  },
-  beforeUpdate () {
     this.updateMap()
   },
   methods: {
@@ -31,7 +67,7 @@ export default {
         .forEach((element) => {
           element.style = null
         })
-      for (const countryStyle of this.countryStyles) {
+      for (const countryStyle of this.globalMapStyles) {
         const element = this.$el.querySelector(`#${countryStyle.id}`)
         if (element) {
           for (const key of Object.keys(countryStyle.style)) {

@@ -4,14 +4,14 @@
       <b-row class="flex-column">
         <h1>
           Covid-19 vaccine policies on lactation
-          <span class="text-muted" style="font-size: 1rem"><b-link to="/pregnancy">(show policies on pregnancy)</b-link></span>
+          <span class="text-muted" style="font-size: 1rem"><b-link to="/pregnancy">(switch to pregnancy)</b-link></span>
         </h1>
-        <PregnancyFilter />
+        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccines="vaccinesFilters" />
       </b-row>
-    </section>
-    <section>
       <b-row class="flex-column">
-        <GlobalMap :country-styles="getMapStylesForPregnancyCode" default-fill-color="#A0A0A0" />
+        <client-only>
+          <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="publicHealthAuthorityRecommendation" />
+        </client-only>
       </b-row>
     </section>
     <section>
@@ -73,7 +73,12 @@
     </section>
     <section>
       <h2>Countries</h2>
-      <span>This list displays the most permissive policy / guidance from each country across amongst all vaccines. Note that the World Health Organization makes recommendations for specific vaccines; <b-link to="/authority/who">view them here</b-link></span>
+      <b-alert class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline" variant="info" show>
+        <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
+        <b-button to="/authority/who" variant="info">
+          View WHO recommendations
+        </b-button>
+      </b-alert>
       <b-table
         hover
         :items="countryListItems"
@@ -96,7 +101,7 @@
           <ProviderVisitLabel :codes="[data.value]" />
         </template>
         <template #cell(subgroups)="data">
-          <PregnancySubgroupsIcons :codes="data | ensureArray" />
+          <LactationSubgroupsIcons :codes="data | ensureArray" />
         </template>
         <template #cell(wbIncomeLevelName)="data">
           {{ data.value ? data.value.replace(' income', '') : undefined }}
@@ -131,80 +136,89 @@ export default {
   },
   data () {
     return {
-      breadcrumbItems: [
-        { text: 'Home', to: '/' },
-        { text: 'Lactation', to: '/lacation' }
-      ],
+      vaccinesFilters: [],
+      policyPositionFilters: [],
+      countryListItems: [],
       countryListFields: [
         { key: 'name', label: 'Country', sortable: true },
-        { key: 'publicHealthAuthorityRecommendation', label: 'Official recommendation', class: 'text-center', sortable: true },
+        { key: 'publicHealthAuthorityRecommendation', label: 'Vaccination Policy', class: 'text-center', sortable: true },
         { key: 'subgroups', class: 'text-center' },
         { key: 'providerVisit', label: 'Provider visit', class: 'text-center', sortable: true },
         { key: 'subgroups', label: 'Subgroups', class: 'text-center', sortable: true },
         { key: 'wbRegion', label: 'Region', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
-      ],
-      countryListItems: []
+      ]
     }
   },
   computed: {
-    getMapStylesForPregnancyCode () {
-      return this.countryListItems
-        .reduce((mapStyles, countryListItem) => {
-          if (countryListItem.publicHealthAuthorityRecommendation) {
-            switch (countryListItem.publicHealthAuthorityRecommendation[0].rank) {
-              case 1:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#54BCD6' } })
-                break
-              case 2:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#3D7632' } })
-                break
-              case 3:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#FDB430' } })
-                break
-              case 4:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#FA774A' } })
-                break
-              case 5:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#9B001D' } })
-                break
-            }
-          }
-          if (countryListItem.inTransition) {
-            mapStyles.push({ id: countryListItem.code, style: { stroke: '#FFFF00', strokeWidth: 7, strokeDasharray: ['10', '10'] } })
-          }
-          return mapStyles
-        }, [])
+    filtering () {
+      return (this.vaccinesFilters.length > 0 || this.policyPositionFilters.length > 0)
+    }
+  },
+  watch: {
+    '$route.query' () {
+      this.vaccinesFilters = this.$route.query.vaccines ? this.$route.query.vaccines.split(',') : []
+      this.policyPositionFilters = (this.$route.query.policyPositions ? this.$route.query.policyPositions.split(',') : [])
+        .map(policyPosition => Number.parseInt(policyPosition))
+      this.countryListItems = this.getCountryListItems(this.vaccinesFilters, this.policyPositionFilters)
     }
   },
   created () {
-    this.countryListItems = this.$store.state.coreData.countries
-      .reduce((result, country) => {
-        if (country.wbRegion) {
-          const outputRow = {
-            id: country.id,
-            name: country.name,
-            code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
-            inTransition: country.inTransition,
-            subgroups: country.authorities
-              ? (country.authorities.slice(-1)[0].policies
-                  ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
-                  : undefined)
-              : undefined,
-            publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode'),
-            providerVisit: country.authorities
-              ? (country.authorities.slice(-1)[0].policies
-                  ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
-                  : undefined)
-              : undefined,
-            wbRegion: country.wbRegion,
-            wbIncomeLevelName: country.wbIncomeLevelName,
-            wbIncomeLevelSort: country.wbIncomeLevelSort
+    this.vaccinesFilters =
+      this.$route.query.vaccines
+        ? this.$route.query.vaccines.split(',')
+        : []
+    this.policyPositionFilters =
+      this.$route.query.policyPositions
+        ? this.$route.query.policyPositions.split(',').map(policyPosition => Number.parseInt(policyPosition))
+        : []
+    this.countryListItems = this.getCountryListItems(this.vaccinesFilters, this.policyPositionFilters)
+  },
+  methods: {
+    getCountryListItems (vaccinesFilters, policyPositionsFilters) {
+      let countryListItems = this.$store.state.coreData.countries
+        .reduce((result, country) => {
+          if (country.wbRegion) {
+            const outputRow = {
+              id: country.id,
+              name: country.name,
+              code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
+              inTransition: country.inTransition,
+              subgroups: country.authorities
+                ? (country.authorities.slice(-1)[0].policies
+                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
+                    : undefined)
+                : undefined,
+              publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode', vaccinesFilters),
+              providerVisit: country.authorities
+                ? (country.authorities.slice(-1)[0].policies
+                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
+                    : undefined)
+                : undefined,
+              wbRegion: country.wbRegion,
+              wbIncomeLevelName: country.wbIncomeLevelName,
+              wbIncomeLevelSort: country.wbIncomeLevelSort
+            }
+            result.push(outputRow)
           }
-          result.push(outputRow)
-        }
-        return result
-      }, [])
+          return result
+        }, [])
+      if (policyPositionsFilters.length > 0) {
+        countryListItems = countryListItems.filter((countryListItem) => {
+          if (countryListItem.publicHealthAuthorityRecommendation) {
+            return countryListItem.publicHealthAuthorityRecommendation.some(pregnancyCode => policyPositionsFilters.includes(pregnancyCode.rank))
+          } else {
+            return false
+          }
+        })
+      }
+      if (this.filtering) {
+        countryListItems = countryListItems.filter((countryListItem) => {
+          return (countryListItem.publicHealthAuthorityRecommendation)
+        })
+      }
+      return countryListItems
+    }
   }
 }
 </script>

@@ -26,6 +26,15 @@ export default (somethingIWontUse, inject) => {
       })
     )
 
+    // remove any vaccine items which are being filtered out (via the 'vaccines' parameter in this method call)
+    if (vaccines.length > 0) {
+      phaPoliciesVaccineIdSet.forEach((vaccineId) => {
+        if (!vaccines.includes(vaccineId)) {
+          phaPoliciesVaccineIdSet.delete(vaccineId)
+        }
+      })
+    }
+
     if (phaPoliciesVaccineIdSet.size === 0) { return undefined }
 
     // now get only the most recent policies which cover all the vaccines we accumulated
