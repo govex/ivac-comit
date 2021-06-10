@@ -10,7 +10,7 @@
       </b-row>
       <b-row class="flex-column">
         <client-only>
-          <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="publicHealthAuthorityRecommendation" />
+          <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="mostPermissiveLactationCode" />
         </client-only>
       </b-row>
     </section>
@@ -72,13 +72,13 @@
       </div>
     </section>
     <section>
-      <h2>Countries</h2>
-      <b-alert class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline" variant="info" show>
+      <b-alert class="mt-4 d-flex flex-row flex-nowrap justify-content-between align-items-baseline" variant="info" show>
         <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
         <b-button to="/authority/who" variant="info">
           View WHO recommendations
         </b-button>
       </b-alert>
+      <span>Showing {{ (countryListItems.length === 1 ? countryListItems.length + ' country' : countryListItems.length + ' countries') }}.</span>
       <b-table
         hover
         :items="countryListItems"
@@ -89,13 +89,31 @@
         head-variant="dark"
         :sort-compare="$root.$listSortComparer"
       >
+        <template #head(name)>
+          Country <b-icon-info-circle v-b-popover.hover="'The country name'" />
+        </template>
+        <template #head(mostPermissiveLactationCode)>
+          Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found.'" />
+        </template>
+        <template #head(providerVisit)>
+          Provider visit <b-icon-info-circle v-b-popover.hover="'Should a lactating person speak with a healthcare professional before vaccination?'" />
+        </template>
+        <template #head(subgroups)>
+          Subgroups <b-icon-info-circle v-b-popover.hover="'Specific subgroups'" />
+        </template>
+        <template #head(wbRegion)>
+          Region <b-icon-info-circle v-b-popover.hover="'The global region of the country, sourced from the World Bank'" />
+        </template>
+        <template #head(wbIncomeLevelName)>
+          Income Level <b-icon-info-circle v-b-popover.hover="'The country income level, sourced from the World Bank'" />
+        </template>
         <template #cell(name)="data">
           <b-link :to="data | countryUrl">
             {{ data.item.name }}
           </b-link>
         </template>
-        <template #cell(publicHealthAuthorityRecommendation)="data">
-          <PregnancyLactationCodeIcons :codes="data.item.publicHealthAuthorityRecommendation" />
+        <template #cell(mostPermissiveLactationCode)="data">
+          <PregnancyLactationCodeIcons :codes="data.item.mostPermissiveLactationCode" />
         </template>
         <template #cell(providerVisit)="data">
           <ProviderVisitLabel :codes="[data.value]" />
@@ -141,13 +159,18 @@ export default {
       countryListItems: [],
       countryListFields: [
         { key: 'name', label: 'Country', sortable: true },
-        { key: 'publicHealthAuthorityRecommendation', label: 'Vaccination Policy', class: 'text-center', sortable: true },
+        { key: 'mostPermissiveLactationCode', label: 'Vaccination Policy', class: 'text-center', sortable: true },
         { key: 'subgroups', class: 'text-center' },
         { key: 'providerVisit', label: 'Provider visit', class: 'text-center', sortable: true },
         { key: 'subgroups', label: 'Subgroups', class: 'text-center', sortable: true },
         { key: 'wbRegion', label: 'Region', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
       ]
+    }
+  },
+  head () {
+    return {
+      title: 'COMIT: Lactation policies'
     }
   },
   computed: {
@@ -189,7 +212,7 @@ export default {
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
                     : undefined)
                 : undefined,
-              publicHealthAuthorityRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode', vaccinesFilters),
+              mostPermissiveLactationCode: this.$root.$getMostPermissiveCode(country, 'lactationCode', vaccinesFilters),
               providerVisit: country.authorities
                 ? (country.authorities.slice(-1)[0].policies
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
@@ -205,8 +228,8 @@ export default {
         }, [])
       if (policyPositionsFilters.length > 0) {
         countryListItems = countryListItems.filter((countryListItem) => {
-          if (countryListItem.publicHealthAuthorityRecommendation) {
-            return countryListItem.publicHealthAuthorityRecommendation.some(pregnancyCode => policyPositionsFilters.includes(pregnancyCode.rank))
+          if (countryListItem.mostPermissiveLactationCode) {
+            return countryListItem.mostPermissiveLactationCode.some(code => policyPositionsFilters.includes(code.rank))
           } else {
             return false
           }
@@ -214,7 +237,7 @@ export default {
       }
       if (this.filtering) {
         countryListItems = countryListItems.filter((countryListItem) => {
-          return (countryListItem.publicHealthAuthorityRecommendation)
+          return (countryListItem.mostPermissiveLactationCode)
         })
       }
       return countryListItems
