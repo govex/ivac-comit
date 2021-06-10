@@ -17,11 +17,6 @@
                 Lactation
               </b-dropdown-item>
             </b-nav-item-dropdown>
-            <!-- <b-nav-item-dropdown text="Country Details">
-              <b-dropdown-item to="#">
-                Placeholder
-              </b-dropdown-item>
-            </b-nav-item-dropdown> -->
             <b-nav-item to="/about/methodology">
               Our Approach
             </b-nav-item>
@@ -75,7 +70,7 @@
           </b-col>
           <b-col>
             <p>CONTACT</p>
-            <p>If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please get in touch. We welcome and appreciate your valuable feedback.</p>
+            <p>If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please <b-link to="/about/contact" class="text-light">get in touch</b-link>. We welcome and appreciate your valuable feedback.</p>
           </b-col>
         </b-row>
       </b-container>
