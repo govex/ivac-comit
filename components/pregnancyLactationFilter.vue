@@ -18,7 +18,6 @@
         <b-button :to="emptyRouteObject">
           Reset all filters
         </b-button>
-        <!-- <div class="row d-flex justify-content-between"> -->
         <div>
           <div class="d-flex justify-content-between align-content-baseline">
             <strong>Vaccines</strong>
@@ -34,18 +33,6 @@
             />
           </b-form-group>
         </div>
-        <!-- <div>
-          <b-form-group v-slot="{ ariaDescribedby }" label="Select a recommending body:">
-            <b-form-checkbox-group
-              id="authoritytype-selection-filter"
-              v-model="authorityType.selected"
-              :options="authorityType.options"
-              :aria-describedby="ariaDescribedby"
-              name="authoritytype-selection-filter"
-              class="d-flex flex-column"
-            />
-          </b-form-group>
-        </div> -->
         <div>
           <div class="d-flex justify-content-between align-items-baseline">
             <strong>Policy positions</strong>
@@ -58,7 +45,6 @@
               </b-button>
             </b-button-group>
           </div>
-
           <b-form-group v-if="policyPositions" v-slot="{ ariaDescribedby }">
             <b-form-checkbox-group
               id="recommendation-selection-filter"
@@ -103,7 +89,7 @@ export default {
     const vaccines = [{ value: 'all', text: 'All' }]
       .concat(this.$store.state.coreData.vaccines
         .map((vaccine) => {
-          return { value: vaccine.id, text: [vaccine.manufacturer, vaccine.name].join(' ') }
+          return { value: vaccine.id, text: vaccine.displayName }
         }))
     const vaccinesSelected = 'all'
     const policyPositions = [
