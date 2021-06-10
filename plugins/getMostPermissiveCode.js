@@ -1,11 +1,13 @@
 export default (somethingIWontUse, inject) => {
-  inject('getMostPermissiveCode', (country, code, vaccines = []) => {
+  inject('getMostPermissiveCode', (country, code, vaccines = [], authorityTypes = ['Public Health Authority']) => {
     if (!country) { return undefined }
     if (!code) { return undefined }
 
-    // filter the authorities
-    const phas = (country.authorities ? country.authorities : [])
-      .filter(authority => authority.authorityType === 'Public Health Authority')
+    // filter the authorities, by authority type, or return all authorities if no authorityTypes specified.
+    const phas = authorityTypes.length === 0
+      ? (country.authorities ? country.authorities : [])
+      : (country.authorities ? country.authorities : [])
+          .filter(authority => authorityTypes.includes(authority.authorityType))
 
     if (phas.length === 0) { return undefined }
 
