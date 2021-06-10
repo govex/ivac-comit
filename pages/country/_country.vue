@@ -7,35 +7,36 @@
     </div> -->
     <div v-if="country" class="w-100">
       <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
-        <h1>{{ country.name }} <span v-if="country.iso3166Alpha2Code">({{ country.iso3166Alpha2Code }})</span></h1>
-        <div class="w-100 d-flex row my-5 text-center justify-content-center">
-          <b-col v-if="country.wbPopulation2019" cols="3">
-            <b-card>
-              <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
-              <b-card-body>
-                Population
-                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-              </b-card-body>
-            </b-card>
-          </b-col>
-          <b-col v-if="country.wbIncomeLevelName" cols="3">
-            <b-card>
-              <b-card-title>{{ country.wbIncomeLevelName.replace(' income', '') }}</b-card-title>
-              <b-card-body>
-                Income Level
-                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-              </b-card-body>
-            </b-card>
-          </b-col>
-          <b-col v-if="country.wbRegion" cols="3">
-            <b-card>
-              <b-card-title>{{ country.wbRegion }}</b-card-title>
-              <b-card-body>
-                Region
-                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-              </b-card-body>
-            </b-card>
-          </b-col>
+        <h1>Country Details: {{ country.name }}</h1>
+        <div class="w-100 d-flex row my-5 text-center justify-content-center align-items-stretch">
+          <b-card v-if="country.wbPopulation2019" class="col-lg-3 m-2">
+            <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
+            <b-card-body>
+              Population
+              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+            </b-card-body>
+          </b-card>
+          <b-card v-if="country.birthrate" class="col-lg-3 m-2">
+            <b-card-title> {{ country.birthrate | friendlyNumber }}</b-card-title>
+            <b-card-body>
+              Birth rate
+              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+            </b-card-body>
+          </b-card>
+          <b-card v-if="country.wbIncomeLevelName" class="col-lg-3 m-2">
+            <b-card-title>{{ country.wbIncomeLevelName.replace(' income', '') }}</b-card-title>
+            <b-card-body>
+              Income Level
+              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+            </b-card-body>
+          </b-card>
+          <b-card v-if="country.wbRegion" class="col-lg-3 m-2">
+            <b-card-title>{{ country.wbRegion }}</b-card-title>
+            <b-card-body>
+              Region
+              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+            </b-card-body>
+          </b-card>
         </div>
         <div class="w-100 d-flex justify-content-around align-items-start text-center">
           <b-card bg-variant="dark" text-variant="white" class="m-1">
@@ -86,43 +87,9 @@
       </div>
       <div class="my-5">
         <template v-if="country.vaccines">
-          <h2>Vaccines Administered <b-icon-info-circle v-b-popover.hover="'Information about vaccines administered in each country obtained from Our World In Data.'" font-scale="0.5" /></h2>
-          <b-table-simple>
-            <b-thead>
-              <b-tr>
-                <b-th>Manufacturer</b-th>
-                <b-th>Product</b-th>
-                <b-th>Other Names</b-th>
-                <b-th>Platform</b-th>
-                <b-th class="text-center">
-                  Other countries using this vaccine
-                </b-th>
-              </b-tr>
-            </b-thead>
-            <b-tbody>
-              <b-tr v-for="vaccine of country.vaccines" :key="vaccine.id" :to="`/vaccine/${vaccine.id}`">
-                <b-td>
-                  <b-link :to="`/vaccine/${vaccine.id}`">
-                    {{ vaccine.manufacturer }}
-                  </b-link>
-                </b-td>
-                <b-td>
-                  <b-link :to="`/vaccine/${vaccine.id}`">
-                    {{ vaccine.name }}
-                  </b-link>
-                </b-td>
-                <b-td>{{ vaccine.otherNames }}</b-td>
-                <b-td>{{ vaccine.platform }}</b-td>
-                <b-td class="text-center">
-                  {{ vaccine.countries.length - 1 }}
-                </b-td>
-              </b-tr>
-            </b-tbody>
-          </b-table-simple>
+          <h2>Vaccines</h2>
+          <CountryVaccines :country="country" />
         </template>
-        <!-- <template v-else>
-          <p>No information available.</p>
-        </template> -->
       </div>
       <h2 class="mb-5">
         Resources &amp; Guidance
