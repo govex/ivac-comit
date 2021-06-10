@@ -1,5 +1,5 @@
 ---
-title: Methodology
+title: Our Approach
 description: "Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in persons trying to become pregnant, pregnant, and lactating people." 
 ---
 

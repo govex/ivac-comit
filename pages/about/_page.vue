@@ -12,7 +12,6 @@
 
 <script>
 export default {
-  scrollToTop: false,
   async asyncData ({ $content, params }) {
     const pageName = params.page
     let page
@@ -20,9 +19,16 @@ export default {
       page = await $content(pageName).fetch()
       return { page }
     } catch (err) {
-      page = undefined
+      return { page: { title: 'Not found', description: 'Not found' } }
     }
-    return { page }
+  },
+  head () {
+    return {
+      title: 'COMIT: ' + this.page.title,
+      meta: [
+        { hid: 'description', name: 'description', content: this.page.description }
+      ]
+    }
   }
 }
 </script>
