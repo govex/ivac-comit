@@ -1,58 +1,64 @@
 <template>
   <div>
     <template v-if="policies && policies.length > 0">
-      <b-table-simple>
-        <b-thead>
-          <b-tr>
-            <b-th><b-icon-link /></b-th>
-            <b-th>Type</b-th>
-            <b-th>Vaccines Included</b-th>
-            <b-th class="text-center">
-              Vaccination while pregnant
-            </b-th>
-            <b-th class="text-center">
-              Vaccination while lactating
-            </b-th>
-            <b-th class="text-center">
-              Published/Updated
-            </b-th>
-          </b-tr>
-        </b-thead>
-        <b-tbody>
-          <b-tr v-for="policy of policies" :key="policy.id">
-            <b-td>
-              <b-link :href="policy.link" target="_blank">
-                <b-button size="sm">
-                  View <b-icon-box-arrow-up-right />
-                </b-button>
+      <b-table
+        hover
+        :items="policies"
+        primary-key="id"
+        :fields="policyListFields"
+        responsive
+        sort-by="date"
+        small
+        head-variant="dark"
+        :sort-compare="$root.$listSortComparer"
+      >
+        <template #head(documentType)>
+          Document type <b-icon-info-circle v-b-popover.hover="'Indicates the type of document in which this policy position was observed.'" />
+        </template>
+        <template #head(vaccines)>
+          Vaccines <b-icon-info-circle v-b-popover.hover="'Indicates any vaccines which were mentioned as part of this policy position.'" />
+        </template>
+        <template #head(pregnancyCode)>
+          Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for pregnant people.'" />
+        </template>
+        <template #head(lactationCode)>
+          Lacation <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for lactating people.'" />
+        </template>
+        <template #head(policyDate)>
+          Date <b-icon-info-circle v-b-popover.hover="'The date this policy was published or updated.'" />
+        </template>
+        <template #cell(documentType)="data">
+          <template v-if="data.value">
+            <b-badge v-for="documentType of data.value" :key="documentType.rank">{{ documentType.value }}</b-badge>
+          </template>
+        </template>
+        <template #cell(vaccines)="data">
+          <template v-if="data.item.vaccinesNonSpecific">
+            <div class="text-muted">(none specified)</div>
+          </template>
+          <template v-else-if="data.value">
+            <div v-for="vaccine of data.value" :key="vaccine.id">
+              <b-link :to="`/vaccine/${vaccine.id}`">
+                {{ vaccine.displayName }}
               </b-link>
-            </b-td>
-            <b-td>
-              <template v-if="policy.documentType">
-                <span v-for="documentType of policy.documentType" :key="documentType.value">{{ documentType.value }}</span>
-              </template>
-            </b-td>
-            <b-td>
-              <template v-if="policy.vaccinesNonSpecific">
-                <span class="text-muted">(none specified)</span>
-              </template>
-              <template v-else>
-                <span v-for="vaccine of policy.vaccines" :key="vaccine.id">{{ vaccine.manufacturer }} {{ vaccine.name }}<br></span>
-              </template>
-            </b-td>
-            <b-td :class="{'bg-warning': policy.pregnancyCode && policy.pregnancyCode.length > 1 }" class="text-center">
-              <PregnancyLactationCodeIcons :codes="policy.pregnancyCode" />
-            </b-td>
-            <b-td :class="{'bg-warning': policy.lactationCode && policy.lactationCode.length > 1 }" class="text-center">
-              <PregnancyLactationCodeIcons :codes="policy.lactationCode" />
-            </b-td>
-            <b-td class="text-center">
-              <span v-if="policy['datePublished/lastUpdated']">{{ policy['datePublished/lastUpdated'] }}</span>
-              <span v-else class="text-muted">unknown</span>
-            </b-td>
-          </b-tr>
-        </b-tbody>
-      </b-table-simple>
+            </div>
+          </template>
+        </template>
+        <template #cell(pregnancyCode)="data">
+          <PregnancyLactationCodeIcons :codes="data.value" />
+        </template>
+        <template #cell(lactationCode)="data">
+          <PregnancyLactationCodeIcons :codes="data.value" />
+        </template>
+        <template #cell(policyDate)="data">
+          {{ data.item['datePublished/lastUpdated'] || 'unknown' }}
+        </template>
+        <template #cell(link)="data">
+          <b-link :href="data.value" target="_blank">
+            <b-icon-box-arrow-up-right v-b-popover.hover="'View this policy document in a new browser tab'" />
+          </b-link>
+        </template>
+      </b-table>
     </template>
     <template v-else>
       <slot />
@@ -66,6 +72,18 @@ export default {
     policies: {
       type: Array,
       default () { return [] }
+    }
+  },
+  data () {
+    return {
+      policyListFields: [
+        { key: 'documentType', sortable: true },
+        { key: 'vaccines' },
+        { key: 'pregnancyCode', class: 'text-center', sortable: true },
+        { key: 'lactationCode', class: 'text-center', sortable: true },
+        { key: 'policyDate', sortable: true },
+        { key: 'link', label: '', class: 'text-center' }
+      ]
     }
   }
 }

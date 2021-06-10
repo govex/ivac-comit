@@ -3,16 +3,24 @@
     <div class="d-flex flex-row justify-content-between align-items-baseline">
       <h1>
         {{ authority.name }}
-        <b-link v-if="authority.website1" :href="authority.website1" target="_blank" class="mx-1">
-          <b-icon-box-arrow-up-right />
-        </b-link>
-        <b-link v-if="authority.website2" :href="authority.website2" target="_blank" class="mx-1">
-          <b-icon-box-arrow-up-right />
-        </b-link>
-        <b-link v-if="authority.website3" :href="authority.website3" target="_blank" class="mx-1">
-          <b-icon-box-arrow-up-right />
-        </b-link>
       </h1>
+    </div>
+    <div class="d-flex flex-column justify-content-end align-items-end">
+      <div class="text-truncate col-6">
+        <b-link v-if="authority.website1" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website1" target="_blank" class="mx-1">
+          <b-icon-box-arrow-up-right /> {{ authority.website1 }}
+        </b-link>
+      </div>
+      <div class="text-truncate col-6">
+        <b-link v-if="authority.website2" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website2" target="_blank" class="mx-1">
+          <b-icon-box-arrow-up-right /> {{ authority.website2 }}
+        </b-link>
+      </div>
+      <div class="text-truncate col-6">
+        <b-link v-if="authority.website3" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website3" target="_blank" class="mx-1">
+          <b-icon-box-arrow-up-right /> {{ authority.website3 }}
+        </b-link>
+      </div>
       <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
     </div>
     <div class="w-100 mb-5 align-items-baseline">
