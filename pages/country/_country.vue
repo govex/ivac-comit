@@ -198,7 +198,7 @@ export default {
     }
   },
   asyncData ({ params }) {
-    let countryCode, country, mostPermissivePregnancyCode, mostPermissiveLactationCode
+    let countryCode, countryName, country, mostPermissivePregnancyCode, mostPermissiveLactationCode
     if (params.country) {
       countryCode = params.country.toUpperCase()
     }
@@ -207,12 +207,12 @@ export default {
       // { displayName: 'Regulatory Bodies', authorityType: 'Regulatory Body', authorities: [] },
       // { displayName: 'Professional Societies', authorityType: 'Professional Society', authorities: [] }
     ]
-    // const breadcrumbItems = [
-    //   { text: 'Home', to: '/' },
-    //   { text: 'Countries', to: '#' }
-    // ]
-
-    return { country, countryCode, authoritiesByType, mostPermissivePregnancyCode, mostPermissiveLactationCode }
+    return { country, countryCode, countryName, authoritiesByType, mostPermissivePregnancyCode, mostPermissiveLactationCode }
+  },
+  head () {
+    return {
+      title: `COMIT: ${this.countryName}`
+    }
   },
   created () {
     if (this.countryCode === 'GLOBAL') {
@@ -222,6 +222,7 @@ export default {
       this.country = this.$store.state.coreData.countries.find(country => country.iso3166Alpha2Code === this.countryCode)
     }
     if (this.country) {
+      this.countryName = this.country.name
       if (this.country.authorities) {
         for (const authorityByType of this.authoritiesByType) {
           authorityByType.authorities = this.country.authorities.filter(authority => authority.authorityType === authorityByType.authorityType)

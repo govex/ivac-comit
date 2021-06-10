@@ -15,19 +15,19 @@
       </h1>
       <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
     </div>
-    <div class="w-100 mb-5">
+    <div class="w-100 mb-5 align-items-baseline">
+      <b-badge variant="success">
+        {{ authority.authorityType }}
+      </b-badge> |
       <span v-for="country of authority.countries" :key="country.id">
-        <b-link v-if="country.iso3166Alpha2Code" :to="`/country/${country.iso3166Alpha2Code.toLowerCase()}`">
+        <b-link v-if="country.name === 'Global'" to="/country/global">
           {{ country.name }}
         </b-link>
-        <b-link v-if="country.name === 'Global'" to="/country/global">
+        <b-link v-else-if="country.iso3166Alpha2Code" :to="`/country/${country.iso3166Alpha2Code.toLowerCase()}`">
           {{ country.name }}
         </b-link>
         <span v-else>{{ country.name }}</span>
       </span>
-      <b-badge variant="secondary">
-        {{ authority.authorityType }}
-      </b-badge>
     </div>
     <h2>Resources &amp; Guidance</h2>
     <AuthorityPolicies :policies="authority.policies">
@@ -44,10 +44,18 @@ export default {
       authorityId = params.authority
       if (authorityId === 'who') { authorityId = 'recFs2GvQUntKmKPz' }
     }
-    return { authorityId, authority }
+    return { authorityId, authority, authorityName: undefined }
+  },
+  head () {
+    return {
+      title: `COMIT: ${this.authorityName}`
+    }
   },
   created () {
     this.authority = this.$store.state.coreData.authorities.find(authority => authority.id === this.authorityId)
+    if (this.authority) {
+      this.authorityName = this.authority.name
+    }
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <div>
     <div v-if="vaccine">
       <b-row class="flex-column">
-        <h1>{{ vaccine.manufacturer }} {{ vaccine.name }}</h1>
+        <h1>{{ vaccine.displayName }}</h1>
         <span v-if="vaccine.otherNames" class="text-muted">Also known as: {{ vaccine.otherNames }}</span>
       </b-row>
       <b-row class="my-5">
@@ -27,6 +27,21 @@
           head-variant="dark"
           :sort-compare="sortComparer"
         >
+          <template #head(name)>
+            Country <b-icon-info-circle v-b-popover.hover="'The country name'" />
+          </template>
+          <template #head(publicHealthAuthorityPregnancyRecommendation)>
+            Pregnancy policy <b-icon-info-circle v-b-popover.hover="'The most recent policy specifically mentioning this vacccine for people who are pregnant.'" />
+          </template>
+          <template #head(publicHealthAuthorityLactationRecommendation)>
+            Lactation policy <b-icon-info-circle v-b-popover.hover="'The most recent policy specifically mentioning this vaccine for people who are lactating.'" />
+          </template>
+          <template #head(wbRegion)>
+            Region <b-icon-info-circle v-b-popover.hover="'The global region of the country, sourced from the World Bank'" />
+          </template>
+          <template #head(wbIncomeLevelName)>
+            Income Level <b-icon-info-circle v-b-popover.hover="'The country income level, sourced from the World Bank'" />
+          </template>
           <template #cell(name)="data">
             <b-link :to="data | countryUrl">
               {{ data.item.name }}
@@ -58,7 +73,7 @@ export default {
     }
   },
   asyncData ({ params }) {
-    let vaccineCode, vaccine, mostPermissivePregnancyCodes, mostPermissiveLactationCodes
+    let vaccineCode, vaccine, vaccineName, mostPermissivePregnancyCodes, mostPermissiveLactationCodes
     if (params.vaccine) {
       vaccineCode = params.vaccine
     }
@@ -70,10 +85,18 @@ export default {
       { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
     ]
     const countryListItems = []
-    return { vaccineCode, vaccine, mostPermissivePregnancyCodes, mostPermissiveLactationCodes, countryListFields, countryListItems }
+    return { vaccineCode, vaccine, vaccineName, mostPermissivePregnancyCodes, mostPermissiveLactationCodes, countryListFields, countryListItems }
+  },
+  head () {
+    return {
+      title: `COMIT: ${this.vaccineName}`
+    }
   },
   created () {
     this.vaccine = this.$store.state.coreData.vaccines.find(vaccine => vaccine.id === this.vaccineCode)
+    if (this.vaccine) {
+      this.vaccineName = this.vaccine.displayName
+    }
     this.countryListItems = (this.vaccine.countries
       ? this.vaccine.countries
         .reduce((result, country) => {
@@ -83,8 +106,8 @@ export default {
             wbIncomeLevelName: country.wbIncomeLevelName,
             wbIncomeLevelCode: country.wbIncomeLevelCode,
             wbRegion: country.wbRegion,
-            publicHealthAuthorityPregnancyRecommendation: this.$root.$getMostPermissiveCode(country, 'pregnancyCode'),
-            publicHealthAuthorityLactationRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode')
+            publicHealthAuthorityPregnancyRecommendation: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', [this.vaccine.id]),
+            publicHealthAuthorityLactationRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode', [this.vaccine.id])
           }
           return result.concat(outputRow)
         }, [])
