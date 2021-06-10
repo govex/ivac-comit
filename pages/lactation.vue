@@ -4,7 +4,7 @@
       <b-row class="flex-column">
         <h1>
           Covid-19 vaccine policies on lactation
-          <span class="text-muted" style="font-size: 1rem"><b-link to="/pregnancy">(switch to pregnancy)</b-link></span>
+          <span class="text-muted" style="font-size: 1rem"><b-link :to="{path: '/pregnancy', query: $route.query}">(switch to pregnancy)</b-link></span>
         </h1>
         <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccines="vaccinesFilters" />
       </b-row>
