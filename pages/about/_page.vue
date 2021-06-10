@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  scrollToTop: false,
   async asyncData ({ $content, params }) {
     const pageName = params.page
     let page

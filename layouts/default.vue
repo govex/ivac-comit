@@ -26,14 +26,20 @@
               Our Approach
             </b-nav-item>
             <b-nav-item-dropdown text="About">
-              <b-dropdown-item to="/about/background">
+              <b-dropdown-item to="/about/comit#overview">
+                Overview
+              </b-dropdown-item>
+              <b-dropdown-item to="/about/comit#Background">
                 Background
               </b-dropdown-item>
-              <b-dropdown-item to="/about/team">
+              <b-dropdown-item to="/about/comit#maps-and-features">
+                Maps &amp; Features
+              </b-dropdown-item>
+              <b-dropdown-item to="/about/comit#team">
                 Team
               </b-dropdown-item>
-              <b-dropdown-item to="/about/team/#disclaimer">
-                Disclaimer
+              <b-dropdown-item to="/about/comit#disclaimers">
+                Disclaimers
               </b-dropdown-item>
               <b-dropdown-item to="/about/contact">
                 Contact Us
