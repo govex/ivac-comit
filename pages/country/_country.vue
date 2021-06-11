@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- <div>
-      <b-row>
-        <b-breadcrumb :items="breadcrumbItems" />
-      </b-row>
-    </div> -->
     <div v-if="country" class="w-100">
       <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
         <h1>Country Details: {{ country.name }}</h1>
@@ -85,6 +80,8 @@
           </b-card>
         </div>
       </div>
+      <h4 class="mt-5">Legend</h4>
+      <PolicyPositionsIndicators displayed-indicators="[1,2,3,4,5,999]" />
       <div class="my-5">
         <template v-if="country.vaccines">
           <h2>Vaccines</h2>

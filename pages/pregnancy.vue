@@ -15,63 +15,7 @@
       </b-row>
     </section>
     <section>
-      <div class="d-flex flex-column">
-        <div class="text-center">
-          <h4>Legend</h4>
-        </div>
-        <div class="d-flex">
-          <div class="mx-auto legend-items p-3">
-            <div class="d-flex flex-column">
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="recommended legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Recommended for some or all
-                  <b-icon-info-circle v-b-popover.hover="'An explicit recommendation that some or all pregnant people should receive vaccination.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="permitted-for-all legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Permitted
-                  <b-icon-info-circle v-b-popover.hover="'All pregnant people can receive, may receive, or can choose to receive vaccination.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="permitted-with-qualifications legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Permitted with qualifications
-                  <b-icon-info-circle v-b-popover.hover="'Only certain groups of pregnant people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccination.'" />
-                </span>
-              </div>
-            </div>
-            <div class="d-flex flex-column">
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="not-recommended-with-exceptions legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Not recommended, but with exceptions
-                  <b-icon-info-circle v-b-popover.hover="'A statement stating pregnant people should not receive vaccination, with certain exceptions.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middlem mx-2">
-                <svg class="prohibited legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Not recommended
-                  <b-icon-info-circle v-b-popover.hover="'Pregnant people should not receive the vaccine or vaccine is contraindicated.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="no-language legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  No policy position found
-                  <b-icon-info-circle v-b-popover.hover="'In instances where no policies or positions regarding pregnancy and vaccination could be found, or where no position was clearly established, e.g., &quot;if pregnant, talk to your doctor.&quot;'" />
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
+      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('total')" indicator-property="mostPermissivePregnancyCode" />
       <b-alert class="mt-4 d-flex flex-row flex-nowrap justify-content-between align-items-baseline" variant="info" show>
         <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
         <b-button to="/authority/who" variant="info">
