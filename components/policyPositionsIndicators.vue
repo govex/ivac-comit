@@ -38,7 +38,7 @@
         {{ keyIndicators.notRecommendedWithExceptions }}
       </h2>
       <strong>
-        Not recommended with exceptions
+        Not recommended but with exceptions
       </strong>
       <strong>
         <b-icon-info-circle v-b-popover.hover="`A statement stating ${statusWord} people should not receive vaccination, with certain exceptions.`" />
@@ -162,7 +162,7 @@ export default {
 
 <style scoped>
 .indicators { flex-flow: row wrap; justify-content: space-between}
-.indicator { display: flex; flex: 1 1 0px; flex-flow: column; justify-content: space-between; align-content: center; padding: 1em 1em; margin: 0.5rem; border-radius: 1em }
+.indicator { display: flex; flex: 1 1 0px; flex-flow: column; justify-content: space-between; align-content: center; padding: 1em 1em; margin: 0.5em; border-radius: 0.25rem }
 .in-transition { border: 4px solid #FF00FF }
 h2 { font-size: 3em; font-weight: bold }
 </style>

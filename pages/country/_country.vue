@@ -80,8 +80,8 @@
           </b-card>
         </div>
       </div>
-      <h4 class="mt-5">Legend</h4>
-      <PolicyPositionsIndicators displayed-indicators="[1,2,3,4,5,999]" />
+      <h4 class="mt-4">Legend</h4>
+      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
       <div class="my-5">
         <template v-if="country.vaccines">
           <h2>Vaccines</h2>

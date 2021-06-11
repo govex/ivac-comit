@@ -2,7 +2,7 @@
   <div>
     <b-alert variant="success" class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline" show>
       <span>Showing {{ policyPositionsText }} for each country {{ vaccinesText }}.</span>
-      <b-button v-b-toggle.collapse-filter variant="primary">
+      <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
         change
       </b-button>
     </b-alert>

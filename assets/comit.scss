@@ -5,6 +5,9 @@ $primary:       #0E1723 ;
 $secondary:     #ffffff ;
 $light:         #F1F5F9 ;
 $dark:          #54BDC6 ;//then bootstrap & bootstrap-vue should be added after 
+
+
+$link-color:     #54BDC6 ;
 //so that they inherit the custom SCSS variables
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-vue/src/index';

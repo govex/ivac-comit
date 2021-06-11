@@ -46,7 +46,7 @@
     </b-navbar>
     <b-container fluid class="bg-dark text-light mb-4">
       <b-container>
-        Vaccine policies for pregnant and lactating people worldwide
+        <em>Vaccine policies for pregnant and lactating people worldwide.</em>
       </b-container>
     </b-container>
     <b-container>
