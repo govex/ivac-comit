@@ -5,19 +5,155 @@ description: "Our aim is to identify, collect, and present publicly available co
 
 Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in pregnant and lactating people. Information from publicly available sources is obtained from departments or ministries of health, and state-sponsored COVID-19 dedicated websites. Sources include vaccine recommendations for use, consent forms, fact sheets, FAQs, press releases, government websites and official government social media posts. Where multiple sources are available for a given country and public health authority, the one with the most permissive pregnancy or lactation code is displayed on the map, regardless of vaccine product. Filtering by vaccine product retrieves the most permissive pregnancy or lactation code for that vaccine in each country. All the sources retrieved for a given country, along with their classification, date published, and vaccine specification, can be viewed on the country profile page. The tracker reflects the most currently available data at the time of each round of survey completion. <span class="bg-warning">View our survey TK</span>. For more information on our methods and procedures, view our <span class="bg-warning">data collection protocol TK</span>.
 
-# Definitions
+<br>
 
-## Pregnancy Policy Categories
+## Definitions
 
-<span class="bg-warning">Table TK</span>
+<br>
+
+### Pregnancy Policy Categories
+
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="recommended"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Recommended for some or all</strong>
+    <span>An explicit recommendation that some or all pregnant people should receive vaccination.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="permitted-for-all"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Permitted</strong>
+    <span>All pregnant people can receive, may receive, or can choose to receive vaccination.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="permitted-with-qualifications"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Permitted with qualifications</strong>
+    <span>Only certain groups of pregnant people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccination.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="not-recommended-with-exceptions"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Not recommended but with exceptions</strong>
+    <span>A statement stating pregnant people should not receive vaccination, with certain  exexceptions provided.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="prohibited"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Not recommended</strong>
+    <span>Pregnant people should not receive the vaccine or vaccine is contraindicated.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="no-language"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">No position found</strong>
+    <span>In instances where no policies or positions regarding pregnancy and vaccination could be found, or where no position was clearly established, e.g., &quot;if pregnant, talk to your doctor.&quot;</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="in-transition"><b-icon-circle /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">In transition</strong>
+    <span>Where current policies are being revised.</span>
+  </div>
+</div>
 
 
-For more detailed information on how pregnancy policies were categorized, please see our pregnancy categories codebook. 
+For more detailed information on how pregnancy policies were categorized, please see our <span class="bg-warning">pregnancy categories codebook TK</span>. 
 
+<br>
 
-## Lactation Policy Categories
+### Lactation Policy Categories
 
-<span class="bg-warning">Table TK</span>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="recommended"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Recommended for some or all</strong>
+    <span>An explicit recommendation that some or all lactating people should receive vaccination.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="permitted-for-all"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Permitted</strong>
+    <span>All lactating people can receive, may receive, or can choose to receive vaccination.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="permitted-with-qualifications"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Permitted with qualifications</strong>
+    <span>Only certain groups of lactating people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccination.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="not-recommended-with-exceptions"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Not recommended but with exceptions</strong>
+    <span>A statement stating lactating people should not receive vaccination, with certain  exexceptions provided.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="prohibited"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Not recommended</strong>
+    <span>Lactating people should not receive the vaccine or vaccine is contraindicated.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="no-language"><b-icon-circle-fill /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">No position found</strong>
+    <span>In instances where no policies or positions regarding lactation and vaccination could be found, or where no position was clearly established, e.g., &quot;if breastfeeding, talk to your doctor.&quot;</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="in-transition"><b-icon-circle /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">In transition</strong>
+    <span>Where current policies are being revised.</span>
+  </div>
+</div>
 
+For more detailed information on how lactation policies were categorized, please see our <span class="bg-warning">lactation categories codebook TK</span>.
 
-For more detailed information on how lactation policies were categorized, please see our lactation categories codebook. 
+<br>
+
+### Subgroups
+
+<div class="row d-flex flex-nowrap justify-content-start align-items-center m-1">
+  <h1 class="text=primary">
+    <svg style="height: 1em; width: 1em" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100">
+      <path d="M86.775,64.303c-1.44-0.829-3.269-0.334-4.098,1.098l-7.945-4.587c1.073-2.449,1.795-5.084,2.098-7.848  C76.889,52.969,76.939,53,77,53h6c1.657,0,3-1.342,3-3s-1.343-3-3-3h-6c-0.061,0-0.111,0.031-0.171,0.034  c-0.302-2.765-1.025-5.399-2.098-7.848l7.945-4.587c0.557,0.961,1.564,1.5,2.601,1.5c0.508,0,1.024-0.129,1.497-0.401  c1.434-0.829,1.926-2.663,1.099-4.099l-3-5.197c-0.829-1.433-2.66-1.931-4.099-1.099c-1.434,0.829-1.926,2.663-1.099,4.099l0,0  L71.712,34c-1.578-2.138-3.459-4.029-5.588-5.62l4.389-6.742c0.904-1.389,0.511-3.249-0.877-4.151s-3.249-0.513-4.15,0.876  l-4.538,6.971c-2.477-1.101-5.145-1.847-7.948-2.157V14c1.657,0,3-1.342,3-3s-1.343-3-3-3h-6c-1.657,0-3,1.342-3,3s1.343,3,3,3  v9.176c-2.803,0.31-5.471,1.056-7.948,2.157l-4.538-6.971c-0.902-1.389-2.763-1.778-4.15-0.876  c-1.389,0.902-1.781,2.763-0.877,4.151l4.389,6.742c-2.129,1.59-4.01,3.482-5.588,5.62l-7.964-4.598l0,0  c0.828-1.436,0.335-3.27-1.099-4.099c-1.438-0.832-3.271-0.334-4.099,1.099l-3,5.197c-0.828,1.436-0.335,3.27,1.099,4.099  c0.473,0.272,0.989,0.401,1.497,0.401c1.037,0,2.044-0.539,2.601-1.5l7.945,4.587c-1.072,2.449-1.796,5.084-2.098,7.848  C23.111,47.031,23.061,47,23,47h-6c-1.657,0-3,1.342-3,3s1.343,3,3,3h6c0.061,0,0.111-0.031,0.171-0.034  c0.302,2.765,1.025,5.399,2.098,7.848l-7.945,4.587c-0.831-1.433-2.663-1.928-4.098-1.098c-1.434,0.829-1.926,2.663-1.099,4.099  l3,5.197c0.557,0.961,1.564,1.5,2.602,1.5c0.508,0,1.024-0.129,1.497-0.401c1.434-0.829,1.926-2.663,1.099-4.099l0,0L28.288,66  c1.578,2.138,3.459,4.029,5.588,5.62l-4.389,6.742c-0.904,1.389-0.511,3.249,0.877,4.151C30.869,82.842,31.436,83,31.997,83  c0.981,0,1.942-0.48,2.517-1.362l4.538-6.971c2.477,1.101,5.145,1.847,7.948,2.157V86c-1.657,0-3,1.342-3,3s1.343,3,3,3h6  c1.657,0,3-1.342,3-3s-1.343-3-3-3v-9.176c2.803-0.31,5.471-1.056,7.948-2.157l4.538,6.971C66.061,82.52,67.021,83,68.003,83  c0.561,0,1.128-0.158,1.633-0.486c1.389-0.902,1.781-2.763,0.877-4.151l-4.389-6.742c2.129-1.59,4.01-3.482,5.588-5.62l7.964,4.598  l0,0c-0.828,1.436-0.335,3.27,1.099,4.099c0.473,0.272,0.989,0.401,1.497,0.401c1.037,0,2.045-0.539,2.602-1.5l3-5.197  C88.701,66.966,88.209,65.132,86.775,64.303z M38,62c-3.314,0-6-2.686-6-6c0-3.314,2.686-6,6-6s6,2.686,6,6  C44,59.314,41.314,62,38,62z M51.5,41c-2.485,0-4.5-2.015-4.5-4.5s2.015-4.5,4.5-4.5s4.5,2.015,4.5,4.5S53.985,41,51.5,41z M56,60.5  c0-2.485,2.015-4.5,4.5-4.5s4.5,2.015,4.5,4.5S62.985,65,60.5,65S56,62.985,56,60.5z" />
+    </svg>
+  </h1>
+  <div class="d-flex flex-column mx-3">
+    <span>Those at high risk of infection (occupational, housing, etc.)</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start align-items-center m-1">
+  <h1 class="text-primary">
+    <svg style="height: 1em; width: 1em" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 -3 95 92">
+      <path d="M82.566,17.057c-8.994-8.993-23.572-8.991-32.563,0l-2.503,2.503l-2.504-2.503c-8.991-8.991-23.569-8.993-32.562,0  c-8.993,8.992-8.993,23.572-0.002,32.563l35.067,35.067L82.566,49.62C91.557,40.629,91.557,26.049,82.566,17.057z M68.344,53.026  H53.271V68.1h-12.05V53.026H26.148v-12.05h15.072V25.903h12.05v15.073h15.073V53.026z" />
+    </svg>
+  </h1>
+  <div class="d-flex flex-column mx-3">
+    <span>Those at high risk of serious disease (co-morbidities, age, underlying conditions, etc.)</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start align-items-center m-1">
+  <h1 class="text-primary">
+    <svg style="height: 1em; width: 1em;" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-8 -8 85 85">
+      <path transform="scale(-1,1), translate(-64, 0)" d="M52.799,37.508c-0.56-1.15-1.14-2.33-1.93-3.32c-1.54-1.91-3.21-3.7-4.85-5.52  c-0.37-0.42-0.73-0.85-1.08-1.29c-0.34-0.39-0.66-0.8-0.98-1.22c-1.07-1.39-2.09-2.84-3.41-3.95c-2.1-1.77-2.03-4.05-2.44-6.31  c0-0.02-0.01-0.04-0.01-0.06c-0.22-1.21-0.41-2.43-0.62-3.64c-0.47-2.63-0.51-5.5-1.6-8.01c-1.49-3.44-4.88-4.08-8.32-3.25  c-1.33,0.32-2.51,0.93-3.46,1.92c-0.05,0.05-0.1,0.1-0.15,0.16c-0.16,0.18-0.32,0.37-0.5,0.59c0-0.01-0.01-0.02-0.02-0.02  c-0.06,0.09-0.11,0.18-0.16,0.28c-0.01,0.07-0.04,0.15-0.1,0.25c-0.07,0.12-0.14,0.24-0.2,0.36c0,0.01-0.01,0.01-0.01,0.01  c-0.49,0.95-0.74,1.94-0.68,3c0.01,0.22,0.03,0.45,0.07,0.68c0.06,0.37-0.11,0.88-0.35,1.2c-0.06,0.07-0.11,0.14-0.17,0.21  c-0.23,0.27-0.51,0.52-0.78,0.76c-0.14,0.12-0.28,0.24-0.42,0.36c-0.56,0.5-0.54,0.84,0.12,1.16c0.01,0.01,0.03,0.02,0.05,0.03  c0.09,0.04,0.18,0.09,0.28,0.12c0.44,0.14,0.42,0.44,0.22,0.74c-0.22,0.33-0.23,0.6-0.21,1.02c0.04,0.5,0.28,0.8,0.42,1.2  c0.09,0.23,0.06,0.53,0,0.78c-0.21,0.9,0.06,1.34,0.97,1.49c0.3,0.05,0.6,0.06,0.91,0.07h0.4c0,0,0.01,0,0.02,0  c0.18-0.03,1.18-0.14,1.62,0.52c0.22,0.21,0.41,0.47,0.49,0.73c0.18,0.56,0.25,1.13,0.28,1.73c0.09,0.39,0.1,0.78,0,1.15  c-0.04,0.17-0.11,0.33-0.2,0.49c-0.21,0.34-0.42,0.68-0.64,1.02c-0.09,0.04-0.16,0.08-0.22,0.1c-1.37,2.15-2.99,4.07-4.99,5.77  c-2.21,1.87-3.38,3.59-2.05,6.53c0.24,0.53,0.26,1.07,0.12,1.59c-0.13,0.48-0.4,0.95-0.75,1.4c-1.08,1.36-2.38,2.34-3.55,3.58  c-2.15,2.26-3.1,5.26-2.93,8.34v0.01c-0.06,2.23,0.59,4.4,1.85,6.17c0.74,1.3,1.69,2.53,2.85,3.63c0.01,0,0.01,0,0.01,0  c0.48,0.46,0.87,1,1.13,1.61c0.24,0.56,0.47,1.13,0.73,1.7h12.68c3.04,0,6.08,0,9.13,0.01c0.05,0,0.1,0,0.14-0.01  c0.15-0.03,0.25-0.1,0.35-0.26c0.05-0.09,0.09-0.17,0.14-0.26c0.74-1.33,1.29-2.74,1.49-4.27c0.24-1.86-0.01-3.68-0.66-5.43  c-0.57-1.57-1.24-3.1-1.86-4.66c-0.36-0.92-0.68-1.86-0.71-2.85c0.05-0.02,0.1-0.04,0.15-0.06c4.43-1.87,8.86-3.74,13.29-5.62  C52.81,39.498,53.38,38.688,52.799,37.508z M44.25,37.808c-1.71,1.21-3.41,2.45-5.18,3.56c0.58-1.78,1.2-3.54,1.76-5.32  c0.25-0.77,0.46-1.54,0.63-2.33c1.02,0.91,2,1.79,2.98,2.68C45.01,36.918,44.739,37.458,44.25,37.808z" />
+    </svg>
+  </h1>
+  <div class="d-flex flex-column mx-3">
+    <span>Only administer vaccine in 2<sup>nd</sup> and 3<sup>rd</sup> trimester.</span>
+  </div>
+</div>
+
