@@ -54,24 +54,12 @@
     </b-container>
     <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
-        <b-row>
-          <b-col class="my-auto">
-            <img width="100%" src="/img/comit-dark-background.png">
-          </b-col>
-          <b-col class="text-right my-auto">
-            A project of
-          </b-col>
-          <b-col cols="6">
-            <img width="100%" src="/img/universitylogo-bi-cir-combined-gentona.svg">
-          </b-col>
-          <!-- <b-col class="my-auto">
-            <img width="100%" src="/img/berman-dark-background.svg">
-          </b-col>
-          <b-col class="my-auto">
-            <img width="100%" src="/img/cir-tall-dark-background.png">
-          </b-col> -->
+        <b-row class="align-items-center justify-content-between mb-5">
+          <img width="30%" src="/img/comit-dark-background.png">
+          <!-- <span>A project of</span> -->
+          <img width="50%" src="/img/universitylogo-bi-cir-combined-gentona-pdflogo.svg">
         </b-row>
-        <b-row class="my-3">
+        <b-row class="align-items">
           <b-col col md="6">
             <p class="text-uppercase">Citation</p>
             <p>Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.comitglobal.org. Accessed: {{ new Date().toLocaleString() }}.</p>
@@ -87,7 +75,7 @@
 </template>
 
 <style>
-html {
+/* html {
   font-family:
     'Source Sans Pro',
     -apple-system,
@@ -104,7 +92,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-}
+} */
 .recommended {color: #54BCD6; fill: #54BCD6}
 .recommended-bg {background-color: #54BCD6}
 .permitted-for-all {color: #3D7632; fill: #3D7632}
