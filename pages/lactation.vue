@@ -84,6 +84,7 @@
         :items="countryListItems"
         primary-key="id"
         :fields="countryListFields"
+        responsive
         sort-by="name"
         small
         head-variant="dark"
@@ -158,13 +159,13 @@ export default {
       policyPositionFilters: [],
       countryListItems: [],
       countryListFields: [
-        { key: 'name', label: 'Country', sortable: true },
-        { key: 'mostPermissiveLactationCode', label: 'Vaccination Policy', class: 'text-center', sortable: true },
-        { key: 'subgroups', class: 'text-center' },
-        { key: 'providerVisit', label: 'Provider visit', class: 'text-center', sortable: true },
-        { key: 'subgroups', label: 'Subgroups', class: 'text-center', sortable: true },
-        { key: 'wbRegion', label: 'Region', sortable: true },
-        { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
+        { key: 'name', label: 'Country', class: 'align-middle', sortable: true },
+        { key: 'mostPermissiveLactationCode', label: 'Vaccination Policy', class: 'text-center align-middle', sortable: true },
+        { key: 'subgroups', class: 'text-center align-middle' },
+        { key: 'providerVisit', label: 'Provider visit', class: 'text-center align-middle', sortable: true },
+        { key: 'subgroups', label: 'Subgroups', class: 'text-center align-middle', sortable: true },
+        { key: 'wbRegion', label: 'Region', class: 'text-truncate align-middle', sortable: true },
+        { key: 'wbIncomeLevelName', label: 'Income Level', class: 'text-truncate align-middle', sortable: true }
       ]
     }
   },

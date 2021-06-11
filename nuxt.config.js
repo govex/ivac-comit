@@ -21,6 +21,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/comit'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -48,7 +49,18 @@ export default {
   ],
 
   bootstrapVue: {
+    bootstrapCSS: false,
+    bootstrapVueCSS: false,
     icons: true
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
   },
 
   // Content module configuration: https://go.nuxtjs.dev/config-content

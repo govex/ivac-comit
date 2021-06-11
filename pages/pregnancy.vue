@@ -84,6 +84,7 @@
         :items="countryListItems"
         primary-key="id"
         :fields="countryListFields"
+        responsive
         sort-by="name"
         small
         head-variant="dark"
@@ -116,7 +117,7 @@
           </b-link>
         </template>
         <template #cell(mostPermissivePregnancyCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.item.mostPermissivePregnancyCode" />
+          <PregnancyLactationCodeIcons style="font-size: 1.4em" :codes="data.item.mostPermissivePregnancyCode" />
         </template>
         <template #cell(providerVisit)="data">
           <ProviderVisitLabel :codes="[data.value]" />
@@ -157,13 +158,13 @@ export default {
       policyPositionFilters: [],
       countryListItems: [],
       countryListFields: [
-        { key: 'name', label: 'Country', sortable: true },
-        { key: 'mostPermissivePregnancyCode', label: 'Vaccination Policy', class: 'text-center', sortable: true },
-        { key: 'subgroups', class: 'text-center' },
-        { key: 'providerVisit', class: 'text-center', sortable: true },
-        { key: 'pregnancyTest', class: 'text-center', sortable: true },
-        { key: 'wbRegion', label: 'Region', sortable: true },
-        { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
+        { key: 'name', label: 'Country', class: 'align-middle', sortable: true },
+        { key: 'mostPermissivePregnancyCode', label: 'Vaccination Policy', class: 'text-center align-middle', sortable: true },
+        { key: 'subgroups', class: 'text-center align-middle' },
+        { key: 'providerVisit', class: 'text-center align-middle', sortable: true },
+        { key: 'pregnancyTest', class: 'text-center align-middle', sortable: true },
+        { key: 'wbRegion', label: 'Region', class: 'align-middle text-truncate', sortable: true },
+        { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle text-truncate', sortable: true }
       ]
     }
   },

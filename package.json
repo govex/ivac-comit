@@ -15,7 +15,9 @@
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.14.0",
+    "node-sass": "^5.0.0",
     "nuxt": "^2.15.6",
+    "sass-loader": "^10.1.1",
     "vue-tippy": "^4.10.1"
   },
   "devDependencies": {

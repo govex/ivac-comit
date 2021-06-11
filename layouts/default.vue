@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" variant="dark" type="dark" class="mb-5" style="padding: 0 1rem">
+    <b-navbar toggleable="md" variant="primary" type="dark" class="mb-5" style="padding: 0 1rem">
       <div class="container">
         <b-navbar-brand to="/">
           <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
@@ -47,7 +47,7 @@
     <b-container>
       <Nuxt />
     </b-container>
-    <footer class="container-fluid text-white mt-5" style="background-color: #3E454F">
+    <footer class="container-fluid text-white mt-5 bg-dark text-light">
       <b-container class="p-3">
         <b-row>
           <b-col class="my-auto">
@@ -64,11 +64,11 @@
           </b-col>
         </b-row>
         <b-row class="my-3">
-          <b-col>
+          <b-col col md="6">
             <p>CITATION</p>
             <p>Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.comitglobal.org. Accessed: {{ new Date().toLocaleString() }}.</p>
           </b-col>
-          <b-col>
+          <b-col col md="6">
             <p>CONTACT</p>
             <p>If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please <b-link to="/about/contact" class="text-light">get in touch</b-link>. We welcome and appreciate your valuable feedback.</p>
           </b-col>
@@ -109,4 +109,6 @@ html {
 .prohibited-bg {background-color: #9B001D}
 .no-language {color: darkgray; fill: darkgray}
 .no-language-bg {background-color: darkgray}
+.in-transition {color: #FF00FF; stroke: #FF00FF}
+.in-transition-bg {background-color: #FF00FF}
 </style>

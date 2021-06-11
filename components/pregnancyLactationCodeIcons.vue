@@ -1,8 +1,8 @@
 <template>
-  <div class="d-inline">
+  <div class="d-inline" style="font-size: 1.4em">
     <template v-if="codes">
       <template v-for="code of codes">
-        <b-icon-circle-fill :key="code.rank" v-b-popover.hover.top="code.value" :class="code.rank | variantClass" class="mx-1" style="font-size: 1.7rem" />
+        <b-icon-circle-fill :key="code.rank" v-b-popover.hover.top="code.value" :class="code.rank | variantClass" class="mx-1" />
       </template>
     </template>
   </div>
