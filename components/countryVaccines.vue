@@ -79,11 +79,13 @@ export default {
         // gather additional vaccines identified in policies
         if (this.country.authorities) {
           const phas = this.country.authorities.filter(authority => authority.authorityType === 'Public Health Authority')
-          const phaPolicies = phas.flatMap(pha => pha.policies)
-          const vaccines = phaPolicies.flatMap(policy => policy.vaccines)
+          const phaPolicies = phas.flatMap(pha => pha.policies || [])
+          const vaccines = phaPolicies.flatMap(policy => policy.vaccines || [])
           for (const vaccine of vaccines) {
-            if (!vaccinesMap.has(vaccine.id)) {
-              vaccinesMap.set(vaccine.id, { ...vaccine })
+            if (vaccine) {
+              if (!vaccinesMap.has(vaccine.id)) {
+                vaccinesMap.set(vaccine.id, { ...vaccine })
+              }
             }
           }
         }
