@@ -66,6 +66,17 @@
         <b-icon-info-circle v-b-popover.hover="`No positions regarding vaccinating ${statusWord} people could be found, or where no position was clearly established`" />
       </strong>
     </div>
+    <div v-if="displayedIndicators.includes('unclear') && keyIndicators.unclear > 0" class="indicator unclear-bg text-dark">
+      <h2 v-if="showCount">
+        {{ keyIndicators.unclear }}
+      </h2>
+      <strong>
+        Unclear
+      </strong>
+      <strong>
+        <b-icon-info-circle v-b-popover.hover="'Within the guidance document, there is language that could be interpreted as indicating different policy positions'" />
+      </strong>
+    </div>
     <div v-if="displayedIndicators.includes('inTransition') && keyIndicators.inTransition > 0" class="indicator in-transition-bg text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.inTransition }}
@@ -74,7 +85,7 @@
         In transition
       </strong>
       <strong>
-        <b-icon-info-circle v-b-popover.hover="'Policies are currently being revised.'" />
+        <b-icon-info-circle v-b-popover.hover="'Policies are currently being revised'" />
       </strong>
     </div>
     <div v-if="displayedIndicators.includes('total')" class="indicator bg-light text-dark">
@@ -108,7 +119,7 @@ export default {
     },
     displayedIndicators: {
       type: Array,
-      default () { return [1, 2, 3, 4, 5, 999, 'inTransition', 'total'] }
+      default () { return [1, 2, 3, 4, 5, 999, 'unclear', 'inTransition', 'total'] }
     },
     hideCounts: {
       type: Boolean,
@@ -131,30 +142,34 @@ export default {
           if (countryListItem.inTransition) {
             result.inTransition++
           }
-          if (countryListItem[this.indicatorProperty] && countryListItem[this.indicatorProperty].length === 1) {
+          if (countryListItem[this.indicatorProperty]) {
             result.total++
-            switch (countryListItem[this.indicatorProperty][0].rank) {
-              case 1:
-                result.recommended++
-                break
-              case 2:
-                result.permittedForAll++
-                break
-              case 3:
-                result.permittedWithQualifications++
-                break
-              case 4:
-                result.notRecommendedWithExceptions++
-                break
-              case 5:
-                result.notRecommended++
-                break
-              case 999:
-                result.noLanguage++
+            if (countryListItem[this.indicatorProperty].length === 1) {
+              switch (countryListItem[this.indicatorProperty][0].rank) {
+                case 1:
+                  result.recommended++
+                  break
+                case 2:
+                  result.permittedForAll++
+                  break
+                case 3:
+                  result.permittedWithQualifications++
+                  break
+                case 4:
+                  result.notRecommendedWithExceptions++
+                  break
+                case 5:
+                  result.notRecommended++
+                  break
+                case 999:
+                  result.noLanguage++
+              }
+            } else {
+              result.unclear++
             }
           }
           return result
-        }, { recommended: 0, permittedForAll: 0, permittedWithQualifications: 0, notRecommendedWithExceptions: 0, notRecommended: 0, noLanguage: 0, inTransition: 0, total: 0 })
+        }, { recommended: 0, permittedForAll: 0, permittedWithQualifications: 0, notRecommendedWithExceptions: 0, notRecommended: 0, noLanguage: 0, unclear: 0, inTransition: 0, total: 0 })
     }
   }
 }

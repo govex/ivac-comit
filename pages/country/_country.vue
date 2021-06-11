@@ -34,7 +34,7 @@
           </b-card>
         </div>
         <div class="w-100 d-flex justify-content-around align-items-start text-center">
-          <b-card bg-variant="dark" text-variant="white" class="m-1">
+          <b-card bg-variant="light" text-variant="primary" class="m-1">
             <b-card-title class="d-flex flex-column">
               <template v-if="mostPermissivePregnancyCode">
                 <PregnancyLactationCodeIcons :codes="mostPermissivePregnancyCode" />
@@ -46,7 +46,7 @@
             </b-card-title>
             <b-card-body class="d-flex flex-column">
               <span v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" class="text-warning">Within the guidance document, there are pieces language that could be interpreted as indicating different policy positions</span>
-              <span>Overall recommendation for vaccination while pregnant</span>
+              <span>Most permissive recommendation across all vaccines in country for vaccination in pregnancy</span>
             </b-card-body>
             <b-card-footer>
               <b-link to="/pregnancy">
@@ -56,7 +56,7 @@
               </b-link>
             </b-card-footer>
           </b-card>
-          <b-card bg-variant="dark" text-variant="white" class="m-1">
+          <b-card bg-variant="light" text-variant="primary" class="m-1">
             <b-card-title class="d-flex flex-column text-center">
               <template v-if="mostPermissiveLactationCode">
                 <PregnancyLactationCodeIcons :codes="mostPermissiveLactationCode" />
@@ -68,7 +68,7 @@
             </b-card-title>
             <b-card-body>
               <span v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" class="text-danger">Within the guidance document, there are pieces language that could be interpreted as indicating different policy positions</span>
-              <span>Overall recommendation for vaccination while lactating</span>
+              <span>Most permissive recommendation across all vaccines in country for vaccination while lactating</span>
             </b-card-body>
             <b-card-footer>
               <b-link to="/lactation">
@@ -81,7 +81,7 @@
         </div>
       </div>
       <h4 class="mt-4">Legend</h4>
-      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
+      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999,'unclear']" />
       <div class="my-5">
         <template v-if="country.vaccines">
           <h2>Vaccines</h2>

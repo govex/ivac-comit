@@ -2,9 +2,14 @@
   <div>
     <b-alert variant="success" class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline" show>
       <span>Showing {{ policyPositionsText }} for each country {{ vaccinesText }}.</span>
-      <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
-        change
-      </b-button>
+      <span>
+        <b-button v-if="filtering" variant="link" size="sm" :to="emptyRouteObject">
+          clear
+        </b-button>
+        <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
+          change
+        </b-button>
+      </span>
     </b-alert>
     <b-sidebar
       id="collapse-filter"
@@ -15,9 +20,6 @@
       @hidden="filterCancel"
     >
       <div class="p-3">
-        <b-button :to="emptyRouteObject">
-          Reset all filters
-        </b-button>
         <div>
           <div class="d-flex justify-content-between align-content-baseline">
             <strong>Vaccines</strong>

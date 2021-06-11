@@ -31,12 +31,13 @@ export default (somethingIWontUse, inject) => {
         if (aRowRank < bRowRank) { return -1 }
         if (aRowRank > bRowRank) { return 1 }
         return 0
-      case 'publicHealthAuthorityRecommendation':
-        if (aRow.publicHealthAuthorityRecommendation) {
-          aRowRank = aRow.publicHealthAuthorityRecommendation[0].rank
+      case 'mostPermissivePregnancyCode':
+      case 'mostPermissiveLactationCode':
+        if (aRow[key]) {
+          aRowRank = aRow[key][0].rank
         }
-        if (bRow.publicHealthAuthorityRecommendation) {
-          bRowRank = bRow.publicHealthAuthorityRecommendation[0].rank
+        if (bRow[key]) {
+          bRowRank = bRow[key][0].rank
         }
         if (aRowRank < bRowRank) { return -1 }
         if (aRowRank > bRowRank) { return 1 }

@@ -105,6 +105,7 @@
 .prohibited-bg {background-color: #9B001D}
 .no-language {color: darkgray; fill: darkgray}
 .no-language-bg {background-color: darkgray}
-.in-transition {color: #FF00FF; stroke: #FF00FF, }
+.in-transition {color: #FF00FF; stroke: #FF00FF}
 .in-transition-bg {border: 3px solid #FF00FF}
+.unclear-bg {border: 3px solid #FF0000}
 </style>

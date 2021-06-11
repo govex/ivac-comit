@@ -15,7 +15,7 @@
       </b-row>
     </section>
     <section>
-      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('total')" indicator-property="mostPermissivePregnancyCode" />
+      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('unclear','total')" indicator-property="mostPermissivePregnancyCode" />
       <b-alert class="mt-4 d-flex flex-row flex-nowrap justify-content-between align-items-baseline" variant="info" show>
         <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
         <b-button to="/authority/who" variant="info">
