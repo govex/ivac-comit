@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" variant="primary" type="dark" class="mb-5" style="padding: 0 1rem">
+    <b-navbar toggleable="md" variant="primary" type="dark" style="padding: 0 1rem">
       <div class="container">
         <b-navbar-brand to="/">
           <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
@@ -44,10 +44,15 @@
         </b-collapse>
       </div>
     </b-navbar>
+    <b-container fluid class="bg-dark text-light mb-4">
+      <b-container>
+        Vaccine policies for pregnant and lactating people worldwide
+      </b-container>
+    </b-container>
     <b-container>
       <Nuxt />
     </b-container>
-    <footer class="container-fluid text-white mt-5 bg-dark text-light">
+    <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
         <b-row>
           <b-col class="my-auto">
@@ -56,20 +61,23 @@
           <b-col class="text-right my-auto">
             A project of
           </b-col>
-          <b-col class="my-auto">
+          <b-col cols="6">
+            <img width="100%" src="/img/universitylogo-bi-cir-combined-gentona.svg">
+          </b-col>
+          <!-- <b-col class="my-auto">
             <img width="100%" src="/img/berman-dark-background.svg">
           </b-col>
           <b-col class="my-auto">
             <img width="100%" src="/img/cir-tall-dark-background.png">
-          </b-col>
+          </b-col> -->
         </b-row>
         <b-row class="my-3">
           <b-col col md="6">
-            <p>CITATION</p>
+            <p class="text-uppercase">Citation</p>
             <p>Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.comitglobal.org. Accessed: {{ new Date().toLocaleString() }}.</p>
           </b-col>
           <b-col col md="6">
-            <p>CONTACT</p>
+            <p class="text-uppercase">Contact</p>
             <p>If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please <b-link to="/about/contact" class="text-light">get in touch</b-link>. We welcome and appreciate your valuable feedback.</p>
           </b-col>
         </b-row>
@@ -109,6 +117,6 @@ html {
 .prohibited-bg {background-color: #9B001D}
 .no-language {color: darkgray; fill: darkgray}
 .no-language-bg {background-color: darkgray}
-.in-transition {color: #FF00FF; stroke: #FF00FF}
-.in-transition-bg {background-color: #FF00FF}
+.in-transition {color: #FF00FF; stroke: #FF00FF, }
+.in-transition-bg {border: 3px solid #FF00FF}
 </style>
