@@ -23,36 +23,33 @@ export default {
   },
   computed: {
     globalMapStyles () {
-      return this.countriesInTransition
-        .map((country) => { return { id: country.iso3166Alpha2Code.toLowerCase(), style: { stroke: '#FF00FF', strokeWidth: 7, strokeDasharray: ['100', '0'] } } })
-        .concat(this.countryListItems
-          .reduce((mapStyles, countryListItem) => {
-            if (countryListItem[this.styleProperty]) {
-              switch (countryListItem[this.styleProperty][0].rank) {
-                case 1:
-                  mapStyles.push({ id: countryListItem.code, style: { fill: '#54BCD6' } })
-                  break
-                case 2:
-                  mapStyles.push({ id: countryListItem.code, style: { fill: '#3D7632' } })
-                  break
-                case 3:
-                  mapStyles.push({ id: countryListItem.code, style: { fill: '#FDB430' } })
-                  break
-                case 4:
-                  mapStyles.push({ id: countryListItem.code, style: { fill: '#FA774A' } })
-                  break
-                case 5:
-                  mapStyles.push({ id: countryListItem.code, style: { fill: '#9B001D' } })
-                  break
-              }
+      return this.countryListItems
+        .reduce((mapStyles, countryListItem) => {
+          if (countryListItem[this.styleProperty]) {
+            switch (countryListItem[this.styleProperty][0].rank) {
+              case 1:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#54BCD6' } })
+                break
+              case 2:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#3D7632' } })
+                break
+              case 3:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#FDB430' } })
+                break
+              case 4:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#FA774A' } })
+                break
+              case 5:
+                mapStyles.push({ id: countryListItem.code, style: { fill: '#9B001D' } })
+                break
             }
-            return mapStyles
-          }, [])
-        )
+          }
+          if (countryListItem.inTransition) {
+            mapStyles.push({ id: countryListItem.code, style: { stroke: '#FF00FF', strokeWidth: 7, strokeDashArray: ['100', '0'] } })
+          }
+          return mapStyles
+        }, [])
     },
-    countriesInTransition () {
-      return this.$store.state.coreData.countries.filter(country => country.inTransition)
-    }
   },
   watch: {
     countryListItems () {
