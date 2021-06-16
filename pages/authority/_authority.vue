@@ -1,26 +1,9 @@
 <template>
   <div>
-    <div class="d-flex flex-row justify-content-between align-items-baseline">
+    <div class="d-flex flex-row justify-content-between align-items-center">
       <h1>
         {{ authority.name }}
       </h1>
-    </div>
-    <div class="d-flex flex-column justify-content-end align-items-end">
-      <div class="text-truncate col-6">
-        <b-link v-if="authority.website1" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website1" target="_blank" class="mx-1">
-          <b-icon-box-arrow-up-right /> {{ authority.website1 }}
-        </b-link>
-      </div>
-      <div class="text-truncate col-6">
-        <b-link v-if="authority.website2" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website2" target="_blank" class="mx-1">
-          <b-icon-box-arrow-up-right /> {{ authority.website2 }}
-        </b-link>
-      </div>
-      <div class="text-truncate col-6">
-        <b-link v-if="authority.website3" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website3" target="_blank" class="mx-1">
-          <b-icon-box-arrow-up-right /> {{ authority.website3 }}
-        </b-link>
-      </div>
       <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
     </div>
     <div class="w-100 mb-5 align-items-baseline">
@@ -37,10 +20,37 @@
         <span v-else>{{ country.name }}</span>
       </span>
     </div>
-    <h2>Resources &amp; Guidance</h2>
+
+    <h2>Most recent vaccine policy positions</h2>
+    <AuthorityVaccinePolicies :authority="authority">
+      No information available.
+    </AuthorityVaccinePolicies>
+
+    <h2 class="mt-5">
+      Resources &amp; guidance
+    </h2>
     <AuthorityPolicies :policies="authority.policies">
       No information available.
     </AuthorityPolicies>
+
+    <h2>Important links</h2>
+    <div class="d-flex flex-column justify-content-start align-items-start">
+      <div class="w-100 text-truncate">
+        <b-link v-if="authority.website1" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website1" target="_blank" class="mx-1">
+          <b-icon-box-arrow-up-right /> {{ authority.website1 }}
+        </b-link>
+      </div>
+      <div class="w-100 text-truncate">
+        <b-link v-if="authority.website2" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website2" target="_blank" class="mx-1">
+          <b-icon-box-arrow-up-right /> {{ authority.website2 }}
+        </b-link>
+      </div>
+      <div class="w-100 text-truncate">
+        <b-link v-if="authority.website3" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website3" target="_blank" class="mx-1">
+          <b-icon-box-arrow-up-right /> {{ authority.website3 }}
+        </b-link>
+      </div>
+    </div>
   </div>
 </template>
 

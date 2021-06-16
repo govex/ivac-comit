@@ -16,11 +16,35 @@
     </section>
     <section>
       <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('unclear','total')" indicator-property="mostPermissivePregnancyCode" />
-      <b-alert class="mt-4 d-flex flex-row flex-nowrap justify-content-between align-items-baseline" variant="info" show>
-        <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
-        <b-button to="/authority/who" variant="info">
-          View WHO recommendations
-        </b-button>
+      <b-alert class="mt-4" variant="info" show>
+        <h5 class="alert-heading">
+          World Health Organization policy (WHO) position
+        </h5>
+        <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
+          <template v-if="vaccinesFilters.length === 0">
+            <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
+            <b-button to="/authority/who" variant="info">
+              View WHO recommendations
+            </b-button>
+          </template>
+          <template v-else-if="whoAuthorityVaccineRecommendations.length > 0">
+            <div v-for="vaccine of whoAuthorityVaccineRecommendations" :key="vaccine.id">
+              <b-link :to="`/vaccine/${vaccine.id}`">
+                {{ vaccine.displayName }}
+              </b-link>
+              <PregnancyLactationCodeIcons :codes="vaccine.mostRecentPregnancyCode" />
+            </div>
+            <b-button to="/authority/who" variant="info">
+              View WHO recommendations for all vaccines
+            </b-button>
+          </template>
+          <template v-else>
+            <span>We could not find a WHO recommendation for the specifed vaccine.</span>
+            <b-button to="/authority/who" variant="info">
+              View WHO recommendations for all vaccines
+            </b-button>
+          </template>
+        </div>
       </b-alert>
       <span>Showing {{ (countryListItems.length === 1 ? countryListItems.length + ' country' : countryListItems.length + ' countries') }}.</span>
       <b-table
@@ -120,6 +144,12 @@ export default {
   computed: {
     filtering () {
       return (this.vaccinesFilters.length > 0 || this.policyPositionFilters.length > 0)
+    },
+    whoAuthority () {
+      return this.$store.state.coreData.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
+    },
+    whoAuthorityVaccineRecommendations () {
+      return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, this.vaccinesFilters)
     }
   },
   watch: {

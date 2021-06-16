@@ -95,7 +95,7 @@
         </template>
       </div>
       <h2 class="mb-5">
-        Resources &amp; Guidance
+        Resources &amp; guidance
       </h2>
       <div v-for="authorityByType of authoritiesByType" :key="authorityByType.authorityType" class="mb-5">
         <!-- <h3><b-icon-arrow-down-right-square-fill /> {{ authorityByType.displayName }}</h3> -->
