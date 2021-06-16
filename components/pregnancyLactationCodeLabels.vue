@@ -1,8 +1,8 @@
 <template>
   <div class="d-inline">
     <template v-for="code of codes">
-      <b-badge :key="code" class="mr-1" :class="code | variant">
-        {{ code }}
+      <b-badge :key="code.rank" class="mr-1 text-light" :class="code | variant">
+        {{ code.value }}
       </b-badge>
     </template>
   </div>
@@ -12,27 +12,26 @@
 export default {
   filters: {
     variant (value) {
-      switch (value) {
-        case 'Recommended':
-          return 'recommended'
-        case 'Permitted for all':
-          return 'permitted-for-all'
-        case 'Permitted with qualifications':
-          return 'permitted-with-qualifications'
-        case 'Not recommended with exceptions':
-        case 'Not recommended but with exceptions':
-          return 'not-recommended-with-exceptions'
-        case 'Prohibited':
-          return 'prohibited'
+      switch (value?.rank) {
+        case 1:
+          return 'recommended-bg'
+        case 2:
+          return 'permitted-for-all-bg'
+        case 3:
+          return 'permitted-with-qualifications-bg'
+        case 4:
+          return 'not-recommended-with-exceptions-bg'
+        case 5:
+          return 'prohibited-bg'
         default:
-          return 'no-language'
+          return 'no-language-bg'
       }
     }
   },
   props: {
     codes: {
       type: Array,
-      required: true
+      default () { return [] }
     }
   }
 }

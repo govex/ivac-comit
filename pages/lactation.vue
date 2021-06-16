@@ -92,7 +92,7 @@
         :sort-compare="$root.$listSortComparer"
       >
         <template #head(name)>
-          Country <b-icon-info-circle v-b-popover.hover="'The country name'" />
+          Country / Territory <b-icon-info-circle v-b-popover.hover="'The country or territory name'" />
         </template>
         <template #head(mostPermissiveLactationCode)>
           Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found.'" />

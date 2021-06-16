@@ -2,9 +2,9 @@
   <div>
     <section>
       <div class="text-center">
-        <h5>How many countries have policy positions on the use of COVID vaccines in pregnancy?</h5>
+        <h5>How many countries have policy positions on the use of COVID-19 vaccines in pregnancy?</h5>
       </div>
-      <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostPermissivePregnancyCode" displayed-indicators="[1,2,3,4,5]" />
+      <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostPermissivePregnancyCode" :displayed-indicators="[1,2,3,4,5]" />
     </section>
     <section>
       <b-overlay show blur="1px" opacity="0.75" class="my-5">

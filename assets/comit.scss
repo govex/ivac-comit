@@ -13,3 +13,19 @@ $link-color:     #54BDC6 ;
 @import 'bootstrap-vue/src/index';
 
 //all other custom scss files or css should be added here
+.recommended {color: #54BCD6; fill: #54BCD6}
+.recommended-bg {background-color: #54BCD6}
+.permitted-for-all {color: #3D7632; fill: #3D7632}
+.permitted-for-all-bg {background-color: #3D7632}
+.permitted-with-qualifications {color: #FDB430; fill: #FDB430}
+.permitted-with-qualifications-bg {background-color: #FDB430}
+.not-recommended-with-exceptions {color: #FA774A; fill: #FA774A}
+.not-recommended-with-exceptions-bg {background-color: #FA774A}
+.prohibited {color: #9B001D; fill: #9B001D}
+.prohibited-bg {background-color: #9B001D}
+.no-language {color: darkgray; fill: darkgray}
+.no-language-bg {background-color: darkgray}
+.in-transition {color: #FF00FF; stroke: #FF00FF}
+.in-transition-bg {border: 3px solid #FF00FF}
+.unclear-bg {border: 3px solid #FF0000}
+.subgroup-icon {color: blue; fill: blue;}

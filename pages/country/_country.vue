@@ -33,54 +33,60 @@
             </b-card-body>
           </b-card>
         </div>
-        <div class="w-100 d-flex justify-content-around align-items-start text-center">
-          <b-card bg-variant="light" text-variant="primary" class="m-1">
-            <b-card-title class="d-flex flex-column">
-              <template v-if="mostPermissivePregnancyCode">
+        <div class="w-100 d-flex justify-content-around align-items-stretch text-center">
+          <div class="card w-50 m-2 p-4 justify-content-start">
+            <h2>Pregnancy</h2>
+            <template v-if="mostPermissivePregnancyCode">
+              <h1>
                 <PregnancyLactationCodeIcons :codes="mostPermissivePregnancyCode" />
-                <span class="mt-3">{{ mostPermissivePregnancyCode | showValues }}</span>
-              </template>
-              <template v-else>
-                <span><b-icon-question-circle /> No policy position found</span>
-              </template>
-            </b-card-title>
-            <b-card-body class="d-flex flex-column">
-              <span v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" class="text-warning">Within the guidance document, there are pieces language that could be interpreted as indicating different policy positions</span>
-              <span>Most permissive recommendation across all vaccines in country for vaccination in pregnancy</span>
-            </b-card-body>
-            <b-card-footer>
-              <b-link to="/pregnancy">
-                <b-button variant="primary">
-                  Compare to other countries
-                </b-button>
-              </b-link>
-            </b-card-footer>
-          </b-card>
-          <b-card bg-variant="light" text-variant="primary" class="m-1">
-            <b-card-title class="d-flex flex-column text-center">
-              <template v-if="mostPermissiveLactationCode">
+              </h1>
+              <span class="m-3">{{ mostPermissivePregnancyCode | showValues }}</span>
+              <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" show>
+                Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
+              </b-alert>
+              <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
+            </template>
+            <template v-else>
+              <h1>
+                <b-icon-question-circle />
+              </h1>
+              <span>No policy position found</span>
+            </template>
+            <b-link to="/pregnancy" class="mt-auto">
+              <b-button variant="link">
+                Compare to other countries
+              </b-button>
+            </b-link>
+          </div>
+          <div class="card w-50 m-2 p-4 justify-content-start">
+            <h2>Lactation</h2>
+            <template v-if="mostPermissiveLactationCode">
+              <h1>
                 <PregnancyLactationCodeIcons :codes="mostPermissiveLactationCode" />
-                <span class="mt-3">{{ mostPermissiveLactationCode | showValues }}</span>
-              </template>
-              <template v-else>
-                <span><b-icon-question-circle /> No policy position found</span>
-              </template>
-            </b-card-title>
-            <b-card-body>
-              <span v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" class="text-danger">Within the guidance document, there are pieces language that could be interpreted as indicating different policy positions</span>
-              <span>Most permissive recommendation across all vaccines in country for vaccination while lactating</span>
-            </b-card-body>
-            <b-card-footer>
-              <b-link to="/lactation">
-                <b-button variant="primary">
-                  Compare to other countries
-                </b-button>
-              </b-link>
-            </b-card-footer>
-          </b-card>
+              </h1>
+              <span class="m-3">{{ mostPermissiveLactationCode | showValues }}</span>
+              <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
+                Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
+              </b-alert>
+              <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
+            </template>
+            <template v-else>
+              <h1>
+                <b-icon-question-circle />
+              </h1>
+              <span>No policy position found</span>
+            </template>
+            <b-link to="/lactation" class="mt-auto">
+              <b-button variant="link">
+                Compare to other countries
+              </b-button>
+            </b-link>
+          </div>
         </div>
       </div>
-      <h4 class="mt-4">Legend</h4>
+      <h4 class="mt-4">
+        Legend
+      </h4>
       <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999,'unclear']" />
       <div class="my-5">
         <template v-if="country.vaccines">
@@ -97,16 +103,32 @@
           <template v-for="authority of authorityByType.authorities">
             <div :key="authority.id" class="w-100">
               <div class="d-flex justify-content-between align-items-baseline mt-3">
-                <h4>
+                <div class="d-flex flex-row justify-content-between align-items-center">
+                  <h4>
+                    <b-link :to="`/authority/${authority.id}`">
+                      {{ authority.name }}
+                    </b-link>
+                  </h4>
+                  <b-badge variant="success" class="mx-2">
+                    {{ authority.authorityType }}
+                  </b-badge>
+                  <span class="mx-2">
+                    <a v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1"  target="_blank" ><b-icon-globe /></a>
+                    <a v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></a>
+                    <a v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></a>
+                  </span>
+                </div>
+                <!-- <h4>
                   <b-link :to="`/authority/${authority.id}`">
                     {{ authority.name }}
                   </b-link>
+                  <b-badge variant="primary">{{ authority.authorityType }}</b-badge>
                   <sup>
-                    <a v-if="authority.website1" :href="authority.website1" target="_blank">1</a>
-                    <a v-if="authority.website2" :href="authority.website2" target="_blank">2</a>
-                    <a v-if="authority.website3" :href="authority.website3" target="_blank">3</a>
+                    <a v-if="authority.website1" :href="authority.website1" target="_blank"><b-icon-globe /></a>
+                    <a v-if="authority.website2" :href="authority.website2" target="_blank"><b-icon-globe /></a>
+                    <a v-if="authority.website3" :href="authority.website3" target="_blank"><b-icon-globe /></a>
                   </sup>
-                </h4>
+                </h4> -->
                 <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
               </div>
               <AuthorityPolicies :policies="authority.policies | sortedByDate">

@@ -7,7 +7,12 @@
           clear
         </b-button>
         <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
-          change
+          <template v-if="!filtering">
+            Filter by vaccine / policy position
+          </template>
+          <template v-else>
+            Change vaccine / policy position filter
+          </template>
         </b-button>
       </span>
     </b-alert>
@@ -20,6 +25,18 @@
       @hidden="filterCancel"
     >
       <div class="p-3">
+        <div class="text-right">
+          <b-button v-if="filtering" variant="link" :to="emptyRouteObject">
+            clear
+          </b-button>
+          <b-button variant="primary" class="mr-1" :to="routeObject">
+            Apply
+          </b-button>
+          <b-button v-b-toggle.collapse-filter variant="outline-danger">
+            Cancel
+          </b-button>
+        </div>
+
         <div>
           <div class="d-flex justify-content-between align-content-baseline">
             <strong>Vaccines</strong>
@@ -58,14 +75,6 @@
             />
           </b-form-group>
         </div>
-      </div>
-      <div class="text-right p-3">
-        <b-button variant="primary" class="mr-1" :to="routeObject">
-          Apply
-        </b-button>
-        <b-button v-b-toggle.collapse-filter variant="outline-danger">
-          Cancel
-        </b-button>
       </div>
     </b-sidebar>
   </div>
@@ -153,6 +162,18 @@ export default {
     } else {
       this.vaccinesSelected = this.selectedVaccines[0]
     }
+  },
+  updated () {
+    // if (this.selectedPolicyPositions.length === 0) {
+    //   this.selectAllPolicyPositions()
+    // } else {
+    //   this.policyPositionsSelected = this.selectedPolicyPositions
+    // }
+    // if (this.selectedVaccines.length === 0) {
+    //   this.vaccinesSelected = 'all'
+    // } else {
+    //   this.vaccinesSelected = this.selectedVaccines[0]
+    // }
   },
   methods: {
     selectAllPolicyPositions () {

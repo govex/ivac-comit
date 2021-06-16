@@ -46,7 +46,7 @@
     </b-navbar>
     <b-container fluid class="bg-dark text-light mb-4">
       <b-container>
-        <em>Vaccine policies for pregnant and lactating people worldwide.</em>
+        <em>COVID-19 Vaccine policies for pregnant and lactating people worldwide.</em>
       </b-container>
     </b-container>
     <b-container>
@@ -61,51 +61,27 @@
         </b-row>
         <b-row class="align-items">
           <b-col col md="6">
-            <p class="text-uppercase">Citation</p>
-            <p>Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.comitglobal.org. Accessed: {{ new Date().toLocaleString() }}.</p>
+            <p class="text-uppercase">
+              Citation
+            </p>
+            <p>
+              Berman Institute of Bioethics &amp; Center for Immunization Research, Johns Hopkins University. Covid-19 Maternal Immunization Tracker (COMIT). www.comitglobal.org. Accessed: {{ new Date().toLocaleString() }}.
+            </p>
           </b-col>
           <b-col col md="6">
-            <p class="text-uppercase">Contact</p>
-            <p>If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please <b-link to="/about/contact" class="text-light">get in touch</b-link>. We welcome and appreciate your valuable feedback.</p>
+            <p class="text-uppercase">
+              Contact
+            </p>
+            <p>
+              If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please
+              <b-link to="/about/contact" class="text-light">
+                get in touch
+              </b-link>
+              . We welcome and appreciate your valuable feedback.
+            </p>
           </b-col>
         </b-row>
       </b-container>
     </footer>
   </div>
 </template>
-
-<style>
-/* html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-} */
-.recommended {color: #54BCD6; fill: #54BCD6}
-.recommended-bg {background-color: #54BCD6}
-.permitted-for-all {color: #3D7632; fill: #3D7632}
-.permitted-for-all-bg {background-color: #3D7632}
-.permitted-with-qualifications {color: #FDB430; fill: #FDB430}
-.permitted-with-qualifications-bg {background-color: #FDB430}
-.not-recommended-with-exceptions {color: #FA774A; fill: #FA774A}
-.not-recommended-with-exceptions-bg {background-color: #FA774A}
-.prohibited {color: #9B001D; fill: #9B001D}
-.prohibited-bg {background-color: #9B001D}
-.no-language {color: darkgray; fill: darkgray}
-.no-language-bg {background-color: darkgray}
-.in-transition {color: #FF00FF; stroke: #FF00FF}
-.in-transition-bg {border: 3px solid #FF00FF}
-.unclear-bg {border: 3px solid #FF0000}
-</style>

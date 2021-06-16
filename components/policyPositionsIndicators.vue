@@ -96,7 +96,7 @@
         Total
       </strong>
       <strong>
-        <b-icon-info-circle v-b-popover.hover="`The total number of policies regarding ${statusWord} people.`" />
+        <b-icon-info-circle v-b-popover.hover="`The total number of countries with policies regarding ${statusWord} people.`" />
       </strong>
     </div>
   </div>
