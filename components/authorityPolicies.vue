@@ -29,12 +29,16 @@
         </template>
         <template #cell(documentType)="data">
           <template v-if="data.value">
-            <b-badge v-for="documentType of data.value" :key="documentType.rank">{{ documentType.value }}</b-badge>
+            <b-badge v-for="documentType of data.value" :key="documentType.rank">
+              {{ documentType.value }}
+            </b-badge>
           </template>
         </template>
         <template #cell(vaccines)="data">
           <template v-if="data.item.vaccinesNonSpecific">
-            <div class="text-muted">(none specified)</div>
+            <div class="text-muted">
+              (none specified)
+            </div>
           </template>
           <template v-else-if="data.value">
             <div v-for="vaccine of data.value" :key="vaccine.id">
