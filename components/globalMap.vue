@@ -39,6 +39,10 @@ export default {
       type: String,
       default () { return '#A0A0A0' }
     },
+    enablePopups: {
+      type: Boolean,
+      default () { return true }
+    },
     policyPositionText: {
       type: String,
       default () { return 'Policy position' }
@@ -95,28 +99,30 @@ export default {
     this.$el.style.fill = this.defaultFillColor
     this.updateMap()
 
-    tippy('#svg-worldmap > g, #svg-worldmap > path', {
-      allowHTML: true,
-      appendTo: document.body,
-      arrow: false,
-      followCursor: 'initial',
-      ignoreAttributes: true,
-      interactive: true,
-      interactiveDebounce: 10,
-      onShow: (instance) => {
-        const code = instance.reference.attributes.id.value
-        this.popoverCountry = this.countryListItems.find(country => country.code === code)
-        if (code === 'ocean') {
-          return false
-        } else {
-          this.$nextTick(function () {
-            instance.setContent(document.getElementById('tippy-popup').outerHTML)
-          })
-        }
-      },
-      placement: 'right',
-      plugins: [followCursor]
-    })
+    if (this.enablePopups) {
+      tippy('#svg-worldmap > g, #svg-worldmap > path', {
+        allowHTML: true,
+        appendTo: document.body,
+        arrow: false,
+        followCursor: 'initial',
+        ignoreAttributes: true,
+        interactive: true,
+        interactiveDebounce: 10,
+        onShow: (instance) => {
+          const code = instance.reference.attributes.id.value
+          this.popoverCountry = this.countryListItems.find(country => country.code === code)
+          if (code === 'ocean') {
+            return false
+          } else {
+            this.$nextTick(function () {
+              instance.setContent(document.getElementById('tippy-popup').outerHTML)
+            })
+          }
+        },
+        placement: 'right',
+        plugins: [followCursor]
+      })
+    }
   },
   methods: {
     updateMap () {

@@ -9,7 +9,7 @@
     <section>
       <b-overlay show blur="1px" opacity="0.75" class="my-5">
         <b-row class="flex-column">
-          <GlobalMap :country-list-items="countryListItems" default-fill-color="#A0A0A0" style-property="mostPermissivePregnancyCode" />
+          <GlobalMap :country-list-items="countryListItems" default-fill-color="#A0A0A0" :enable-popups="false" style-property="mostPermissivePregnancyCode" />
         </b-row>
         <template #overlay>
           <div class="text-center">
