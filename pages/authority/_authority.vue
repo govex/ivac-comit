@@ -33,7 +33,9 @@
       No information available.
     </AuthorityPolicies>
 
-    <h2>Important links</h2>
+    <h2 class="mt-5">
+      Important links
+    </h2>
     <div class="d-flex flex-column justify-content-start align-items-start">
       <div class="w-100 text-truncate">
         <b-link v-if="authority.website1" v-b-popover.hover="'Open this website in a new browser tab'" :href="authority.website1" target="_blank" class="mx-1">

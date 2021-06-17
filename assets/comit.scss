@@ -13,6 +13,9 @@ $link-color:     #54BDC6 ;
 @import 'bootstrap-vue/src/index';
 
 //all other custom scss files or css should be added here
+html, body { min-height: 100vh }
+
+
 .recommended {color: #54BCD6; fill: #54BCD6}
 .recommended-bg {background-color: #54BCD6}
 .permitted-for-all {color: #3D7632; fill: #3D7632}
