@@ -103,7 +103,7 @@
           </template>
         </div>
       </b-alert>
-      <span>Showing {{ (countryListItems.length === 1 ? countryListItems.length + ' country' : countryListItems.length + ' countries') }}.</span>
+      <span>Showing {{ (countryListItems.length === 1 ? countryListItems.length + ' country / territory' : countryListItems.length + ' countries / territories') }}.</span>
       <b-table
         hover
         :items="countryListItems"
@@ -116,7 +116,7 @@
         :sort-compare="$root.$listSortComparer"
       >
         <template #head(name)>
-          Country / Territory <b-icon-info-circle v-b-popover.hover="'The country or territory name'" />
+          Country / territory <b-icon-info-circle v-b-popover.hover="'The country or territory name'" />
         </template>
         <template #head(mostPermissiveLactationCode)>
           Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found.'" />
