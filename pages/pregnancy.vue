@@ -18,7 +18,7 @@
       <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('unclear','total')" indicator-property="mostPermissivePregnancyCode" />
       <b-alert class="mt-4" variant="info" show>
         <h5 class="alert-heading">
-          World Health Organization policy (WHO) position
+          World Health Organization (WHO) policy position
         </h5>
         <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
           <template v-if="vaccinesFilters.length === 0">
