@@ -21,7 +21,11 @@
       </span>
     </div>
 
-    <h2>Most recent vaccine policy positions</h2>
+    <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999,'unclear']" />
+
+    <h2 class="mt-5">
+      Most recent vaccine policy positions
+    </h2>
     <AuthorityVaccinePolicies :authority="authority">
       No information available.
     </AuthorityVaccinePolicies>
