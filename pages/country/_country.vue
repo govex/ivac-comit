@@ -3,29 +3,29 @@
     <div v-if="country" class="w-100">
       <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
         <h1>Country Details: {{ country.name }}</h1>
-        <div class="w-100 d-flex row my-5 text-center justify-content-center align-items-stretch">
-          <b-card v-if="country.wbPopulation2019" class="col-lg-3 m-2">
+        <div class="w-100 d-flex row my-5 text-center justify-content-around align-items-stretch">
+          <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
             <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
             <b-card-body>
               Population
               <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
             </b-card-body>
           </b-card>
-          <b-card v-if="country.birthrate" class="col-lg-3 m-2">
+          <b-card v-if="country.birthrate" class="flex-fill m-2">
             <b-card-title> {{ country.birthrate | friendlyNumber }}</b-card-title>
             <b-card-body>
               Birth rate
               <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
             </b-card-body>
           </b-card>
-          <b-card v-if="country.wbIncomeLevelName" class="col-lg-3 m-2">
+          <b-card v-if="country.wbIncomeLevelName" class="flex-fill m-2">
             <b-card-title>{{ country.wbIncomeLevelName.replace(' income', '') }}</b-card-title>
             <b-card-body>
-              Income Level
+              Income level
               <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
             </b-card-body>
           </b-card>
-          <b-card v-if="country.wbRegion" class="col-lg-3 m-2">
+          <b-card v-if="country.wbRegion" class="flex-fill m-2">
             <b-card-title>{{ country.wbRegion }}</b-card-title>
             <b-card-body>
               Region
@@ -113,7 +113,7 @@
                     {{ authority.authorityType }}
                   </b-badge>
                   <span class="mx-2">
-                    <a v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1"  target="_blank" ><b-icon-globe /></a>
+                    <a v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1" target="_blank"><b-icon-globe /></a>
                     <a v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></a>
                     <a v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></a>
                   </span>
