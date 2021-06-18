@@ -7,7 +7,18 @@ $light:         #F1F5F9 ;
 $dark:          #54BDC6 ;//then bootstrap & bootstrap-vue should be added after 
 
 
-$link-color:     #54BDC6 ;
+$link-color:    #54BDC6 ;
+
+
+$recommended:                     #3D7632 ;
+$permitted-for-all:               #54BCD6 ;
+$permitted-with-qualifications:   #FDB430 ;
+$not-recommended-with-exceptions: #FA774A ;
+$prohibited:                      #9B002D ;
+$no-language:                     darkgray;
+$in-transition:                   #FF00FF;
+$unclear:                         #FF0000;
+
 //so that they inherit the custom SCSS variables
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-vue/src/index';
@@ -16,19 +27,20 @@ $link-color:     #54BDC6 ;
 html, body { min-height: 100vh }
 
 
-.recommended {color: #3D7632; fill: #3D7632}
-.recommended-bg {background-color: #3D7632}
-.permitted-for-all {color: #54BCD6; fill: #54BCD6}
-.permitted-for-all-bg {background-color: #54BCD6}
-.permitted-with-qualifications {color: #FDB430; fill: #FDB430}
-.permitted-with-qualifications-bg {background-color: #FDB430}
-.not-recommended-with-exceptions {color: #FA774A; fill: #FA774A}
-.not-recommended-with-exceptions-bg {background-color: #FA774A}
-.prohibited {color: #9B001D; fill: #9B001D}
-.prohibited-bg {background-color: #9B001D}
-.no-language {color: darkgray; fill: darkgray}
-.no-language-bg {background-color: darkgray}
-.in-transition {color: #FF00FF; stroke: #FF00FF}
-.in-transition-bg {border: 3px solid #FF00FF}
-.unclear-bg {border: 3px solid #FF0000}
+.recommended {color: $recommended; fill: $recommended}
+.recommended-bg {background-color: $recommended}
+.permitted-for-all {color: $permitted-for-all; fill: $permitted-for-all}
+.permitted-for-all-bg {background-color: $permitted-for-all}
+.permitted-with-qualifications {color: $permitted-with-qualifications; fill: $permitted-with-qualifications}
+.permitted-with-qualifications-bg {background-color: $permitted-with-qualifications}
+.not-recommended-with-exceptions {color: $not-recommended-with-exceptions; fill: $not-recommended-with-exceptions}
+.not-recommended-with-exceptions-bg {background-color: $not-recommended-with-exceptions}
+.prohibited {color: $prohibited; fill: $prohibited}
+.prohibited-bg {background-color: $prohibited}
+.no-language {color: $no-language; fill: $no-language}
+.no-language-bg {background-color: $no-language}
+.in-transition {color: $in-transition; stroke: $in-transition; stroke-width: 7; stroke-dasharray: 100 0;}
+.in-transition-bg {border: 3px solid $in-transition}
+.unclear { stroke: $unclear; stroke-width: 7; stroke-dasharray: 100 0; }
+.unclear-bg {border: 3px solid $unclear; stroke: $unclear}
 .subgroup-icon {color: blue; fill: blue;}

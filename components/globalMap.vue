@@ -63,28 +63,28 @@ export default {
         .reduce((mapStyles, countryListItem) => {
           if (countryListItem[this.styleProperty]) {
             if (countryListItem[this.styleProperty].length > 1) {
-              mapStyles.push({ id: countryListItem.code, style: { stroke: '#FF0000', strokeWidth: 7, strokeDashArray: ['100', '0'] } })
+              mapStyles.push({ id: countryListItem.code, classes: ['unclear'] })
             }
             switch (countryListItem[this.styleProperty][0].rank) {
               case 1:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#54BCD6' } })
+                mapStyles.push({ id: countryListItem.code, classes: ['recommended'] })
                 break
               case 2:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#3D7632' } })
+                mapStyles.push({ id: countryListItem.code, classes: ['permitted-for-all'] })
                 break
               case 3:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#FDB430' } })
+                mapStyles.push({ id: countryListItem.code, classes: ['permitted-with-qualifications'] })
                 break
               case 4:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#FA774A' } })
+                mapStyles.push({ id: countryListItem.code, classes: ['not-recommended-with-exceptions'] })
                 break
               case 5:
-                mapStyles.push({ id: countryListItem.code, style: { fill: '#9B001D' } })
+                mapStyles.push({ id: countryListItem.code, classes: ['prohibited'] })
                 break
             }
           }
           if (countryListItem.inTransition) {
-            mapStyles.push({ id: countryListItem.code, style: { stroke: '#FF00FF', strokeWidth: 7, strokeDashArray: ['100', '0'] } })
+            mapStyles.push({ id: countryListItem.code, classes: ['in-transition'] })
           }
           return mapStyles
         }, [])
@@ -126,16 +126,23 @@ export default {
   },
   methods: {
     updateMap () {
-      this.$el.querySelectorAll('g,path')
+      this.$el.querySelectorAll('svg>g,svg>path')
         .forEach((element) => {
           element.style = null
+          element.classList.remove([
+            'recommended',
+            'permitted-for-all',
+            'permitted-with-qualifications',
+            'not-recommended-with-exceptions',
+            'prohibited',
+            'no-language',
+            'in-transition',
+            'unclear'])
         })
       for (const countryStyle of this.globalMapStyles) {
         const element = this.$el.querySelector(`#${countryStyle.id}`)
         if (element) {
-          for (const key of Object.keys(countryStyle.style)) {
-            element.style[key] = countryStyle.style[key]
-          }
+          element.classList.add(countryStyle.classes)
         }
       }
     },
