@@ -89,10 +89,10 @@
       </h4>
       <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999,'unclear']" />
       <div class="my-5">
-        <template v-if="country.vaccines">
-          <h2>Vaccines</h2>
-          <CountryVaccines :country="country" />
-        </template>
+        <h2>Vaccines</h2>
+        <CountryVaccines :country="country">
+          No information available.
+        </CountryVaccines>
       </div>
       <h2 class="mb-5">
         Resources &amp; guidance

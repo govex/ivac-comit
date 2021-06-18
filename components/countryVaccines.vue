@@ -1,48 +1,53 @@
 <template>
   <div>
-    <b-table
-      hover
-      :items="vaccineList"
-      primary-key="id"
-      :fields="vaccineListFields"
-      sort-by="displayName"
-      small
-      head-variant="dark"
-      :sort-compare="$root.$listSortComparer"
-    >
-      <template #head(displayName)>
-        Name <b-icon-info-circle v-b-popover.hover="'The name of the vaccine'" />
-      </template>
-      <template #cell(displayName)="data">
-        <b-link :to="`/vaccine/${data.item.id}`">
-          {{ data.value }}
-        </b-link>
-      </template>
-      <template #head(otherNames)>
-        Other names <b-icon-info-circle v-b-popover.hover="'Additional names by which this vaccine may be known'" />
-      </template>
-      <template #head(owidAdministration)>
-        Administered <b-icon-info-circle v-b-popover.hover="'Indicates whether this vaccine has been administered in this country, according to Our World In Data.'" />
-      </template>
-      <template #cell(owidAdministration)="data">
-        <span v-if="data.value" class="text-success"><b-icon-check-circle-fill v-b-popover.hover="'This vaccine has been administered in this country.'" /></span>
-      </template>
-      <template #head(mostPermissivePregnancyCode)>
-        Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during pregnancy.'" />
-      </template>
-      <template #cell(mostPermissivePregnancyCode)="data">
-        <PregnancyLactationCodeIcons :codes="data.value" />
-      </template>
-      <template #head(mostPermissiveLactationCode)>
-        Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during lactation.'" />
-      </template>
-      <template #cell(mostPermissiveLactationCode)="data">
-        <PregnancyLactationCodeIcons :codes="data.value" />
-      </template>
-      <template #head(otherCountryCount)>
-        Other countries <b-icon-info-circle v-b-popover.hover="'Indicates how many other countries are administering this vaccine, according to Our World In Data.'" />
-      </template>
-    </b-table>
+    <template v-if="vaccineList">
+      <b-table
+        hover
+        :items="vaccineList"
+        primary-key="id"
+        :fields="vaccineListFields"
+        sort-by="displayName"
+        small
+        head-variant="dark"
+        :sort-compare="$root.$listSortComparer"
+      >
+        <template #head(displayName)>
+          Name <b-icon-info-circle v-b-popover.hover="'The name of the vaccine'" />
+        </template>
+        <template #cell(displayName)="data">
+          <b-link :to="`/vaccine/${data.item.id}`">
+            {{ data.value }}
+          </b-link>
+        </template>
+        <template #head(otherNames)>
+          Other names <b-icon-info-circle v-b-popover.hover="'Additional names by which this vaccine may be known'" />
+        </template>
+        <template #head(owidAdministration)>
+          Administered <b-icon-info-circle v-b-popover.hover="'Indicates whether this vaccine has been administered in this country, according to Our World In Data.'" />
+        </template>
+        <template #cell(owidAdministration)="data">
+          <span v-if="data.value" class="text-success"><b-icon-check-circle-fill v-b-popover.hover="'This vaccine has been administered in this country.'" /></span>
+        </template>
+        <template #head(mostPermissivePregnancyCode)>
+          Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during pregnancy.'" />
+        </template>
+        <template #cell(mostPermissivePregnancyCode)="data">
+          <PregnancyLactationCodeIcons :codes="data.value" />
+        </template>
+        <template #head(mostPermissiveLactationCode)>
+          Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during lactation.'" />
+        </template>
+        <template #cell(mostPermissiveLactationCode)="data">
+          <PregnancyLactationCodeIcons :codes="data.value" />
+        </template>
+        <template #head(otherCountryCount)>
+          Other countries <b-icon-info-circle v-b-popover.hover="'Indicates how many other countries are administering this vaccine, according to Our World In Data.'" />
+        </template>
+      </b-table>
+    </template>
+    <template v-else>
+      <slot />
+    </template>
   </div>
 </template>
 
@@ -89,6 +94,9 @@ export default {
             }
           }
         }
+        if (vaccinesMap.size === 0) {
+          return undefined
+        }
         // now turn the map of vaccines into the list we need
         return Array.from(vaccinesMap.values()).map((vaccine) => {
           return {
@@ -102,7 +110,7 @@ export default {
           }
         })
       } else {
-        return []
+        return undefined
       }
     }
   }
