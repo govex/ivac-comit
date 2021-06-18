@@ -32,7 +32,9 @@ export default (somethingIWontUse, inject) => {
         if (aRowRank > bRowRank) { return 1 }
         return 0
       case 'mostPermissivePregnancyCode':
+      case 'mostRecentPregnancyCode':
       case 'mostPermissiveLactationCode':
+      case 'mostRecentLacationCode':
         if (aRow[key]) {
           aRowRank = aRow[key][0].rank
         }
