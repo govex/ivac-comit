@@ -77,17 +77,6 @@
         <b-icon-info-circle v-b-popover.hover="'Within the guidance document, there is language that could be interpreted as indicating different policy positions'" />
       </strong>
     </div>
-    <div v-if="displayedIndicators.includes('inTransition') && keyIndicators.inTransition > 0" class="indicator in-transition-bg text-dark">
-      <h2 v-if="showCount">
-        {{ keyIndicators.inTransition }}
-      </h2>
-      <strong>
-        In transition
-      </strong>
-      <strong>
-        <b-icon-info-circle v-b-popover.hover="'Policies are currently being revised'" />
-      </strong>
-    </div>
     <div v-if="displayedIndicators.includes('total')" class="indicator bg-light text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.total }}
@@ -97,6 +86,17 @@
       </strong>
       <strong>
         <b-icon-info-circle v-b-popover.hover="`The total number of countries with policies regarding ${statusWord} people.`" />
+      </strong>
+    </div>
+    <div v-if="displayedIndicators.includes('inTransition') && keyIndicators.inTransition > 0" class="indicator in-transition-bg text-dark">
+      <h2 v-if="showCount">
+        {{ keyIndicators.inTransition }}
+      </h2>
+      <strong>
+        In transition
+      </strong>
+      <strong>
+        <b-icon-info-circle v-b-popover.hover="'Policies are currently being revised'" />
       </strong>
     </div>
   </div>
