@@ -5,6 +5,23 @@
         <h1>{{ vaccine.displayName }}</h1>
         <span v-if="vaccine.otherNames" class="text-muted">Also known as: {{ vaccine.otherNames }}</span>
       </b-row>
+      <b-row>
+        <h2 class="mt-5">
+          Policy positions summary
+        </h2>
+        <div class="w-100 my-4 d-flex flex-column align-items-start">
+          <h4 class="col-2">
+            Pregnancy
+          </h4>
+          <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostRecentPregnancyCode" />
+        </div>
+        <div class="w-100 my-4 d-flex flex-column align-items-start">
+          <h4 class="col-2">
+            Lactation
+          </h4>
+          <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostRecentLactationCode" />
+        </div>
+      </b-row>
       <b-row class="my-5">
         <h2>
           {{ countryListItems.length }}
@@ -25,15 +42,15 @@
           sort-by="name"
           small
           head-variant="dark"
-          :sort-compare="sortComparer"
+          :sort-compare="$root.$listSortComparer"
         >
           <template #head(name)>
-            Country <b-icon-info-circle v-b-popover.hover="'The country name'" />
+            Country / territory<b-icon-info-circle v-b-popover.hover="'The country / territory name'" />
           </template>
-          <template #head(publicHealthAuthorityPregnancyRecommendation)>
+          <template #head(mostRecentPregnancyCode)>
             Pregnancy policy <b-icon-info-circle v-b-popover.hover="'The most recent policy specifically mentioning this vacccine for people who are pregnant.'" />
           </template>
-          <template #head(publicHealthAuthorityLactationRecommendation)>
+          <template #head(mostRecentLactationCode)>
             Lactation policy <b-icon-info-circle v-b-popover.hover="'The most recent policy specifically mentioning this vaccine for people who are lactating.'" />
           </template>
           <template #head(wbRegion)>
@@ -47,11 +64,11 @@
               {{ data.item.name }}
             </b-link>
           </template>
-          <template #cell(publicHealthAuthorityPregnancyRecommendation)="data">
-            <PregnancyLactationCodeIcons :codes="data.item.publicHealthAuthorityPregnancyRecommendation" />
+          <template #cell(mostRecentPregnancyCode)="data">
+            <PregnancyLactationCodeIcons :codes="data.item.mostRecentPregnancyCode" />
           </template>
-          <template #cell(publicHealthAuthorityLactationRecommendation)="data">
-            <PregnancyLactationCodeIcons :codes="data.item.publicHealthAuthorityLactationRecommendation" />
+          <template #cell(mostRecentLactationCode)="data">
+            <PregnancyLactationCodeIcons :codes="data.item.mostRecentLactationCode" />
           </template>
         </b-table>
       </b-row>
@@ -79,9 +96,9 @@ export default {
     }
     const countryListFields = [
       { key: 'name', label: 'Country', sortable: true },
-      { key: 'publicHealthAuthorityPregnancyRecommendation', label: 'Pregnancy Recommendation', class: 'text-center' },
-      { key: 'publicHealthAuthorityLactationRecommendation', label: 'Lactation Recommendation', class: 'text-center' },
-      { key: 'wbRegion', label: 'Region' },
+      { key: 'mostRecentPregnancyCode', label: 'Pregnancy Recommendation', class: 'text-center', sortable: true },
+      { key: 'mostRecentLactationCode', label: 'Lactation Recommendation', class: 'text-center', sortable: true },
+      { key: 'wbRegion', label: 'Region', sortable: true },
       { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
     ]
     const countryListItems = []
@@ -104,30 +121,14 @@ export default {
             name: country.name,
             code: country.iso3166Alpha2Code,
             wbIncomeLevelName: country.wbIncomeLevelName,
-            wbIncomeLevelCode: country.wbIncomeLevelCode,
+            wbIncomeLevelSort: country.wbIncomeLevelSort,
             wbRegion: country.wbRegion,
-            publicHealthAuthorityPregnancyRecommendation: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', [this.vaccine.id]),
-            publicHealthAuthorityLactationRecommendation: this.$root.$getMostPermissiveCode(country, 'lactationCode', [this.vaccine.id])
+            mostRecentPregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', [this.vaccine.id]),
+            mostRecentLactationCode: this.$root.$getMostPermissiveCode(country, 'lactationCode', [this.vaccine.id])
           }
           return result.concat(outputRow)
         }, [])
       : [])
-  },
-  methods: {
-    sortComparer (aRow, bRow, key, sortDesc, formatter, compareOptions, compareLocale) {
-      switch (key) {
-        case 'name':
-          if (aRow.name === 'Global') { return -1 }
-          if (bRow.name === 'Global') { return 1 }
-          return aRow.name.localeCompare(bRow.name)
-        case 'wbIncomeLevelName':
-          if (aRow.wbIncomeLevelSort < bRow.wbIncomeLevelSort) { return -1 }
-          if (aRow.wbIncomeLevelSort > bRow.wbIncomeLevelSort) { return 1 }
-          return 0
-        default:
-          return undefined
-      }
-    }
   }
 }
 </script>
