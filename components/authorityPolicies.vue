@@ -7,7 +7,8 @@
         primary-key="id"
         :fields="policyListFields"
         responsive
-        sort-by="date"
+        sort-by="datePublished/lastUpdated"
+        sort-desc="true"
         small
         head-variant="dark"
         :sort-compare="$root.$listSortComparer"
@@ -85,7 +86,7 @@ export default {
         { key: 'vaccines' },
         { key: 'pregnancyCode', class: 'text-center', sortable: true },
         { key: 'lactationCode', class: 'text-center', sortable: true },
-        { key: 'policyDate', sortable: true },
+        { key: 'datePublished/lastUpdated', label: 'Date', sortable: true },
         { key: 'link', label: '', class: 'text-center' }
       ]
     }
