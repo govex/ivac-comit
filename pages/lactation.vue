@@ -15,7 +15,7 @@
       </b-row>
     </section>
     <section>
-      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="lactating" :displayed-indicators="policyPositionFilters ? policyPositionFilters.concat('unclear','total') : undefined" indicator-property="mostPermissiveLactationCode" />
+      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="lactating" :displayed-indicators="policyPositionFilters ? policyPositionFilters.concat('unclear') : undefined" indicator-property="mostPermissiveLactationCode" />
       <b-alert class="mt-4" variant="info" show>
         <h5 class="alert-heading">
           World Health Organization (WHO) policy position
@@ -184,7 +184,13 @@ export default {
       }
       if (this.filtering) {
         countryListItems = countryListItems.filter((countryListItem) => {
-          return (countryListItem.mostPermissiveLactationCode)
+          if (countryListItem.mostPermissiveLactationCode) {
+            if (countryListItem.mostPermissiveLactationCode[0].rank === 999) {
+              return false
+            }
+            return true
+          }
+          return false
         })
       }
       return countryListItems
