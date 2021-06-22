@@ -46,7 +46,7 @@
           </template>
         </div>
       </b-alert>
-      <span>Showing {{ (countryListItems.length === 1 ? countryListItems.length + ' country / territory' : countryListItems.length + ' countries / territories') }}.</span>
+      <span>Showing {{ (countryListItems.length === 1 ? countryListItems.length + ' country / territory' : countryListItems.length + ' countries / territories') }}</span>
       <b-table
         hover
         :items="countryListItems"
