@@ -2,7 +2,7 @@
   <div>
     <div v-if="country" class="w-100">
       <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
-        <h1>Country Details: {{ country.name }}</h1>
+        <h1>{{ country.name }}</h1>
         <div class="w-100 d-flex row my-5 text-center justify-content-around align-items-stretch">
           <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
             <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
@@ -183,42 +183,59 @@ export default {
       }
     }
   },
-  asyncData ({ params }) {
-    let countryCode, countryName, country, mostPermissivePregnancyCode, mostPermissiveLactationCode
-    if (params.country) {
-      countryCode = params.country.toUpperCase()
-    }
-    const authoritiesByType = [
-      { displayName: 'Public Health Authorities', authorityType: 'Public Health Authority', authorities: [] }
-      // { displayName: 'Regulatory Bodies', authorityType: 'Regulatory Body', authorities: [] },
-      // { displayName: 'Professional Societies', authorityType: 'Professional Society', authorities: [] }
-    ]
-    return { country, countryCode, countryName, authoritiesByType, mostPermissivePregnancyCode, mostPermissiveLactationCode }
-  },
   head () {
     return {
-      title: `COMIT: ${this.countryName}`
+      title: `COMIT: ${this.countryName ? this.countryName : 'not found'}`
     }
   },
-  created () {
-    if (this.countryCode === 'GLOBAL') {
-      this.country = this.$store.state.coreData.countries.find(country => country.id === 'recqmhXt2Ey2DiVOd')
-      // this.breadcrumbItems.push({ text: 'Global', to: '/country/global' })
-    } else {
-      this.country = this.$store.state.coreData.countries.find(country => country.iso3166Alpha2Code === this.countryCode)
-    }
-    if (this.country) {
-      this.countryName = this.country.name
-      if (this.country.authorities) {
-        for (const authorityByType of this.authoritiesByType) {
+  computed: {
+    authoritiesByType () {
+      const authoritiesByType = [
+        { displayName: 'Public Health Authorities', authorityType: 'Public Health Authority', authorities: [] }
+        // { displayName: 'Regulatory Bodies', authorityType: 'Regulatory Body', authorities: [] },
+        // { displayName: 'Professional Societies', authorityType: 'Professional Society', authorities: [] }
+      ]
+      if (this.country?.authorities) {
+        for (const authorityByType of authoritiesByType) {
           authorityByType.authorities = this.country.authorities.filter(authority => authority.authorityType === authorityByType.authorityType)
         }
-        this.mostPermissivePregnancyCode = this.$root.$getMostPermissiveCode(this.country, 'pregnancyCode')
-        this.mostPermissiveLactationCode = this.$root.$getMostPermissiveCode(this.country, 'lactationCode')
       }
-      // this.breadcrumbItems[2] = { text: this.country.name, to: `/country/${this.country.iso3166Alpha2Code.toLowerCase()}` }
-    } else {
-      // this.breadcrumbItems[2] = { text: '[unknown country]', to: '#' }
+      return authoritiesByType
+    },
+    country () {
+      const countryCode = this.countryCode?.toUpperCase()
+      if (countryCode === 'GLOBAL') {
+        return this.$store.state.coreData.countries.find(country => country.id === 'recqmhXt2Ey2DiVOd')
+      }
+      let country = this.$store.state.coreData.countries.find(country => country.iso3166Alpha2Code === countryCode)
+      if (country) {
+        return country
+      }
+      country = this.$store.state.coreData.countries.find(country => country.id === this.countryCode)
+      if (country) {
+        return country
+      }
+      return undefined
+    },
+    countryCode () {
+      return this.$route.params.country
+    },
+    countryName () {
+      return this.country?.name
+    },
+    mostPermissivePregnancyCode () {
+      if (this.country) {
+        return (this.$root.$getMostPermissiveCode(this.country, 'pregnancyCode'))
+      } else {
+        return undefined
+      }
+    },
+    mostPermissiveLactationCode () {
+      if (this.country) {
+        return (this.$root.$getMostPermissiveCode(this.country, 'lactationCode'))
+      } else {
+        return undefined
+      }
     }
   }
 }
