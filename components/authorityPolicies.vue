@@ -23,7 +23,7 @@
           Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for pregnant people.'" />
         </template>
         <template #head(lactationCode)>
-          Lacation <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for lactating people.'" />
+          Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for lactating people.'" />
         </template>
         <template #head(policyDate)>
           Date <b-icon-info-circle v-b-popover.hover="'The date this policy was published or updated.'" />
