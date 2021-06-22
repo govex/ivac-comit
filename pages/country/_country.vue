@@ -87,7 +87,7 @@
       <h4 class="mt-4">
         Legend
       </h4>
-      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999,'unclear']" />
+      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
       <div class="my-5">
         <h2>Vaccines</h2>
         <CountryVaccines :country="country">
@@ -98,7 +98,6 @@
         Resources &amp; guidance
       </h2>
       <div v-for="authorityByType of authoritiesByType" :key="authorityByType.authorityType" class="mb-5">
-        <!-- <h3><b-icon-arrow-down-right-square-fill /> {{ authorityByType.displayName }}</h3> -->
         <template v-if="authorityByType.authorities.length > 0">
           <template v-for="authority of authorityByType.authorities">
             <div :key="authority.id" class="w-100">
@@ -118,17 +117,6 @@
                     <a v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></a>
                   </span>
                 </div>
-                <!-- <h4>
-                  <b-link :to="`/authority/${authority.id}`">
-                    {{ authority.name }}
-                  </b-link>
-                  <b-badge variant="primary">{{ authority.authorityType }}</b-badge>
-                  <sup>
-                    <a v-if="authority.website1" :href="authority.website1" target="_blank"><b-icon-globe /></a>
-                    <a v-if="authority.website2" :href="authority.website2" target="_blank"><b-icon-globe /></a>
-                    <a v-if="authority.website3" :href="authority.website3" target="_blank"><b-icon-globe /></a>
-                  </sup>
-                </h4> -->
                 <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
               </div>
               <AuthorityPolicies :policies="authority.policies | sortedByDate">
@@ -185,7 +173,7 @@ export default {
   },
   head () {
     return {
-      title: `COMIT: ${this.countryName ? this.countryName : 'not found'}`
+      title: `COMIT: ${this.country ? this.country.name : 'not found'}`
     }
   },
   computed: {
@@ -219,9 +207,6 @@ export default {
     },
     countryCode () {
       return this.$route.params.country
-    },
-    countryName () {
-      return this.country?.name
     },
     mostPermissivePregnancyCode () {
       if (this.country) {
