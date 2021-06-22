@@ -129,7 +129,7 @@ export default {
       this.$el.querySelectorAll('svg>g,svg>path')
         .forEach((element) => {
           element.style = null
-          element.classList.remove([
+          element.classList.remove(
             'recommended',
             'permitted-for-all',
             'permitted-with-qualifications',
@@ -137,7 +137,7 @@ export default {
             'prohibited',
             'no-language',
             'in-transition',
-            'unclear'])
+            'unclear')
         })
       for (const countryStyle of this.globalMapStyles) {
         const element = this.$el.querySelector(`#${countryStyle.id}`)
