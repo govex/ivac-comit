@@ -21,7 +21,7 @@
       </span>
     </div>
 
-    <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999,'unclear']" />
+    <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,'unclear']" />
 
     <h2 class="mt-5">
       Most recent vaccine policy positions
@@ -62,23 +62,20 @@
 
 <script>
 export default {
-  asyncData ({ params }) {
-    let authority, authorityId
-    if (params.authority) {
-      authorityId = params.authority
-      if (authorityId === 'who') { authorityId = 'recFs2GvQUntKmKPz' }
-    }
-    return { authorityId, authority, authorityName: undefined }
-  },
   head () {
     return {
-      title: `COMIT: ${this.authorityName}`
+      title: `COMIT: ${this.authority ? this.authority.name : 'not found'}`
     }
   },
-  created () {
-    this.authority = this.$store.state.coreData.authorities.find(authority => authority.id === this.authorityId)
-    if (this.authority) {
-      this.authorityName = this.authority.name
+  computed: {
+    authority () {
+      const authorityId = this.authorityId === 'who'
+        ? 'recFs2GvQUntKmKPz'
+        : this.authorityId
+      return this.$store.state.coreData.authorities.find(authority => authority.id === authorityId)
+    },
+    authorityId () {
+      return this.$route.params.authority
     }
   }
 }
