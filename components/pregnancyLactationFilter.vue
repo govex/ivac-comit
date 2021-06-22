@@ -94,7 +94,7 @@ export default {
       type: Array,
       required: false,
       default () {
-        return [1, 2, 3, 4, 5, 999]
+        return [1, 2, 3, 4, 5]
       }
     }
   },
@@ -111,8 +111,7 @@ export default {
       { text: 'Permitted', value: 2 },
       { text: 'Permitted with qualifications', value: 3 },
       { text: 'Not recommended but with exceptions', value: 4 },
-      { text: 'Not recommended', value: 5 },
-      { text: 'No policy position found', value: 999 }
+      { text: 'Not recommended', value: 5 }
     ]
     const toBeSelectedPolicyPositions = Array.from(this.selectedPolicyPositions)
 
@@ -124,7 +123,7 @@ export default {
     },
     routeObject () {
       const routeObject = { query: {} }
-      if (this.toBeSelectedPolicyPositions.length < 6 && this.toBeSelectedPolicyPositions.length > 0) {
+      if (this.toBeSelectedPolicyPositions.length < this.policyPositions.length && this.toBeSelectedPolicyPositions.length > 0) {
         routeObject.query.policyPositions = this.toBeSelectedPolicyPositions.join(',')
       }
       if (this.toBeSelectedVaccine !== 'all') {
@@ -133,11 +132,11 @@ export default {
       return routeObject
     },
     filtering () {
-      return (this.selectedPolicyPositions.length < 6 || this.selectedVaccine !== 'all')
+      return (this.selectedPolicyPositions.length < this.policyPositions.length || this.selectedVaccine !== 'all')
     },
     filterText () {
       if (this.selectedVaccine === 'all') {
-        if (this.selectedPolicyPositions.length === 6) {
+        if (this.selectedPolicyPositions.length === this.policyPositions.length) {
           return 'Showing the most permissive policy position for each country for all vaccines'
         } else {
           return 'Showing countries where the most permissive policy position for all vaccines is ' + this.selectedPolicyPositions
@@ -148,7 +147,7 @@ export default {
               return undefined
             }).join('; ')
         }
-      } else if (this.selectedPolicyPositions.length === 6) {
+      } else if (this.selectedPolicyPositions.length === this.policyPositions.length) {
         const vaccine = this.vaccines.find(vaccine => vaccine.value === this.selectedVaccine)
         if (vaccine) {
           return `Showing the most recent policy position for each country for ${vaccine.text}`
@@ -185,7 +184,7 @@ export default {
   },
   methods: {
     selectAllPolicyPositions () {
-      this.toBeSelectedPolicyPositions = [1, 2, 3, 4, 5, 999]
+      this.toBeSelectedPolicyPositions = [1, 2, 3, 4, 5]
     },
     selectNonePolicyPositions () {
       this.toBeSelectedPolicyPositions = []
