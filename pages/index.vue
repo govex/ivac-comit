@@ -2,7 +2,7 @@
   <div>
     <section>
       <div class="text-center">
-        <h5>How many countries have policy positions on the use of COVID-19 vaccines in pregnancy?</h5>
+        <h5>How many countries / territories have policy positions on the use of COVID-19 vaccines in pregnancy?</h5>
       </div>
       <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostPermissivePregnancyCode" :displayed-indicators="[1,2,3,4,5]" />
     </section>
@@ -47,11 +47,13 @@ export default {
   created () {
     this.countryListItems = this.$store.state.coreData.countries
       .reduce((result, country) => {
-        const outputRow = {
-          code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
-          mostPermissivePregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode')
+        if (country.wbRegion) {
+          const outputRow = {
+            code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
+            mostPermissivePregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode')
+          }
+          result.push(outputRow)
         }
-        result.push(outputRow)
         return result
       }, [])
 
