@@ -15,7 +15,7 @@
       </b-row>
     </section>
     <section>
-      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="lactating" :displayed-indicators="policyPositionFilters ? policyPositionFilters.concat('unclear','total') : undefined" indicator-property="mostPermissivePregnancyCode" />
+      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters ? policyPositionFilters.concat('unclear','total') : undefined" indicator-property="mostPermissivePregnancyCode" />
       <b-alert class="mt-4" variant="info" show>
         <h5 class="alert-heading">
           World Health Organization (WHO) policy position

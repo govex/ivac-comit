@@ -18,7 +18,7 @@
           </b-link>
         </template>
         <template v-else>
-          Unable to display information.
+          No information to display.
         </template>
       </div>
     </div>
