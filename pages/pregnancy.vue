@@ -6,7 +6,7 @@
           Covid-19 vaccine policies on pregnancy
           <span class="text-muted" style="font-size: 1rem"><b-link :to="{path: '/lactation', query: $route.query}">(switch to lactation)</b-link></span>
         </h1>
-        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccines="vaccinesFilters" />
+        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" />
       </b-row>
       <b-row class="flex-column">
         <client-only>
@@ -15,13 +15,13 @@
       </b-row>
     </section>
     <section>
-      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="pregnant" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('unclear','total')" indicator-property="mostPermissivePregnancyCode" />
+      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="lactating" :displayed-indicators="policyPositionFilters ? policyPositionFilters.concat('unclear','total') : undefined" indicator-property="mostPermissivePregnancyCode" />
       <b-alert class="mt-4" variant="info" show>
         <h5 class="alert-heading">
           World Health Organization (WHO) policy position
         </h5>
         <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
-          <template v-if="vaccinesFilters.length === 0">
+          <template v-if="!whoAuthorityVaccineRecommendations">
             <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
             <b-button to="/authority/who" variant="info">
               View WHO recommendations
@@ -62,10 +62,15 @@
           Country / territory <b-icon-info-circle v-b-popover.hover="'The country or territory name'" />
         </template>
         <template #head(mostPermissivePregnancyCode)>
-          Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found.'" />
+          <template v-if="vaccinesFilters">
+            Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most recent policy found'" />
+          </template>
+          <template v-else>
+            Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found'" />
+          </template>
         </template>
         <template #head(providerVisit)>
-          Provider visit <b-icon-info-circle v-b-popover.hover="'Should a pregnant person speak with a healthcare professional before vaccination?'" />
+          Provider visit <b-icon-info-circle v-b-popover.hover="'Policy positions of consulting with a provider prior to vaccination'" />
         </template>
         <template #head(pregnancyTest)>
           Pregnancy test <b-icon-info-circle v-b-popover.hover="'Is a pregnancy test required before vaccination?'" />
@@ -122,9 +127,6 @@ export default {
   },
   data () {
     return {
-      vaccinesFilters: [],
-      policyPositionFilters: [],
-      countryListItems: [],
       countryListFields: [
         { key: 'name', label: 'Country', class: 'align-middle', sortable: true },
         { key: 'mostPermissivePregnancyCode', label: 'Vaccination Policy', class: 'text-center align-middle', sortable: true },
@@ -142,37 +144,7 @@ export default {
     }
   },
   computed: {
-    filtering () {
-      return (this.vaccinesFilters.length > 0 || this.policyPositionFilters.length > 0)
-    },
-    whoAuthority () {
-      return this.$store.state.coreData.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
-    },
-    whoAuthorityVaccineRecommendations () {
-      return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, this.vaccinesFilters)
-    }
-  },
-  watch: {
-    '$route.query' () {
-      this.vaccinesFilters = this.$route.query.vaccines ? this.$route.query.vaccines.split(',') : []
-      this.policyPositionFilters = (this.$route.query.policyPositions ? this.$route.query.policyPositions.split(',') : [])
-        .map(policyPosition => Number.parseInt(policyPosition))
-      this.countryListItems = this.getCountryListItems(this.vaccinesFilters, this.policyPositionFilters)
-    }
-  },
-  created () {
-    this.vaccinesFilters =
-      this.$route.query.vaccines
-        ? this.$route.query.vaccines.split(',')
-        : []
-    this.policyPositionFilters =
-      this.$route.query.policyPositions
-        ? this.$route.query.policyPositions.split(',').map(policyPosition => Number.parseInt(policyPosition))
-        : []
-    this.countryListItems = this.getCountryListItems(this.vaccinesFilters, this.policyPositionFilters)
-  },
-  methods: {
-    getCountryListItems (vaccinesFilters, policyPositionsFilters) {
+    countryListItems () {
       let countryListItems = this.$store.state.coreData.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
@@ -186,7 +158,7 @@ export default {
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
                     : undefined)
                 : undefined,
-              mostPermissivePregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', vaccinesFilters),
+              mostPermissivePregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', this.vaccinesFilters),
               pregnancyTest: country.authorities
                 ? (country.authorities.slice(-1)[0].policies
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyTest
@@ -205,10 +177,10 @@ export default {
           }
           return result
         }, [])
-      if (policyPositionsFilters.length > 0) {
+      if (this.policyPositionFilters?.length > 0) {
         countryListItems = countryListItems.filter((countryListItem) => {
           if (countryListItem.mostPermissivePregnancyCode) {
-            return countryListItem.mostPermissivePregnancyCode.some(code => policyPositionsFilters.includes(code.rank))
+            return countryListItem.mostPermissivePregnancyCode.some(code => this.policyPositionFilters.includes(code.rank))
           } else {
             return false
           }
@@ -220,6 +192,24 @@ export default {
         })
       }
       return countryListItems
+    },
+    filtering () {
+      return (this.vaccinesFilters || this.policyPositionFilters?.length > 0)
+    },
+    policyPositionFilters () {
+      return this.$route.query.policyPositions?.split(',').map(value => parseInt(value)) || undefined
+    },
+    vaccinesFilters () {
+      return this.$route.query.vaccine
+    },
+    whoAuthority () {
+      return this.$store.state.coreData.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
+    },
+    whoAuthorityVaccineRecommendations () {
+      if (this.vaccinesFilters) {
+        return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, [this.vaccinesFilters])
+      }
+      return undefined
     }
   }
 }

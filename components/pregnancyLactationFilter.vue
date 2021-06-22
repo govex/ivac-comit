@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-alert variant="success" class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline" show>
-      <span>Showing {{ policyPositionsText }} for each country {{ vaccinesText }}.</span>
+      <span>{{ filterText }}.</span>
       <span>
-        <b-button v-if="filtering" variant="link" size="sm" :to="emptyRouteObject">
+        <!-- <b-button v-if="filtering" variant="link" size="sm" :to="emptyRouteObject">
           clear
-        </b-button>
+        </b-button> -->
         <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
           <template v-if="!filtering">
             Filter by vaccine / policy position
@@ -44,7 +44,7 @@
           <b-form-group v-if="vaccines" v-slot="{ ariaDescribedby }">
             <b-form-radio-group
               id="vaccine-selection-filter"
-              v-model="vaccinesSelected"
+              v-model="toBeSelectedVaccine"
               :options="vaccines"
               :aria-describedby="ariaDescribedby"
               name="vaccine"
@@ -67,7 +67,7 @@
           <b-form-group v-if="policyPositions" v-slot="{ ariaDescribedby }">
             <b-form-checkbox-group
               id="recommendation-selection-filter"
-              v-model="policyPositionsSelected"
+              v-model="toBeSelectedPolicyPositions"
               :options="policyPositions"
               :aria-describedby="ariaDescribedby"
               name="recommendation-selection-filter"
@@ -83,17 +83,19 @@
 <script>
 export default {
   props: {
-    selectedVaccines: {
-      type: Array,
+    selectedVaccine: {
+      type: String,
       required: false,
       default () {
-        return ['all']
+        return 'all'
       }
     },
     selectedPolicyPositions: {
       type: Array,
       required: false,
-      default () { return [1, 2, 3, 4, 5, 999] }
+      default () {
+        return [1, 2, 3, 4, 5, 999]
+      }
     }
   },
   data () {
@@ -102,7 +104,8 @@ export default {
         .map((vaccine) => {
           return { value: vaccine.id, text: vaccine.displayName }
         }))
-    const vaccinesSelected = 'all'
+    const toBeSelectedVaccine = this.selectedVaccine
+
     const policyPositions = [
       { text: 'Recommended for some or all', value: 1 },
       { text: 'Permitted', value: 2 },
@@ -111,8 +114,9 @@ export default {
       { text: 'Not recommended', value: 5 },
       { text: 'No policy position found', value: 999 }
     ]
-    const policyPositionsSelected = Array.from(this.selectedPolicyPositions)
-    return { vaccines, vaccinesSelected, policyPositions, policyPositionsSelected }
+    const toBeSelectedPolicyPositions = Array.from(this.selectedPolicyPositions)
+
+    return { vaccines, toBeSelectedVaccine, policyPositions, toBeSelectedPolicyPositions }
   },
   computed: {
     emptyRouteObject () {
@@ -120,79 +124,75 @@ export default {
     },
     routeObject () {
       const routeObject = { query: {} }
-      if (this.policyPositionsSelected.length < 6 && this.policyPositionsSelected.length > 0) {
-        routeObject.query.policyPositions = this.policyPositionsSelected.join(',')
+      if (this.toBeSelectedPolicyPositions.length < 6 && this.toBeSelectedPolicyPositions.length > 0) {
+        routeObject.query.policyPositions = this.toBeSelectedPolicyPositions.join(',')
       }
-      if (this.vaccinesSelected !== 'all') {
-        routeObject.query.vaccines = this.vaccinesSelected
+      if (this.toBeSelectedVaccine !== 'all') {
+        routeObject.query.vaccine = this.toBeSelectedVaccine
       }
       return routeObject
     },
     filtering () {
-      return (this.selectedPolicyPositions.length > 0 || this.selectedVaccines.length > 0)
+      return (this.selectedPolicyPositions.length < 6 || this.selectedVaccine !== 'all')
     },
-    policyPositionsText () {
-      if (this.selectedPolicyPositions.length === 0) { return 'the most permissive policy position' }
-      if (this.selectedPolicyPositions.length === 1) {
-        return '"' + this.policyPositions.find(policyPosition => policyPosition.value === this.selectedPolicyPositions[0]).text + '"'
+    filterText () {
+      if (this.selectedVaccine === 'all') {
+        if (this.selectedPolicyPositions.length === 6) {
+          return 'Showing the most permissive policy position for each country for all vaccines'
+        } else {
+          return 'Showing countries where the most permissive policy position for all vaccines is ' + this.selectedPolicyPositions
+            .map((selectedPolicyPosition) => {
+              const policyPosition = this.policyPositions
+                .find(policyPosition => policyPosition.value === selectedPolicyPosition)
+              if (policyPosition) { return '"' + policyPosition.text + '"' }
+              return undefined
+            }).join('; ')
+        }
+      } else if (this.selectedPolicyPositions.length === 6) {
+        const vaccine = this.vaccines.find(vaccine => vaccine.value === this.selectedVaccine)
+        if (vaccine) {
+          return `Showing the most recent policy position for each country for ${vaccine.text}`
+        } else {
+          return 'The filtering system encountered an error. Please try reloading the page'
+        }
+      } else {
+        const vaccine = this.vaccines.find(vaccine => vaccine.value === this.selectedVaccine)
+        if (vaccine) {
+          return `Showing countries where the most recent policy position for ${vaccine.text} is ` + this.selectedPolicyPositions
+            .map((selectedPolicyPosition) => {
+              const policyPosition = this.policyPositions
+                .find(policyPosition => policyPosition.value === selectedPolicyPosition)
+              if (policyPosition) { return '"' + policyPosition.text + '"' }
+              return undefined
+            }).join('; ')
+        } else {
+          return 'The filtering system encountered an error. Please try reloading the page'
+        }
       }
-      return 'the most permissive of ' + this.selectedPolicyPositions.map((selectedPolicyPosition) => {
-        const policyPosition = this.policyPositions.find(policyPosition => policyPosition.value === selectedPolicyPosition)
-        if (policyPosition) { return '"' + policyPosition.text + '"' }
-        return undefined
-      }).join('; ')
     },
-    vaccinesText () {
-      if (this.selectedVaccines.length === 0) { return 'across all vaccines' }
-      return 'for ' + this.selectedVaccines.map((selectedVaccine) => {
-        const vaccine = this.vaccines.find(vaccine => vaccine.value === selectedVaccine)
-        if (vaccine) { return vaccine.text }
-        return undefined
-      }).join('; ')
+    selectedVaccineText () {
+      if (this.selectedVaccine === 'all') {
+        return 'all vaccines'
+      } else {
+        const vaccine = this.vaccines.find(vaccine => vaccine.value === this.selectedVaccine)
+        if (vaccine) {
+          return `${vaccine.text}`
+        } else {
+          return '[unknown vaccine]'
+        }
+      }
     }
-  },
-  created () {
-    if (this.selectedPolicyPositions.length === 0) {
-      this.selectAllPolicyPositions()
-    } else {
-      this.policyPositionsSelected = this.selectedPolicyPositions
-    }
-    if (this.selectedVaccines.length === 0) {
-      this.vaccinesSelected = 'all'
-    } else {
-      this.vaccinesSelected = this.selectedVaccines[0]
-    }
-  },
-  updated () {
-    // if (this.selectedPolicyPositions.length === 0) {
-    //   this.selectAllPolicyPositions()
-    // } else {
-    //   this.policyPositionsSelected = this.selectedPolicyPositions
-    // }
-    // if (this.selectedVaccines.length === 0) {
-    //   this.vaccinesSelected = 'all'
-    // } else {
-    //   this.vaccinesSelected = this.selectedVaccines[0]
-    // }
   },
   methods: {
     selectAllPolicyPositions () {
-      this.policyPositionsSelected = [1, 2, 3, 4, 5, 999]
+      this.toBeSelectedPolicyPositions = [1, 2, 3, 4, 5, 999]
     },
     selectNonePolicyPositions () {
-      this.policyPositionsSelected = []
+      this.toBeSelectedPolicyPositions = []
     },
     filterCancel () {
-      if (this.selectedVaccines.length === 0) {
-        this.selectAllPolicyPositions()
-      } else {
-        this.policyPositionsSelected = this.selectedPolicyPositions
-      }
-      if (this.selectedVaccines.length === 0) {
-        this.vaccinesSelected = 'all'
-      } else {
-        this.vaccinesSelected = this.selectedVaccines[0]
-      }
+      this.toBeSelectedVaccine = this.selectedVaccine
+      this.toBeSelectedPolicyPositions = this.selectedPolicyPositions
     }
   }
 }

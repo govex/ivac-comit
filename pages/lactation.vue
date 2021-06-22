@@ -6,7 +6,7 @@
           Covid-19 vaccine policies on lactation
           <span class="text-muted" style="font-size: 1rem"><b-link :to="{path: '/pregnancy', query: $route.query}">(switch to pregnancy)</b-link></span>
         </h1>
-        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccines="vaccinesFilters" />
+        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" />
       </b-row>
       <b-row class="flex-column">
         <client-only>
@@ -14,71 +14,14 @@
         </client-only>
       </b-row>
     </section>
-    <!-- <section>
-      <div class="d-flex flex-column">
-        <div class="text-center">
-          <h4>Legend</h4>
-        </div>
-        <div class="d-flex">
-          <div class="mx-auto legend-items p-3">
-            <div class="d-flex flex-column">
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="recommended legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Recommended for some or all
-                  <b-icon-info-circle v-b-popover.hover="'An explicit recommendation that some or all lactating people should receive vaccination.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="permitted-for-all legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Permitted
-                  <b-icon-info-circle v-b-popover.hover="'All lactating people can receive, may receive, or can choose to receive vaccination.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="permitted-with-qualifications legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Permitted with qualifications
-                  <b-icon-info-circle v-b-popover.hover="'Only certain groups of lactating people, e.g., those at high risk of exposure, or with underlying conditions, can, may, or can choose to receive vaccination.'" />
-                </span>
-              </div>
-            </div>
-            <div class="d-flex flex-column">
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="not-recommended-with-exceptions legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Not recommended, but with exceptions
-                  <b-icon-info-circle v-b-popover.hover="'A statement stating lactating people should not receive vaccination, with certain exceptions provided.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middlem mx-2">
-                <svg class="prohibited legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  Not recommended
-                  <b-icon-info-circle v-b-popover.hover="'Lactating people should not receive the vaccine or vaccine is contraindicated.'" />
-                </span>
-              </div>
-              <div class="d-flex flex-row align-items-middle mx-2">
-                <svg class="no-language legend-color" viewbox="0 0 20 20"><rect x="0" y="0" width="20" height="20" /></svg>
-                <span>
-                  No policy position found
-                  <b-icon-info-circle v-b-popover.hover="'In instances where no policies or positions regarding lactation and vaccination could be found, or where no position was clearly established, e.g., &quot;if breastfeeding, talk to your doctor.&quot;'" />
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
     <section>
-      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="lactating" :displayed-indicators="policyPositionFilters.length === 0 ? undefined : policyPositionFilters.concat('unclear','total')" indicator-property="mostPermissiveLactationCode" />
+      <PolicyPositionsIndicators font-size="0.8em" :country-list-items="countryListItems" status-word="lactating" :displayed-indicators="policyPositionFilters ? policyPositionFilters.concat('unclear','total') : undefined" indicator-property="mostPermissiveLactationCode" />
       <b-alert class="mt-4" variant="info" show>
         <h5 class="alert-heading">
           World Health Organization (WHO) policy position
         </h5>
         <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
-          <template v-if="vaccinesFilters.length === 0">
+          <template v-if="!whoAuthorityVaccineRecommendations">
             <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
             <b-button to="/authority/who" variant="info">
               View WHO recommendations
@@ -119,10 +62,15 @@
           Country / territory <b-icon-info-circle v-b-popover.hover="'The country or territory name'" />
         </template>
         <template #head(mostPermissiveLactationCode)>
-          Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found.'" />
+          <template v-if="vaccinesFilters">
+            Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most recent policy found'" />
+          </template>
+          <template v-else>
+            Vaccination policy <b-icon-info-circle v-b-popover.hover="'The most permissive policy found'" />
+          </template>
         </template>
         <template #head(providerVisit)>
-          Provider visit <b-icon-info-circle v-b-popover.hover="'Should a lactating person speak with a healthcare professional before vaccination?'" />
+          Provider visit <b-icon-info-circle v-b-popover.hover="'Policy positions of consulting with a provider prior to vaccination'" />
         </template>
         <template #head(subgroups)>
           Subgroups <b-icon-info-circle v-b-popover.hover="'Specific subgroups'" />
@@ -180,9 +128,6 @@ export default {
   },
   data () {
     return {
-      vaccinesFilters: [],
-      policyPositionFilters: [],
-      countryListItems: [],
       countryListFields: [
         { key: 'name', label: 'Country', class: 'align-middle', sortable: true },
         { key: 'mostPermissiveLactationCode', label: 'Vaccination Policy', class: 'text-center align-middle', sortable: true },
@@ -200,37 +145,7 @@ export default {
     }
   },
   computed: {
-    filtering () {
-      return (this.vaccinesFilters.length > 0 || this.policyPositionFilters.length > 0)
-    },
-    whoAuthority () {
-      return this.$store.state.coreData.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
-    },
-    whoAuthorityVaccineRecommendations () {
-      return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, this.vaccinesFilters)
-    }
-  },
-  watch: {
-    '$route.query' () {
-      this.vaccinesFilters = this.$route.query.vaccines ? this.$route.query.vaccines.split(',') : []
-      this.policyPositionFilters = (this.$route.query.policyPositions ? this.$route.query.policyPositions.split(',') : [])
-        .map(policyPosition => Number.parseInt(policyPosition))
-      this.countryListItems = this.getCountryListItems(this.vaccinesFilters, this.policyPositionFilters)
-    }
-  },
-  created () {
-    this.vaccinesFilters =
-      this.$route.query.vaccines
-        ? this.$route.query.vaccines.split(',')
-        : []
-    this.policyPositionFilters =
-      this.$route.query.policyPositions
-        ? this.$route.query.policyPositions.split(',').map(policyPosition => Number.parseInt(policyPosition))
-        : []
-    this.countryListItems = this.getCountryListItems(this.vaccinesFilters, this.policyPositionFilters)
-  },
-  methods: {
-    getCountryListItems (vaccinesFilters, policyPositionsFilters) {
+    countryListItems () {
       let countryListItems = this.$store.state.coreData.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
@@ -244,7 +159,7 @@ export default {
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
                     : undefined)
                 : undefined,
-              mostPermissiveLactationCode: this.$root.$getMostPermissiveCode(country, 'lactationCode', vaccinesFilters),
+              mostPermissiveLactationCode: this.$root.$getMostPermissiveCode(country, 'lactationCode', this.vaccinesFilters),
               providerVisit: country.authorities
                 ? (country.authorities.slice(-1)[0].policies
                     ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
@@ -258,10 +173,10 @@ export default {
           }
           return result
         }, [])
-      if (policyPositionsFilters.length > 0) {
+      if (this.policyPositionFilters?.length > 0) {
         countryListItems = countryListItems.filter((countryListItem) => {
           if (countryListItem.mostPermissiveLactationCode) {
-            return countryListItem.mostPermissiveLactationCode.some(code => policyPositionsFilters.includes(code.rank))
+            return countryListItem.mostPermissiveLactationCode.some(code => this.policyPositionFilters.includes(code.rank))
           } else {
             return false
           }
@@ -273,6 +188,24 @@ export default {
         })
       }
       return countryListItems
+    },
+    filtering () {
+      return (this.vaccinesFilters || this.policyPositionFilters?.length > 0)
+    },
+    policyPositionFilters () {
+      return this.$route.query.policyPositions?.split(',').map(value => parseInt(value)) || undefined
+    },
+    vaccinesFilters () {
+      return this.$route.query.vaccine
+    },
+    whoAuthority () {
+      return this.$store.state.coreData.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
+    },
+    whoAuthorityVaccineRecommendations () {
+      if (this.vaccinesFilters) {
+        return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, [this.vaccinesFilters])
+      }
+      return undefined
     }
   }
 }
