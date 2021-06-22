@@ -5,12 +5,15 @@
       <div id="tippy-popup" class="d-flex flex-column">
         <template v-if="popoverCountry">
           <h4>{{ popoverCountry.name }}</h4>
-          <div v-if="popoverCountry[styleProperty]" class="my-2">
+          <div v-if="popoverCountry[styleProperty] && popoverCountry[styleProperty][0].rank !== 999" class="my-2">
             {{ policyPositionText }}:
             <PregnancyLactationCodeLabels :codes="popoverCountry[styleProperty]" />
             <div v-if="popoverCountry[styleProperty].length > 1" class="text-warning mt-2">
               Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
             </div>
+          </div>
+          <div v-else>
+            This country had no specific pregnancy position in their policy or we could not obtain a policy for review.
           </div>
           <span v-if="popoverCountry.inTransition" class="text-warning">This country may be in the process of updating their policies.</span>
           <b-link :to="`/country/${popoverCountry.code}`" class="mt-2" style="border-top: 1px solid grey">
