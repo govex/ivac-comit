@@ -70,7 +70,7 @@
           </template>
         </template>
         <template #head(providerVisit)>
-          Provider visit <b-icon-info-circle v-b-popover.hover="'Policy positions of consulting with a provider prior to vaccination'" />
+          Provider visit <b-icon-info-circle v-b-popover.hover="'What does the policy say about seeing a healthcare professional before vaccination?'" />
         </template>
         <template #head(subgroups)>
           Subgroups <b-icon-info-circle v-b-popover.hover="'Specific subgroups'" />
