@@ -55,17 +55,6 @@
         <b-icon-info-circle v-b-popover.hover="`People who are ${statusWord} should not receive the vaccine or vaccine is contraindicated.`" />
       </strong>
     </div>
-    <div v-if="displayedIndicators.includes(999)" class="indicator no-language-bg">
-      <h2 v-if="showCount">
-        {{ keyIndicators.noLanguage }}
-      </h2>
-      <strong>
-        No position found
-      </strong>
-      <strong>
-        <b-icon-info-circle v-b-popover.hover="`No positions regarding vaccinating ${statusWord} people could be found, or where no position was clearly established`" />
-      </strong>
-    </div>
     <div v-if="displayedIndicators.includes('unclear') && keyIndicators.unclear > 0" class="indicator unclear-bg text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.unclear }}
@@ -77,7 +66,18 @@
         <b-icon-info-circle v-b-popover.hover="'Within the guidance document, there is language that could be interpreted as indicating different policy positions'" />
       </strong>
     </div>
-    <div v-if="displayedIndicators.includes('total')" class="indicator bg-light text-dark">
+    <div v-if="displayedIndicators.includes(999) && keyIndicators.noLanguage > 0" class="indicator no-language-bg">
+      <h2 v-if="showCount">
+        {{ keyIndicators.noLanguage }}
+      </h2>
+      <strong>
+        No position found
+      </strong>
+      <strong>
+        <b-icon-info-circle v-b-popover.hover="`No positions regarding vaccinating ${statusWord} people could be found, or where no position was clearly established`" />
+      </strong>
+    </div>
+    <!-- <div v-if="displayedIndicators.includes('total')" class="indicator bg-light text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.total }}
       </h2>
@@ -87,7 +87,7 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`The total number of countries with policies regarding ${statusWord} people.`" />
       </strong>
-    </div>
+    </div> -->
     <div v-if="displayedIndicators.includes('inTransition') && keyIndicators.inTransition > 0" class="indicator in-transition-bg text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.inTransition }}
@@ -119,7 +119,7 @@ export default {
     },
     displayedIndicators: {
       type: Array,
-      default () { return [1, 2, 3, 4, 5, 999, 'unclear', 'inTransition', 'total'] }
+      default () { return [1, 2, 3, 4, 5, 999, 'unclear', 'inTransition'] }
     },
     hideCounts: {
       type: Boolean,
@@ -142,8 +142,8 @@ export default {
           if (countryListItem.inTransition) {
             result.inTransition++
           }
+          result.total++
           if (countryListItem[this.indicatorProperty]) {
-            result.total++
             if (countryListItem[this.indicatorProperty].length === 1) {
               switch (countryListItem[this.indicatorProperty][0].rank) {
                 case 1:
@@ -168,6 +168,7 @@ export default {
               result.unclear++
             }
           }
+          result.noLanguage = result.total - result.notRecommended - result.notRecommendedWithExceptions - result.permittedWithQualifications - result.permittedForAll - result.recommended - result.unclear
           return result
         }, { recommended: 0, permittedForAll: 0, permittedWithQualifications: 0, notRecommendedWithExceptions: 0, notRecommended: 0, noLanguage: 0, unclear: 0, inTransition: 0, total: 0 })
     }
