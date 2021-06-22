@@ -54,10 +54,21 @@
     </b-container>
     <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
-        <b-row class="align-items-center justify-content-between mb-5">
+        <b-row class="align-items-center justify-content-between mb-3">
           <img width="30%" src="/img/comit-dark-background.png">
           <!-- <span>A project of</span> -->
           <img width="50%" src="/img/universitylogo-bi-cir-combined-gentona-pdflogo.svg">
+        </b-row>
+        <b-row class="justify-content-start mb-5">
+          <b-col>
+            The COMIT policy tracker was developed with support from the
+            <b-link href="https://www.gatesfoundation.org/">
+              Bill &amp; Melinda Gates Foundation
+            </b-link> and
+            <b-link href="https://wellcome.org/">
+              Wellcome
+            </b-link>.
+          </b-col>
         </b-row>
         <b-row class="align-items">
           <b-col col md="6">
