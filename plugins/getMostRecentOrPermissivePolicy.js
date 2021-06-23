@@ -1,5 +1,5 @@
 export default (somethingIWontUse, inject) => {
-  inject('getMostPermissiveCode', (country, code, vaccines = [], authorityTypes = ['Public Health Authority']) => {
+  inject('getMostRecentOrPermissivePolicy', (country, code, vaccines = [], authorityTypes = ['Public Health Authority']) => {
     if (!country) { return undefined }
     if (!code) { return undefined }
 
@@ -9,6 +9,7 @@ export default (somethingIWontUse, inject) => {
       : (country.authorities ? country.authorities : [])
           .filter(authority => authorityTypes.includes(authority.authorityType))
 
+    // if we don't have any authorities, there's no more work to do
     if (phas.length === 0) { return undefined }
 
     // gather the policies from the filtered authorities, don't nest the arrays, sort them by date published / updated / accessed
@@ -18,6 +19,7 @@ export default (somethingIWontUse, inject) => {
         return (policy2['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown').localeCompare((policy1['datePublished/lastUpdated'] || policy1.dateAccessed || 'unknown'))
       })
 
+    // if we don't have any resulting policies, there's no more work to do
     if (phaPolicies.length === 0) { return undefined }
 
     // gather the vaccineIds from the resulting policies
@@ -37,6 +39,7 @@ export default (somethingIWontUse, inject) => {
       })
     }
 
+    // if we don't have any vaccine identifiers (which in theory shouldn't happen), there's no more work to do
     if (phaPoliciesVaccineIdSet.size === 0) { return undefined }
 
     // now get only the most recent policies which cover all the vaccines we accumulated
@@ -61,8 +64,7 @@ export default (somethingIWontUse, inject) => {
         return policy1[code][0].rank - policy2[code][0].rank
       })
 
-    if (phaCurrentPolicies.length === 0) { return undefined }
-
-    return phaCurrentPolicies[0][code]
+    // return the top item from this policy array; if the array is empty, it will return undefined
+    return phaCurrentPolicies.shift()
   })
 }

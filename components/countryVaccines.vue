@@ -104,8 +104,8 @@ export default {
             displayName: vaccine.displayName,
             otherNames: vaccine.otherNames,
             owidAdministration: vaccine.owidAdministration,
-            mostPermissivePregnancyCode: this.$root.$getMostPermissiveCode(this.country, 'pregnancyCode', [vaccine.id]),
-            mostPermissiveLactationCode: this.$root.$getMostPermissiveCode(this.country, 'lactationCode', [vaccine.id]),
+            mostPermissivePregnancyCode: this.$root.$getMostRecentOrPermissivePolicy(this.country, 'pregnancyCode', [vaccine.id])?.pregnancyCode,
+            mostPermissiveLactationCode: this.$root.$getMostRecentOrPermissivePolicy(this.country, 'lactationCode', [vaccine.id])?.lactationCode,
             otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0
           }
         })

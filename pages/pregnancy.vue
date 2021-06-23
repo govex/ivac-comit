@@ -148,27 +148,16 @@ export default {
       let countryListItems = this.$store.state.coreData.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
+            const mostRecentOrPermissivePolicy = this.$root.$getMostRecentOrPermissivePolicy(country, 'pregnancyCode', this.vaccinesFilters)
             const outputRow = {
               id: country.id,
               name: country.name,
               code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
               inTransition: country.inTransition,
-              subgroups: country.authorities
-                ? (country.authorities.slice(-1)[0].policies
-                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
-                    : undefined)
-                : undefined,
-              mostPermissivePregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', this.vaccinesFilters),
-              pregnancyTest: country.authorities
-                ? (country.authorities.slice(-1)[0].policies
-                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyTest
-                    : undefined)
-                : undefined,
-              providerVisit: country.authorities
-                ? (country.authorities.slice(-1)[0].policies
-                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyCounselingAndInformation
-                    : undefined)
-                : undefined,
+              subgroups: mostRecentOrPermissivePolicy?.pregnancyQualifications,
+              mostPermissivePregnancyCode: mostRecentOrPermissivePolicy?.pregnancyCode,
+              pregnancyTest: mostRecentOrPermissivePolicy?.pregnancyTest,
+              providerVisit: mostRecentOrPermissivePolicy?.pregnancyCounselingAndInformation,
               wbRegion: country.wbRegion,
               wbIncomeLevelName: country.wbIncomeLevelName,
               wbIncomeLevelSort: country.wbIncomeLevelSort

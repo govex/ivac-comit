@@ -8,7 +8,7 @@
         :fields="policyListFields"
         responsive
         sort-by="datePublished/lastUpdated"
-        sort-desc="true"
+        sort-desc
         small
         head-variant="dark"
         :sort-compare="$root.$listSortComparer"

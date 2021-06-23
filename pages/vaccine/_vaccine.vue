@@ -119,8 +119,8 @@ export default {
               wbIncomeLevelName: country.wbIncomeLevelName,
               wbIncomeLevelSort: country.wbIncomeLevelSort,
               wbRegion: country.wbRegion,
-              mostRecentPregnancyCode: this.$root.$getMostPermissiveCode(country, 'pregnancyCode', [this.vaccine.id]),
-              mostRecentLactationCode: this.$root.$getMostPermissiveCode(country, 'lactationCode', [this.vaccine.id])
+              mostRecentPregnancyCode: this.$root.$getMostRecentOrPermissivePolicy(country, 'pregnancyCode', [this.vaccine.id])?.pregnancyCode,
+              mostRecentLactationCode: this.$root.$getMostRecentOrPermissivePolicy(country, 'lactationCode', [this.vaccine.id])?.lactationCode
             }
             return result.concat(outputRow)
           }, [])

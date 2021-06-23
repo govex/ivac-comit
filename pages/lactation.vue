@@ -149,22 +149,16 @@ export default {
       let countryListItems = this.$store.state.coreData.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
+            // get the most permissive/recent policy for across the vaccines specified, based upon lactation code
+            const mostPermissiveLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy(country, 'lactationCode', this.vaccinesFilters)
             const outputRow = {
               id: country.id,
               name: country.name,
               code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
               inTransition: country.inTransition,
-              subgroups: country.authorities
-                ? (country.authorities.slice(-1)[0].policies
-                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].pregnancyQualifications
-                    : undefined)
-                : undefined,
-              mostPermissiveLactationCode: this.$root.$getMostPermissiveCode(country, 'lactationCode', this.vaccinesFilters),
-              providerVisit: country.authorities
-                ? (country.authorities.slice(-1)[0].policies
-                    ? country.authorities.slice(-1)[0].policies.slice(-1)[0].lactationCounselingAndInformation
-                    : undefined)
-                : undefined,
+              subgroups: mostPermissiveLactationPolicy?.lactationQualifications,
+              mostPermissiveLactationCode: mostPermissiveLactationPolicy?.lactationCode,
+              providerVisit: mostPermissiveLactationPolicy?.lactationCounselingAndInformation,
               wbRegion: country.wbRegion,
               wbIncomeLevelName: country.wbIncomeLevelName,
               wbIncomeLevelSort: country.wbIncomeLevelSort
@@ -173,6 +167,8 @@ export default {
           }
           return result
         }, [])
+
+      // filter the results for policy positions
       if (this.policyPositionFilters?.length > 0) {
         countryListItems = countryListItems.filter((countryListItem) => {
           if (countryListItem.mostPermissiveLactationCode) {
@@ -182,6 +178,8 @@ export default {
           }
         })
       }
+
+      // remove the entries which don't have a lactation code
       if (this.filtering) {
         countryListItems = countryListItems.filter((countryListItem) => {
           if (countryListItem.mostPermissiveLactationCode) {
