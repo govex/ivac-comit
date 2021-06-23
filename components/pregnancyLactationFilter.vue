@@ -103,6 +103,10 @@ export default {
       .concat(this.$store.state.coreData.vaccines
         .map((vaccine) => {
           return { value: vaccine.id, text: vaccine.displayName }
+        })
+        .filter(vaccine => vaccine.text)
+        .sort((vaccine1, vaccine2) => {
+          return vaccine1.text?.localeCompare(vaccine2.text)
         }))
     const toBeSelectedVaccine = this.selectedVaccine
 
