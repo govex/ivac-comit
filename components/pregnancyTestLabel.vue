@@ -11,11 +11,11 @@ export default {
   filters: {
     flatten (value) {
       switch (value) {
-        case 1:
+        case 3:
           return 'Not required'
         case 2:
           return 'Not required'
-        case 3:
+        case 1:
           return 'Required'
         case 999:
           return '-'
