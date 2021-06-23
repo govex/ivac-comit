@@ -65,10 +65,10 @@
             </b-link>
           </template>
           <template #cell(mostRecentPregnancyCode)="data">
-            <PregnancyLactationCodeIcons :codes="data.item.mostRecentPregnancyCode" />
+            <PregnancyLactationCodeIcons v-if="data.item.mostRecentPregnancyCode" :codes="data.item.mostRecentPregnancyCode" />
           </template>
           <template #cell(mostRecentLactationCode)="data">
-            <PregnancyLactationCodeIcons :codes="data.item.mostRecentLactationCode" />
+            <PregnancyLactationCodeIcons v-if="data.item.mostRecentLactationCode" :codes="data.item.mostRecentLactationCode" />
           </template>
         </b-table>
       </b-row>

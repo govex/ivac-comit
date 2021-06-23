@@ -32,7 +32,7 @@
               <b-link :to="`/vaccine/${vaccine.id}`">
                 {{ vaccine.displayName }}
               </b-link>
-              <PregnancyLactationCodeIcons :codes="vaccine.mostRecentPregnancyCode" />
+              <PregnancyLactationCodeIcons v-if="vaccine.mostRecentPregnancyCode" :codes="vaccine.mostRecentPregnancyCode" />
             </div>
             <b-button to="/authority/who" variant="info">
               View WHO recommendations for all vaccines
@@ -90,7 +90,7 @@
           </b-link>
         </template>
         <template #cell(mostPermissivePregnancyCode)="data">
-          <PregnancyLactationCodeIcons style="font-size: 1.4em" :codes="data.item.mostPermissivePregnancyCode" />
+          <PregnancyLactationCodeIcons v-if="data.item.mostPermissivePregnancyCode" style="font-size: 1.4em" :codes="data.item.mostPermissivePregnancyCode" />
         </template>
         <template #cell(providerVisit)="data">
           <ProviderVisitLabel :codes="[data.value]" />

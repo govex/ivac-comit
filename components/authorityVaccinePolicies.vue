@@ -26,13 +26,13 @@
           Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during pregnancy'" />
         </template>
         <template #cell(mostRecentPregnancyCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.value" />
+          <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #head(mostRecentLactationCode)>
           Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during lactation'" />
         </template>
         <template #cell(mostRecentLactationCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.value" />
+          <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #head(policyDate)>
           Date <b-icon-info-circle v-b-popover.hover="'Indicates the date on which this policy position was published'" />

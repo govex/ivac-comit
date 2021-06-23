@@ -32,13 +32,13 @@
           Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during pregnancy.'" />
         </template>
         <template #cell(mostPermissivePregnancyCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.value" />
+          <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #head(mostPermissiveLactationCode)>
           Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the most recent policy position where this vaccine is specifically mentioned for use during lactation.'" />
         </template>
         <template #cell(mostPermissiveLactationCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.value" />
+          <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #head(otherCountryCount)>
           Other countries <b-icon-info-circle v-b-popover.hover="'Indicates how many other countries are administering this vaccine, according to Our World In Data.'" />

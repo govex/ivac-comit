@@ -50,10 +50,10 @@
           </template>
         </template>
         <template #cell(pregnancyCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.value" />
+          <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #cell(lactationCode)="data">
-          <PregnancyLactationCodeIcons :codes="data.value" />
+          <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #cell(policyDate)="data">
           {{ data.item['datePublished/lastUpdated'] || 'unknown' }}
