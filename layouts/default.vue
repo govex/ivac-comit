@@ -4,7 +4,7 @@
       <div class="container">
         <b-navbar-brand to="/">
           <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
-          <sup><b-badge variant="warning">beta</b-badge></sup>
+          <sup><b-badge v-if="!production" variant="warning">beta</b-badge></sup>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
@@ -96,3 +96,13 @@
     </footer>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      production: process.env.NODE_ENV === 'production'
+    }
+  }
+}
+</script>
