@@ -116,13 +116,11 @@ export default {
       if (Array.isArray(data.value)) { return data.value }
     },
     countryUrl (data) {
-      if (data.item.name === 'Global') {
-        return '/country/global'
-      } else if (data.item.code) {
-        return '/country/' + data.item.code.toLowerCase()
-      } else {
-        return '/country/' + data.item.id
-      }
+      return `/country/${
+        data.item.name === 'Global'
+        ? 'global'
+        : data.item.code?.toLowerCase() || data.item.id
+      }`
     }
   },
   data () {
