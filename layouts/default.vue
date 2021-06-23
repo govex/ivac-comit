@@ -101,7 +101,7 @@
 export default {
   data () {
     return {
-      production: process.env.NODE_ENV === 'production'
+      production: process.env.HIDE_BETA_BADGE === 'true'
     }
   }
 }

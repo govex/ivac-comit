@@ -1,5 +1,11 @@
 # public-website
 
+Note: for the production website you must set the environment variable `HIDE_BETA_BADGE=true` to hide the beta badge in the navbar.
+
+
+# Development
+This site uses the [nuxtjs](https://nuxtjs.org) framework.
+
 ## Build Setup
 
 ```bash
@@ -19,21 +25,3 @@ $ npm run generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-
-
-
-
-
-#TODOs
-
-We are only displaying Public Authorities for now.
-"Global" should appear first in country list; use WHO icon for it.
-
-Provider visit: Pregnancy Qualifications & Counseling / Information
-
-
-policy list show date published and if blank
-
-
-
-Permissiveness: the most recent entry (by publication - then input date if publication date is missing) for each vaccine at its most permissive level
