@@ -40,6 +40,7 @@ html, body { min-height: 100vh }
 .no-language {color: $no-language; fill: $no-language}
 .no-language-bg {background-color: $no-language}
 .in-transition {color: $in-transition; stroke: $in-transition; stroke-width: 7; stroke-dasharray: 100 0;}
+.in-transition-doc { stroke: $in-transition; stroke-width: 1; stroke-dasharray: 100 0; }
 .in-transition-bg {border: 3px solid $in-transition}
 .unclear { stroke: $unclear; stroke-width: 7; stroke-dasharray: 100 0; }
 .unclear-bg {border: 3px solid $unclear; stroke: $unclear}

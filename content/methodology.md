@@ -57,7 +57,7 @@ Our aim is to identify, collect, and present publicly available country and glob
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
-  <h1 class="in-transition"><b-icon-circle /></h1>
+  <h1 class="in-transition-doc"><b-icon-circle /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">In transition</strong>
     <span>Where current policies are being revised.</span>
@@ -114,7 +114,7 @@ For more detailed information on how pregnancy policies were categorized, please
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
-  <h1 class="in-transition"><b-icon-circle /></h1>
+  <h1 class="in-transition-doc"><b-icon-circle /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">In transition</strong>
     <span>Where current policies are being revised.</span>
@@ -154,7 +154,7 @@ For more detailed information on how lactation policies were categorized, please
     </svg>
   </h1>
   <div class="d-flex flex-column mx-3">
-    <span>Only administer vaccine in 2<sup>nd</sup> and 3<sup>rd</sup> trimester.</span>
+    <span>Advises administration in the 2<sup>nd</sup> or 3<sup>rd</sup> trimester</span>
   </div>
 </div>
 
