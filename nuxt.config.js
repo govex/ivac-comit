@@ -46,7 +46,9 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    // https://github.com/nuxt-community/google-gtag-module
+    '@nuxtjs/google-gtag'
   ],
 
   bootstrapVue: {
@@ -64,8 +66,22 @@ export default {
     ]
   },
 
+  'google-gtag': {
+    id: process.env.GOOGLE_GTAG_ID || 'G-6XP6230PCN',
+    config: {
+      anonymize_ip: true, // anonymize IP
+      send_page_view: false, // might be necessary to avoid duplicated page track on page reload
+      linker: {
+        domains: ['www.comitglobal.org']
+      }
+    },
+    debug: false, // enable to track in dev mode
+    disableAutoPageTrack: false // disable if you don't want to track each page route with router.afterEach(...).
+  },
+
   // Content module configuration: https://go.nuxtjs.dev/config-content
-  content: {},
+  content: {
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
