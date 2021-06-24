@@ -9,9 +9,9 @@
         <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" />
       </b-row>
       <b-row class="flex-column">
-        <!-- <client-only> -->
+        <client-only>
           <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="mostPermissiveLactationCode" />
-        <!-- </client-only> -->
+        </client-only>
       </b-row>
     </section>
     <section>
