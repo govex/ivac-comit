@@ -4,7 +4,7 @@
       <div class="container">
         <b-navbar-brand to="/">
           <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
-          <sup v-if="showBetaBadge"><b-badge variant="warning">beta</b-badge></sup>
+          <!-- <sup v-if="showBetaBadge"><b-badge variant="warning">beta</b-badge></sup> -->
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
