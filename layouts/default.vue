@@ -4,7 +4,7 @@
       <div class="container">
         <b-navbar-brand to="/">
           <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
-          <sup><b-badge v-show="!production" variant="warning">beta</b-badge></sup>
+          <sup v-if="showBetaBadge"><b-badge variant="warning">beta</b-badge></sup>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
@@ -101,7 +101,7 @@
 export default {
   data () {
     return {
-      production: process.env.HIDE_BETA_BADGE === 'true'
+      showBetaBadge: process.env.HIDE_BETA_BADGE !== 'true'
     }
   }
 }
