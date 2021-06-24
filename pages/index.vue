@@ -28,11 +28,9 @@
       <p>
         The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on country policies and the recommendations of professional medical societies as they respond to the dynamic state of the pandemic and emerging evidence.
       </p>
-      <b-link to="#">
-        <b-button variant="primary" to="/about/comit">
-          Learn more
-        </b-button>
-      </b-link>
+      <b-button variant="primary" to="/about/comit">
+        Learn more
+      </b-button>
     </section>
   </div>
 </template>
