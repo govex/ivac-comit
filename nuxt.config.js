@@ -67,7 +67,7 @@ export default {
   },
 
   'google-gtag': {
-    id: process.env.GOOGLE_GTAG_ID || 'G-6XP6230PCN',
+    id: process.env.GOOGLE_GTAG_ID || 'G-FD6EH13JDD',
     config: {
       anonymize_ip: true, // anonymize IP
       send_page_view: false, // might be necessary to avoid duplicated page track on page reload
