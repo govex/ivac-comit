@@ -1,10 +1,10 @@
 <template>
   <div class="indicators d-flex text-center text-white" :style="{ fontSize: fontSize }">
     <component :is="indicatorIs" v-if="displayedIndicators.includes(1)" :to="linkProps(1)" class="indicator recommended-bg text-center">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.recommended }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Recommended for some or all
       </strong>
       <strong>
@@ -12,10 +12,10 @@
       </strong>
     </component>
     <component :is="indicatorIs" v-if="displayedIndicators.includes(2)" :to="linkProps(2)" class="indicator permitted-for-all-bg">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.permittedForAll }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Permitted
       </strong>
       <strong>
@@ -23,10 +23,10 @@
       </strong>
     </component>
     <component :is="indicatorIs" v-if="displayedIndicators.includes(3)" :to="linkProps(3)" class="indicator permitted-with-qualifications-bg">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.permittedWithQualifications }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Permitted with qualifications
       </strong>
       <strong>
@@ -34,10 +34,10 @@
       </strong>
     </component>
     <component :is="indicatorIs" v-if="displayedIndicators.includes(4)" :to="linkProps(4)" class="indicator not-recommended-with-exceptions-bg">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.notRecommendedWithExceptions }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Not recommended but with exceptions
       </strong>
       <strong>
@@ -45,10 +45,10 @@
       </strong>
     </component>
     <component :is="indicatorIs" v-if="displayedIndicators.includes(5)" :to="linkProps(5)" class="indicator prohibited-bg">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.notRecommended }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Not recommended
       </strong>
       <strong>
@@ -56,10 +56,10 @@
       </strong>
     </component>
     <div v-if="displayedIndicators.includes('unclear') && keyIndicators.unclear > 0" class="indicator unclear-bg text-dark">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.unclear }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Unclear
       </strong>
       <strong>
@@ -67,10 +67,10 @@
       </strong>
     </div>
     <component :is="indicatorIs" v-if="displayedIndicators.includes(999) && keyIndicators.noLanguage > 0" :to="linkProps(999)" class="indicator no-language-bg">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.noLanguage }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         No position found
       </strong>
       <strong>
@@ -81,7 +81,7 @@
       <h2 v-if="showCount">
         {{ keyIndicators.total }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         Total
       </strong>
       <strong>
@@ -89,10 +89,10 @@
       </strong>
     </div> -->
     <div v-if="displayedIndicators.includes('inTransition') && keyIndicators.inTransition > 0" class="indicator in-transition-bg text-dark">
-      <h2 v-if="showCount">
+      <h2 v-if="showCounts">
         {{ keyIndicators.inTransition }}
       </h2>
-      <strong>
+      <strong v-if="showLabels">
         In transition
       </strong>
       <strong>
@@ -121,6 +121,10 @@ export default {
       type: Boolean,
       default () { return false }
     },
+    hideLabels: {
+      type: Boolean,
+      default () { return false }
+    },
     indicatorProperty: {
       type: String,
       default () { return 'mostPermissivePregnancyCode' }
@@ -136,7 +140,8 @@ export default {
   },
   data () {
     return {
-      showCount: this.hideCounts ? false : this.countryListItems.length > 0
+      showCounts: this.hideCounts ? false : this.countryListItems.length > 0,
+      showLabels: !this.hideLabels
     }
   },
   computed: {
