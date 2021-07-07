@@ -121,13 +121,13 @@ export default {
       type: Boolean,
       default () { return false }
     },
-    link: {
-      type: [Boolean, String],
-      default () { return false }
-    },
     indicatorProperty: {
       type: String,
       default () { return 'mostPermissivePregnancyCode' }
+    },
+    link: {
+      type: [Boolean, String],
+      default () { return false }
     },
     statusWord: {
       type: String,
@@ -211,4 +211,12 @@ export default {
 a {color: var(--white)}
 a:hover {filter: brightness(80%); text-decoration: none;}
 h2 { font-size: 3em; font-weight: bold }
+
+@media (max-width: 800px) {
+  .indicator { font-size: 75% }
+}
+@media (max-width: 600px) {
+  .indicator { font-size: 50% }
+}
+
 </style>
