@@ -4,15 +4,15 @@
       <div class="text-center">
         <h5>How many countries / territories have policy positions on the use of COVID-19 vaccines in pregnancy?</h5>
       </div>
-      <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostPermissivePregnancyCode" :displayed-indicators="[1,2,3,4,5]" link="/pregnancy" />
     </section>
     <section>
-      <b-overlay show blur="1px" opacity="0.75" class="my-5">
+      <b-overlay show blur="1px" opacity="0.75" class="my-5" no-center>
         <b-row class="flex-column">
           <GlobalMap :country-list-items="countryListItems" default-fill-color="#A0A0A0" :enable-popups="false" style-property="mostPermissivePregnancyCode" />
         </b-row>
         <template #overlay>
-          <div class="text-center">
+          <div class="h-100 d-flex flex-column align-items-center justify-content-around p-3">
+            <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostPermissivePregnancyCode" :displayed-indicators="[1,2,3,4,5]" link="/pregnancy" />
             <b-button to="/pregnancy" variant="primary" size="lg" prefetch>
               Explore the Data
             </b-button>
