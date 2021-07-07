@@ -1,6 +1,6 @@
 <template>
   <div class="indicators d-flex text-center text-white" :style="{ fontSize: fontSize }">
-    <div v-if="displayedIndicators.includes(1)" class="indicator recommended-bg text-center">
+    <component :is="indicatorIs" v-if="displayedIndicators.includes(1)" :to="linkProps(1)" class="indicator recommended-bg text-center">
       <h2 v-if="showCount">
         {{ keyIndicators.recommended }}
       </h2>
@@ -10,8 +10,8 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`An explicit recommendation that some or all ${statusWord} people should receive vaccination.`" />
       </strong>
-    </div>
-    <div v-if="displayedIndicators.includes(2)" class="indicator permitted-for-all-bg">
+    </component>
+    <component :is="indicatorIs" v-if="displayedIndicators.includes(2)" :to="linkProps(2)" class="indicator permitted-for-all-bg">
       <h2 v-if="showCount">
         {{ keyIndicators.permittedForAll }}
       </h2>
@@ -21,8 +21,8 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`All ${statusWord} people can receive, may receive, or can choose to receive vaccination.`" />
       </strong>
-    </div>
-    <div v-if="displayedIndicators.includes(3)" class="indicator permitted-with-qualifications-bg">
+    </component>
+    <component :is="indicatorIs" v-if="displayedIndicators.includes(3)" :to="linkProps(3)" class="indicator permitted-with-qualifications-bg">
       <h2 v-if="showCount">
         {{ keyIndicators.permittedWithQualifications }}
       </h2>
@@ -32,8 +32,8 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`Only certain groups of ${statusWord} people, e.g., ${statusWord} health workers, ${statusWord} people with underlying conditions, can, may, or can choose to receive vaccination.`" />
       </strong>
-    </div>
-    <div v-if="displayedIndicators.includes(4)" class="indicator not-recommended-with-exceptions-bg">
+    </component>
+    <component :is="indicatorIs" v-if="displayedIndicators.includes(4)" :to="linkProps(4)" class="indicator not-recommended-with-exceptions-bg">
       <h2 v-if="showCount">
         {{ keyIndicators.notRecommendedWithExceptions }}
       </h2>
@@ -43,8 +43,8 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`A statement stating ${statusWord} people should not receive vaccination, with certain exceptions.`" />
       </strong>
-    </div>
-    <div v-if="displayedIndicators.includes(5)" class="indicator prohibited-bg">
+    </component>
+    <component :is="indicatorIs" v-if="displayedIndicators.includes(5)" :to="linkProps(5)" class="indicator prohibited-bg">
       <h2 v-if="showCount">
         {{ keyIndicators.notRecommended }}
       </h2>
@@ -54,7 +54,7 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`People who are ${statusWord} should not receive the vaccine or vaccine is contraindicated.`" />
       </strong>
-    </div>
+    </component>
     <div v-if="displayedIndicators.includes('unclear') && keyIndicators.unclear > 0" class="indicator unclear-bg text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.unclear }}
@@ -66,7 +66,7 @@
         <b-icon-info-circle v-b-popover.hover="'Within the guidance document, there is language that could be interpreted as indicating different policy positions'" />
       </strong>
     </div>
-    <div v-if="displayedIndicators.includes(999) && keyIndicators.noLanguage > 0" class="indicator no-language-bg">
+    <component :is="indicatorIs" v-if="displayedIndicators.includes(999) && keyIndicators.noLanguage > 0" :to="linkProps(999)" class="indicator no-language-bg">
       <h2 v-if="showCount">
         {{ keyIndicators.noLanguage }}
       </h2>
@@ -76,7 +76,7 @@
       <strong>
         <b-icon-info-circle v-b-popover.hover="`No positions regarding vaccinating ${statusWord} people could be found, or where no position was clearly established`" />
       </strong>
-    </div>
+    </component>
     <!-- <div v-if="displayedIndicators.includes('total')" class="indicator bg-light text-dark">
       <h2 v-if="showCount">
         {{ keyIndicators.total }}
@@ -109,6 +109,22 @@ export default {
       type: Array,
       default () { return [] }
     },
+    displayedIndicators: {
+      type: Array,
+      default () { return [1, 2, 3, 4, 5, 999, 'unclear', 'inTransition'] }
+    },
+    fontSize: {
+      type: String,
+      default () { return '1em' }
+    },
+    hideCounts: {
+      type: Boolean,
+      default () { return false }
+    },
+    link: {
+      type: [Boolean, String],
+      default () { return false }
+    },
     indicatorProperty: {
       type: String,
       default () { return 'mostPermissivePregnancyCode' }
@@ -116,18 +132,6 @@ export default {
     statusWord: {
       type: String,
       default () { return 'pregnant' }
-    },
-    displayedIndicators: {
-      type: Array,
-      default () { return [1, 2, 3, 4, 5, 999, 'unclear', 'inTransition'] }
-    },
-    hideCounts: {
-      type: Boolean,
-      default () { return false }
-    },
-    fontSize: {
-      type: String,
-      default () { return '1em' }
     }
   },
   data () {
@@ -136,6 +140,13 @@ export default {
     }
   },
   computed: {
+    indicatorIs () {
+      if (this.link) {
+        return 'NuxtLink'
+      } else {
+        return 'div'
+      }
+    },
     keyIndicators () {
       return this.countryListItems
         .reduce((result, countryListItem) => {
@@ -172,6 +183,23 @@ export default {
           return result
         }, { recommended: 0, permittedForAll: 0, permittedWithQualifications: 0, notRecommendedWithExceptions: 0, notRecommended: 0, noLanguage: 0, unclear: 0, inTransition: 0, total: 0 })
     }
+  },
+  methods: {
+    linkProps (indicator) {
+      if (this.link) {
+        const query = { policyPositions: indicator }
+        if (this.link !== true) {
+          return {
+            path: this.link,
+            query
+          }
+        } else {
+          return { query }
+        }
+      } else {
+        return undefined
+      }
+    }
   }
 }
 </script>
@@ -180,5 +208,7 @@ export default {
 .indicators { flex-flow: row wrap; justify-content: space-between}
 .indicator { display: flex; flex: 1 1 0px; flex-flow: column; justify-content: space-between; align-content: center; padding: 1em 1em; margin: 0.5em; border-radius: 0.25rem }
 .in-transition { border: 4px solid #FF00FF }
+a {color: var(--white)}
+a:hover {filter: brightness(80%); text-decoration: none;}
 h2 { font-size: 3em; font-weight: bold }
 </style>
