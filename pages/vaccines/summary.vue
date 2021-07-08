@@ -19,7 +19,7 @@
         <PolicyPositionsIndicators
           v-if="data.item.countries.length > 0"
           :country-list-items="data.item.countries"
-          :displayed-indicators="[1,2,3,4,5, 999]"
+          :displayed-indicators="[1,2,3,4,5]"
           indicator-property="pregnancyCode"
           status-word="pregnant"
           hide-labels
@@ -30,7 +30,7 @@
         <PolicyPositionsIndicators
           v-if="data.item.countries.length > 0"
           :country-list-items="data.item.countries"
-          :displayed-indicators="[1,2,3,4,5, 999]"
+          :displayed-indicators="[1,2,3,4,5]"
           indicator-property="lactationCode"
           status-word="lactating"
           hide-labels
