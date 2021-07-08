@@ -26,8 +26,6 @@
             <NuxtLink :to="`/vaccine/${data.field.key}`">
               {{ data.label }}
             </NuxtLink>
-            <br>
-            <span class="text-muted small">{{ data.field.policyCount }} policies</span>
           </div>
         </template>
       </template>
