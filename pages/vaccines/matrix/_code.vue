@@ -4,6 +4,11 @@
       Most recent policy positions by country, by vaccine for {{ code.code }}
       <span v-for="codeItem of otherCodes" :key="codeItem.code" class="text-muted" style="font-size: 1rem"><NuxtLink :to="`${codeItem.code}`">(switch to {{ codeItem.code }})</NuxtLink></span>
     </h2>
+    <p>This table shows the most recent policy position, by country, for each vaccine.</p>
+    <b-alert variant="warning" show>
+      <b-icon-exclamation-circle />
+      Only vaccines mentioned in more than one policy are displayed here.
+    </b-alert>
     <b-table
       :items="countryListItems"
       :fields="countryListFields"
@@ -18,7 +23,11 @@
         </template>
         <template v-else>
           <div class="rotate">
-            {{ data.label }}
+            <NuxtLink :to="`/vaccine/${data.field.key}`">
+              {{ data.label }}
+            </NuxtLink>
+            <br>
+            <span class="text-muted small">{{ data.field.policyCount }} policies</span>
           </div>
         </template>
       </template>
@@ -29,8 +38,9 @@
           </NuxtLink>
         </template>
         <template v-else>
-          <component :is="code.component" :codes="data.item[data.field.key]" />
-          <!-- <PregnancyLactationCodeIcons :codes="data.item[data.field.key]" /> -->
+          <div class="text-center">
+            <component :is="code.component" :codes="data.item[data.field.key]" />
+          </div>
         </template>
       </template>
     </b-table>
@@ -62,7 +72,8 @@ export default {
         .map((vaccine) => {
           return {
             key: vaccine.id,
-            label: vaccine.displayName
+            label: vaccine.displayName,
+            policyCount: vaccine.policies ? vaccine.policies.length : 0
           }
         }))
     },
@@ -87,9 +98,11 @@ export default {
     vaccines () {
       return this.$store.state.coreData.vaccines
         .slice()
+        .filter((vaccine) => {
+          return vaccine.policies && vaccine.policies.length > 1
+        })
         .sort((vaccine1, vaccine2) => {
-          return (vaccine2.countries ? vaccine2.countries.length : 0) -
-            (vaccine1.countries ? vaccine1.countries.length : 0)
+          return vaccine2.policies.length - vaccine1.policies.length
         })
     }
   }
@@ -97,5 +110,5 @@ export default {
 </script>
 
 <style scoped>
-.rotate { width: 3em; height: 400px; text-orientation: mixed; writing-mode: vertical-rl; transform: rotate(180deg)}
+.rotate { width: 3em; height: 300px; text-orientation: mixed; writing-mode: vertical-rl; transform: rotate(180deg)}
 </style>
