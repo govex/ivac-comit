@@ -26,6 +26,11 @@
             <NuxtLink :to="`/vaccine/${data.field.key}`">
               {{ data.label }}
             </NuxtLink>
+            <br>
+            <span class="text-muted small">
+              {{ data.field.policyCount }}
+              countries
+            </span>
           </div>
         </template>
       </template>
@@ -71,7 +76,12 @@ export default {
           return {
             key: vaccine.id,
             label: vaccine.displayName,
-            policyCount: vaccine.policies ? vaccine.policies.length : 0
+            policyCount: this.countryListItems.reduce((count, countryItem) => {
+              if (countryItem[vaccine.id]) {
+                count++
+              }
+              return count
+            }, 0)
           }
         }))
     },
@@ -108,5 +118,5 @@ export default {
 </script>
 
 <style scoped>
-.rotate { width: 3em; height: 300px; text-orientation: mixed; writing-mode: vertical-rl; transform: rotate(180deg)}
+.rotate { width: 3em; height: 250px; text-orientation: mixed; writing-mode: vertical-rl; transform: rotate(180deg)}
 </style>
