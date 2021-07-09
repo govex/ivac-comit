@@ -1,5 +1,42 @@
 <template>
   <div>
+    <b-sidebar
+      id="country-filter"
+      title="Countries"
+      shadow
+      backdrop
+      backdrop-variant="dark"
+    >
+      <div class="p-3">
+        <div class="d-flex justify-content-end align-items-baseline text-primary">
+          Select
+          <b-button-group size="sm">
+            <b-button variant="link" @click="selectAllCountries">All</b-button> .
+            <b-dropdown text="Regions" variant="link">
+              <b-button variant="link" @click="selectWbRegionCountries('East Asia and Pacific')">East Asia and Pacific</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Europe and Central Asia')">Europe and Central Asia</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Latin America and Caribbean')">Latin America and Caribbean</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Middle East and North Africa')">Middle East and North Africa</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('North America')">North America</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('South Asia')">South Asia</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Sub-Saharan Africa')">Sub-Saharan Africa</b-button>
+            </b-dropdown>
+            <b-button variant="link" @click="selectNoneCountries">None</b-button>
+          </b-button-group>
+        </div>
+        <hr>
+        <b-form-group v-if="countriesForCheckboxes" v-slot="{ ariaDescribedby }">
+          <b-form-checkbox-group
+            id="countries-to-display"
+            v-model="countriesToDisplay"
+            :options="countriesForCheckboxes"
+            :aria-describedby="ariaDescribedby"
+            name="countries-to-display"
+            class="d-flex flex-column"
+          />
+        </b-form-group>
+      </div>
+    </b-sidebar>
     <h2>
       Most recent policy positions by country, by vaccine for {{ code.code }}
       <span v-for="codeItem of otherCodes" :key="codeItem.code" class="text-muted" style="font-size: 1rem"><NuxtLink :to="`${codeItem.code}`">(switch to {{ codeItem.code }})</NuxtLink></span>
@@ -20,6 +57,9 @@
       <template #head()="data">
         <template v-if="data.column === 'name'">
           {{ data.label }}
+          <b-button v-b-toggle.country-filter variant="link">
+            <b-icon-filter v-b-popover.hover="'Select countries to display'" />
+          </b-button>
         </template>
         <template v-else>
           <div class="rotate">
@@ -57,7 +97,8 @@ export default {
       codes: [
         { code: 'pregnancy', key: 'pregnancyCode', component: 'PregnancyLactationCodeIcons' },
         { code: 'lactation', key: 'lactationCode', component: 'PregnancyLactationCodeIcons' }
-      ]
+      ],
+      countriesToDisplay: this.$store.state.coreData.countries.filter(country => country.name !== 'Global').map(country => country.id)
     }
   },
   computed: {
@@ -86,8 +127,8 @@ export default {
         }))
     },
     countryListItems () {
-      return this.$store.state.coreData.countries
-        .filter(country => country.name !== 'Global')
+      return this.countriesNotGlobal
+        .filter(country => this.countriesToDisplay.includes(country.id))
         .map((country) => {
           const countryListItem = {
             id: country.id,
@@ -99,6 +140,16 @@ export default {
           }
           return countryListItem
         })
+    },
+    countriesForCheckboxes () {
+      return this.countriesNotGlobal
+        .map((country) => {
+          return { text: country.name, value: country.id }
+        })
+    },
+    countriesNotGlobal () {
+      return this.$store.state.coreData.countries
+        .filter(country => country.name !== 'Global')
     },
     otherCodes () {
       return this.codes.filter(codeItem => codeItem.code !== this.code.code)
@@ -112,6 +163,19 @@ export default {
         .sort((vaccine1, vaccine2) => {
           return vaccine2.policies.length - vaccine1.policies.length
         })
+    }
+  },
+  methods: {
+    selectAllCountries () {
+      this.countriesToDisplay = this.countriesForCheckboxes.map(country => country.value)
+    },
+    selectNoneCountries () {
+      this.countriesToDisplay = []
+    },
+    selectWbRegionCountries (region) {
+      this.countriesToDisplay = this.countriesNotGlobal
+        .filter(country => country.wbRegion === region)
+        .map(country => country.id)
     }
   }
 }
