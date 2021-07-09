@@ -11,17 +11,35 @@
         <div class="d-flex justify-content-end align-items-baseline text-primary">
           Select
           <b-button-group size="sm">
-            <b-button variant="link" @click="selectAllCountries">All</b-button> .
+            <b-button variant="link" @click="selectAllCountries">
+              All
+            </b-button> .
             <b-dropdown text="Regions" variant="link">
-              <b-button variant="link" @click="selectWbRegionCountries('East Asia and Pacific')">East Asia and Pacific</b-button>
-              <b-button variant="link" @click="selectWbRegionCountries('Europe and Central Asia')">Europe and Central Asia</b-button>
-              <b-button variant="link" @click="selectWbRegionCountries('Latin America and Caribbean')">Latin America and Caribbean</b-button>
-              <b-button variant="link" @click="selectWbRegionCountries('Middle East and North Africa')">Middle East and North Africa</b-button>
-              <b-button variant="link" @click="selectWbRegionCountries('North America')">North America</b-button>
-              <b-button variant="link" @click="selectWbRegionCountries('South Asia')">South Asia</b-button>
-              <b-button variant="link" @click="selectWbRegionCountries('Sub-Saharan Africa')">Sub-Saharan Africa</b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('East Asia and Pacific')">
+                East Asia and Pacific
+              </b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Europe and Central Asia')">
+                Europe and Central Asia
+              </b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Latin America and Caribbean')">
+                Latin America and Caribbean
+              </b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Middle East and North Africa')">
+                Middle East and North Africa
+              </b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('North America')">
+                North America
+              </b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('South Asia')">
+                South Asia
+              </b-button>
+              <b-button variant="link" @click="selectWbRegionCountries('Sub-Saharan Africa')">
+                Sub-Saharan Africa
+              </b-button>
             </b-dropdown>
-            <b-button variant="link" @click="selectNoneCountries">None</b-button>
+            <b-button variant="link" @click="selectNoneCountries">
+              None
+            </b-button>
           </b-button-group>
         </div>
         <hr>
