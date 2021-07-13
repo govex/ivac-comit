@@ -1,5 +1,5 @@
 export default (somethingIWontUse, inject) => {
-  inject('getMostRecentOrPermissivePolicy', (country, code, vaccines = [], authorityTypes = ['Public Health Authority']) => {
+  inject('getMostRecentOrPermissivePolicy', (country, code, vaccines = [], authorityTypes = ['Public Health Authority'], beforeDate = undefined) => {
     if (!country) { return undefined }
     if (!code) { return undefined }
 
@@ -13,11 +13,19 @@ export default (somethingIWontUse, inject) => {
     if (phas.length === 0) { return undefined }
 
     // gather the policies from the filtered authorities, don't nest the arrays, sort them by date published / updated / accessed
-    const phaPolicies = phas.flatMap(authority => (authority.policies ? authority.policies : []))
+    // also remove policies which don't have the code field we are looking for
+    let phaPolicies = phas.flatMap(authority => (authority.policies ? authority.policies : []))
       .filter(policy => policy[code])
       .sort((policy1, policy2) => {
         return (policy2['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown').localeCompare((policy1['datePublished/lastUpdated'] || policy1.dateAccessed || 'unknown'))
       })
+
+    // remove any policies after beforeDate, if it's specified
+    if (beforeDate) {
+      phaPolicies = phaPolicies.filter((policy) => {
+        return (policy['datePublished/lastUpdated'] || policy.dateAccessed) <= beforeDate
+      })
+    }
 
     // if we don't have any resulting policies, there's no more work to do
     if (phaPolicies.length === 0) { return undefined }

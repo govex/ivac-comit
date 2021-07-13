@@ -8,6 +8,10 @@
         </h1>
         <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" />
       </b-row>
+      <b-row class="flex-column justify-content-center align-items-center">
+        <input v-model="timeWarpIndex" type="range" min="0" :max="timeWarpDates.length - 1" class="w-75 custom-range">
+        <span>{{ (timeWarpIndex <= timeWarpDates.length - 2) ? timeWarpDate : 'Present' }}</span>
+      </b-row>
       <b-row class="flex-column">
         <client-only>
           <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="mostPermissivePregnancyCode" />
@@ -133,7 +137,8 @@ export default {
         { key: 'pregnancyTest', class: 'text-center align-middle', sortable: true },
         { key: 'wbRegion', label: 'Region', class: 'align-middle text-truncate', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle text-truncate', sortable: true }
-      ]
+      ],
+      timeWarpIndex: Number.MAX_VALUE
     }
   },
   head () {
@@ -146,7 +151,7 @@ export default {
       let countryListItems = this.$store.state.coreData.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
-            const mostRecentOrPermissivePolicy = this.$root.$getMostRecentOrPermissivePolicy(country, 'pregnancyCode', this.vaccinesFilters)
+            const mostRecentOrPermissivePolicy = this.$root.$getMostRecentOrPermissivePolicy(country, 'pregnancyCode', this.vaccinesFilters, undefined, this.timeWarpDate)
             const outputRow = {
               id: country.id,
               name: country.name,
@@ -158,7 +163,8 @@ export default {
               providerVisit: mostRecentOrPermissivePolicy?.pregnancyCounselingAndInformation,
               wbRegion: country.wbRegion,
               wbIncomeLevelName: country.wbIncomeLevelName,
-              wbIncomeLevelSort: country.wbIncomeLevelSort
+              wbIncomeLevelSort: country.wbIncomeLevelSort,
+              policyDate: mostRecentOrPermissivePolicy?.['datePublished/lastUpdated'] || mostRecentOrPermissivePolicy?.dateAccessed
             }
             result.push(outputRow)
           }
@@ -191,6 +197,28 @@ export default {
     },
     policyPositionFilters () {
       return this.$route.query.policyPositions?.split(',').map(value => parseInt(value)) || undefined
+    },
+    timeWarpDate () {
+      if (this.timeWarpIndex === Infinity) { return undefined }
+      else { return this.timeWarpDates[this.timeWarpIndex] }
+    },
+    timeWarpDates () {
+      const twInfo = this.$store.state.coreData.policies.reduce((range, policy) => {
+        const policyDate = policy['datePublished/lastUpdated'] || policy.dateAccessed
+        range.max = policyDate > range.max ? policyDate : range.max
+        range.min = policyDate < range.min ? policyDate : range.min
+        return range
+      }, { min: '9999-99-99', max: '0000-00-00' })
+      if (twInfo.min > twInfo.max) { return [] }
+      const timeWarpDates = []
+      twInfo.min = new Date(twInfo.min)
+      twInfo.max = new Date(twInfo.max)
+      do {
+        timeWarpDates.push(twInfo.min.toISOString().slice(0, 10))
+        twInfo.min.setDate(twInfo.min.getDate() + 14)
+      } while (twInfo.min < twInfo.max)
+      timeWarpDates.push(twInfo.max.toISOString().slice(0,10))
+      return timeWarpDates
     },
     vaccinesFilters () {
       return this.$route.query.vaccine
