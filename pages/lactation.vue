@@ -148,7 +148,11 @@ export default {
         .reduce((result, country) => {
           if (country.wbRegion) {
             // get the most permissive/recent policy for across the vaccines specified, based upon lactation code
-            const mostPermissiveLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy(country, 'lactationCode', this.vaccinesFilters)
+            const mostPermissiveLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy({
+              country,
+              code: 'lactationCode',
+              vaccineIds: this.vaccinesFilters
+            })
             const outputRow = {
               id: country.id,
               name: country.name,

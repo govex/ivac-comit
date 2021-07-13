@@ -63,8 +63,8 @@ export default {
           countries: vaccine.countries
             ? vaccine.countries.reduce((countryResults, country) => {
               return countryResults.concat({
-                pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy(country, 'pregnancyCode', [vaccine.id])?.pregnancyCode,
-                lactationCode: this.$root.$getMostRecentOrPermissivePolicy(country, 'lactationCode', [vaccine.id])?.lactationCode
+                pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
+                lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode
               })
             }, [])
             : []

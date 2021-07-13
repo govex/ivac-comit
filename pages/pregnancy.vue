@@ -151,7 +151,12 @@ export default {
       let countryListItems = this.$store.state.coreData.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
-            const mostRecentOrPermissivePolicy = this.$root.$getMostRecentOrPermissivePolicy(country, 'pregnancyCode', this.vaccinesFilters, undefined, this.timeWarpDate)
+            const mostRecentOrPermissivePolicy = this.$root.$getMostRecentOrPermissivePolicy({
+              country,
+              code: 'pregnancyCode',
+              vaccineIds: this.vaccinesFilters,
+              beforeDate: this.timeWarpDate
+            })
             const outputRow = {
               id: country.id,
               name: country.name,

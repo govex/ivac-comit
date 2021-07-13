@@ -154,7 +154,7 @@ export default {
             code: country.iso3166Alpha2Code
           }
           for (const vaccine of this.vaccines) {
-            countryListItem[vaccine.id] = this.$root.$getMostRecentOrPermissivePolicy(country, this.code.key, [vaccine.id])?.[this.code.key]
+            countryListItem[vaccine.id] = this.$root.$getMostRecentOrPermissivePolicy({ country, code: this.code.key, vaccineIds: [vaccine.id] })?.[this.code.key]
           }
           return countryListItem
         })

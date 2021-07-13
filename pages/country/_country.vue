@@ -210,14 +210,14 @@ export default {
     },
     mostPermissivePregnancyCode () {
       if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy(this.country, 'pregnancyCode')?.pregnancyCode
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })?.pregnancyCode
       } else {
         return undefined
       }
     },
     mostPermissiveLactationCode () {
       if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy(this.country, 'lactationCode')?.lactationCode
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })?.lactationCode
       } else {
         return undefined
       }

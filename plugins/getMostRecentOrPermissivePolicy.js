@@ -1,13 +1,24 @@
 export default (somethingIWontUse, inject) => {
-  inject('getMostRecentOrPermissivePolicy', (country, code, vaccines = [], authorityTypes = ['Public Health Authority'], beforeDate = undefined) => {
-    if (!country) { return undefined }
-    if (!code) { return undefined }
+  inject('getMostRecentOrPermissivePolicy', (options) => {
+    // check for options and set defaults
+    if (!options.country) { return undefined }
+    if (!options.code) { return undefined }
+    if (!Array.isArray(options.vaccineIds)) { options.vaccineIds = [] }
+    if (!Array.isArray(options.authorityTypes)) { options.authorityTypes = ['Public Health Authority'] }
+    if (options.beforeDate) {
+      try {
+        const beforeDate = new Date(options.beforeDate)
+        options.beforeDate = beforeDate.toISOString().slice(0, 10)
+      } catch {
+        options.beforeDate = undefined
+      }
+    }
 
     // filter the authorities, by authority type, or return all authorities if no authorityTypes specified.
-    const phas = authorityTypes.length === 0
-      ? (country.authorities ? country.authorities : [])
-      : (country.authorities ? country.authorities : [])
-          .filter(authority => authorityTypes.includes(authority.authorityType))
+    const phas = options.authorityTypes.length === 0
+      ? (options.country.authorities || [])
+      : (options.country.authorities || [])
+          .filter(authority => options.authorityTypes.includes(authority.authorityType))
 
     // if we don't have any authorities, there's no more work to do
     if (phas.length === 0) { return undefined }
@@ -15,15 +26,15 @@ export default (somethingIWontUse, inject) => {
     // gather the policies from the filtered authorities, don't nest the arrays, sort them by date published / updated / accessed
     // also remove policies which don't have the code field we are looking for
     let phaPolicies = phas.flatMap(authority => (authority.policies ? authority.policies : []))
-      .filter(policy => policy[code])
+      .filter(policy => policy[options.code])
       .sort((policy1, policy2) => {
         return (policy2['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown').localeCompare((policy1['datePublished/lastUpdated'] || policy1.dateAccessed || 'unknown'))
       })
 
     // remove any policies after beforeDate, if it's specified
-    if (beforeDate) {
+    if (options.beforeDate) {
       phaPolicies = phaPolicies.filter((policy) => {
-        return (policy['datePublished/lastUpdated'] || policy.dateAccessed) <= beforeDate
+        return (policy['datePublished/lastUpdated'] || policy.dateAccessed) <= options.beforeDate
       })
     }
 
@@ -38,10 +49,10 @@ export default (somethingIWontUse, inject) => {
       })
     )
 
-    // remove any vaccine items which are being filtered out (via the 'vaccines' parameter in this method call)
-    if (vaccines.length > 0) {
+    // remove any vaccine items which are being filtered out (via the 'vaccineIds' parameter in this method call)
+    if (options.vaccineIds.length > 0) {
       phaPoliciesVaccineIdSet.forEach((vaccineId) => {
-        if (!vaccines.includes(vaccineId)) {
+        if (!options.vaccineIds.includes(vaccineId)) {
           phaPoliciesVaccineIdSet.delete(vaccineId)
         }
       })
@@ -69,7 +80,7 @@ export default (somethingIWontUse, inject) => {
         return false
       })
       .sort((policy1, policy2) => {
-        return policy1[code][0].rank - policy2[code][0].rank
+        return policy1[options.code][0].rank - policy2[options.code][0].rank
       })
 
     // return the top item from this policy array; if the array is empty, it will return undefined
