@@ -9,12 +9,21 @@
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="w-100 justify-content-around lead">
-            <b-nav-item-dropdown text="Vaccine Policies">
+            <b-nav-item-dropdown text="Policies">
               <b-dropdown-item to="/pregnancy">
-                Pregnancy
+                Pregnancy data explorer
               </b-dropdown-item>
               <b-dropdown-item to="/lactation">
-                Lactation
+                Lactation data explorer
+              </b-dropdown-item>
+              <b-dropdown-item to="/vaccines/matrix/pregnancy">
+                Pregnancy vaccine/country matrix
+              </b-dropdown-item>
+              <b-dropdown-item to="/vaccines/matrix/lactation">
+                Lactation vaccine/country matrix
+              </b-dropdown-item>
+              <b-dropdown-item to="/vaccines/summary">
+                Vaccine comparison summary
               </b-dropdown-item>
             </b-nav-item-dropdown>
             <b-nav-item to="/about/methodology">
