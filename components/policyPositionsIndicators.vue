@@ -1,6 +1,6 @@
 <template>
   <div class="indicators d-flex text-center text-white" :style="{ fontSize: fontSize }">
-    <component :is="indicatorIs" v-if="displayedIndicators.includes(1)" :to="linkProps(1)" class="indicator recommended-bg text-center">
+    <component :is="indicatorIs" v-if="show1" :to="linkProps(1)" class="indicator recommended-bg text-center">
       <h2 v-if="showCounts">
         {{ keyIndicators.recommended }}
       </h2>
@@ -8,10 +8,10 @@
         Recommended for some or all
       </strong>
       <strong>
-        <b-icon-info-circle v-b-popover.hover="`An explicit recommendation that some or all ${statusWord} people should receive vaccination.`" />
+        <b-icon-info-circle v-b-popover.hover="`An explicit recommendation that some or all ${statusWord} people should receive vaccine.`" />
       </strong>
     </component>
-    <component :is="indicatorIs" v-if="displayedIndicators.includes(2)" :to="linkProps(2)" class="indicator permitted-for-all-bg">
+    <component :is="indicatorIs" v-if="show2" :to="linkProps(2)" class="indicator permitted-for-all-bg">
       <h2 v-if="showCounts">
         {{ keyIndicators.permittedForAll }}
       </h2>
@@ -19,10 +19,10 @@
         Permitted
       </strong>
       <strong>
-        <b-icon-info-circle v-b-popover.hover="`All ${statusWord} people can receive, may receive, or can choose to receive vaccination.`" />
+        <b-icon-info-circle v-b-popover.hover="`All ${statusWord} people can receive, may receive, or can choose to receive vaccine.`" />
       </strong>
     </component>
-    <component :is="indicatorIs" v-if="displayedIndicators.includes(3)" :to="linkProps(3)" class="indicator permitted-with-qualifications-bg">
+    <component :is="indicatorIs" v-if="show3" :to="linkProps(3)" class="indicator permitted-with-qualifications-bg">
       <h2 v-if="showCounts">
         {{ keyIndicators.permittedWithQualifications }}
       </h2>
@@ -30,10 +30,10 @@
         Permitted with qualifications
       </strong>
       <strong>
-        <b-icon-info-circle v-b-popover.hover="`Only certain groups of ${statusWord} people, e.g., ${statusWord} health workers, ${statusWord} people with underlying conditions, can, may, or can choose to receive vaccination.`" />
+        <b-icon-info-circle v-b-popover.hover="`Only certain groups of ${statusWord} people, e.g., ${statusWord} health workers, ${statusWord} people with underlying conditions, can, may, or can choose to receive vaccine.`" />
       </strong>
     </component>
-    <component :is="indicatorIs" v-if="displayedIndicators.includes(4)" :to="linkProps(4)" class="indicator not-recommended-with-exceptions-bg">
+    <component :is="indicatorIs" v-if="show4" :to="linkProps(4)" class="indicator not-recommended-with-exceptions-bg">
       <h2 v-if="showCounts">
         {{ keyIndicators.notRecommendedWithExceptions }}
       </h2>
@@ -41,10 +41,10 @@
         Not recommended but with exceptions
       </strong>
       <strong>
-        <b-icon-info-circle v-b-popover.hover="`A statement stating ${statusWord} people should not receive vaccination, with certain exceptions.`" />
+        <b-icon-info-circle v-b-popover.hover="`A statement stating ${statusWord} people should not receive vaccine, with certain exceptions.`" />
       </strong>
     </component>
-    <component :is="indicatorIs" v-if="displayedIndicators.includes(5)" :to="linkProps(5)" class="indicator prohibited-bg">
+    <component :is="indicatorIs" v-if="show5" :to="linkProps(5)" class="indicator prohibited-bg">
       <h2 v-if="showCounts">
         {{ keyIndicators.notRecommended }}
       </h2>
@@ -55,7 +55,7 @@
         <b-icon-info-circle v-b-popover.hover="`People who are ${statusWord} should not receive the vaccine or vaccine is contraindicated.`" />
       </strong>
     </component>
-    <div v-if="displayedIndicators.includes('unclear') && keyIndicators.unclear > 0" class="indicator unclear-bg text-dark">
+    <div v-if="showUnclear" class="indicator unclear-bg text-dark">
       <h2 v-if="showCounts">
         {{ keyIndicators.unclear }}
       </h2>
@@ -66,7 +66,7 @@
         <b-icon-info-circle v-b-popover.hover="'Within the guidance document, there is language that could be interpreted as indicating different policy positions'" />
       </strong>
     </div>
-    <component :is="indicatorIs" v-if="displayedIndicators.includes(999) && keyIndicators.noLanguage > 0" :to="linkProps(999)" class="indicator no-language-bg">
+    <component :is="indicatorIs" v-if="show999" :to="linkProps(999)" class="indicator no-language-bg">
       <h2 v-if="showCounts">
         {{ keyIndicators.noLanguage }}
       </h2>
@@ -88,7 +88,7 @@
         <b-icon-info-circle v-b-popover.hover="`The total number of countries with policies regarding ${statusWord} people.`" />
       </strong>
     </div> -->
-    <div v-if="displayedIndicators.includes('inTransition') && keyIndicators.inTransition > 0" class="indicator in-transition-bg text-dark">
+    <div v-if="showIntransition" class="indicator in-transition-bg text-dark">
       <h2 v-if="showCounts">
         {{ keyIndicators.inTransition }}
       </h2>
@@ -187,6 +187,30 @@ export default {
           result.noLanguage = result.total - result.notRecommended - result.notRecommendedWithExceptions - result.permittedWithQualifications - result.permittedForAll - result.recommended - result.unclear
           return result
         }, { recommended: 0, permittedForAll: 0, permittedWithQualifications: 0, notRecommendedWithExceptions: 0, notRecommended: 0, noLanguage: 0, unclear: 0, inTransition: 0, total: 0 })
+    },
+    show1 () {
+      return this.displayedIndicators.includes(1)
+    },
+    show2 () {
+      return this.displayedIndicators.includes(2)
+    },
+    show3 () {
+      return this.displayedIndicators.includes(3)
+    },
+    show4 () {
+      return this.displayedIndicators.includes(4)
+    },
+    show5 () {
+      return this.displayedIndicators.includes(5)
+    },
+    show999 () {
+      return this.displayedIndicators.includes(999) && (this.countryListItems.length === 0 || this.keyIndicators.noLanguage > 0)
+    },
+    showUnclear () {
+      return this.displayedIndicators.includes('unclear') && this.keyIndicators.unclear > 0
+    },
+    showInTransition () {
+      return this.displayedIndicators.includes('inTransition') && this.keyIndicators.inTransition > 0
     }
   },
   methods: {

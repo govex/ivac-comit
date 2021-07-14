@@ -3,7 +3,10 @@ title: Our Approach
 description: "Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in persons trying to become pregnant, pregnant, and lactating people." 
 ---
 
-Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in pregnant and lactating people. Information from publicly available sources is obtained from departments or ministries of health, and state-sponsored COVID-19 dedicated websites. Sources include vaccine recommendations for use, consent forms, fact sheets, FAQs, press releases, government websites and official government social media posts. All the sources retrieved for a given country, along with their classification, date published, and vaccine specification, can be viewed on the country profile page. When multiple source documents are available for a given country and public health authority, the unfiltered maps and tables will display the most permissive pregnancy or lactation code across all vaccine products, based on the set of the most recently updated and available guidance documents for each product. When filtering by vaccine, the maps & tables retrieve the most recent pregnancy or lactation policy position for that specific vaccine among countries that specify guidance by product. In rare instances, a single source document contains language that could be interpreted as indicating different policy positions or categories. These appear in the map with a “red” border, and the distinct positions are color coded accordingly in the summary tables and country profile pages. The tracker reflects the most currently available data at the time of each round of survey completion, with surveys completed at least every 3 weeks. <a href="/documents/comit-data-entry-survey-2021-06-14.pdf" target="_blank">View our survey</a>. For more information on our methods and procedures, view our <a href="/documents/comit-data-collection-protocol-2021-06-23.pdf" target="_blank">data collection protocol</a>.
+
+Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in pregnant and lactating people. Information from publicly available sources is obtained from departments or ministries of health, and state-sponsored COVID-19 dedicated websites. Sources include vaccine recommendations for use, consent forms, fact sheets, FAQs, press releases, government websites and official government social media posts. Where multiple sources are available for a given country and public health authority, the one with the most permissive pregnancy or lactation code is displayed on the map, regardless of vaccine product. Filtering by vaccine product retrieves the most permissive pregnancy or lactation code for that vaccine in each country. All the sources retrieved for a given country, along with their classification, date published, and vaccine specification, can be viewed on the country profile page. The tracker reflects the most currently available data at the time of each round of survey completion, with surveys completed at least every 3 weeks. <a href="/documents/comit-data-entry-survey-2021-06-14.pdf" target="_blank">View our survey</a>.
+
+For more information on our methods and procedures, view our <a href="/documents/comit-data-collection-protocol-2021-06-23.pdf" target="_blank">data collection protocol</a>.
 
 
 <br>
@@ -18,28 +21,28 @@ Our aim is to identify, collect, and present publicly available country and glob
   <h1 class="recommended"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Recommended for some or all</strong>
-    <span>An explicit recommendation that some or all pregnant people should receive vaccination.</span>
+    <span>An explicit recommendation that some or all pregnant people should receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="permitted-for-all"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Permitted</strong>
-    <span>All pregnant people can receive, may receive, or can choose to receive vaccination.</span>
+    <span>All pregnant people can receive, may receive, or can choose to receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="permitted-with-qualifications"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Permitted with qualifications</strong>
-    <span>Only certain groups of pregnant people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccination.</span>
+    <span>Only certain groups of pregnant people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="not-recommended-with-exceptions"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Not recommended but with exceptions</strong>
-    <span>A statement stating pregnant people should not receive vaccination, with certain  exexceptions provided.</span>
+    <span>A statement stating pregnant people should not receive vaccine, with certain exceptions.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
@@ -75,28 +78,28 @@ For more detailed information on how pregnancy policies were categorized, please
   <h1 class="recommended"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Recommended for some or all</strong>
-    <span>An explicit recommendation that some or all lactating people should receive vaccination.</span>
+    <span>An explicit recommendation that some or all lactating people should receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="permitted-for-all"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Permitted</strong>
-    <span>All lactating people can receive, may receive, or can choose to receive vaccination.</span>
+    <span>All lactating people can receive, may receive, or can choose to receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="permitted-with-qualifications"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Permitted with qualifications</strong>
-    <span>Only certain groups of lactating people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccination.</span>
+    <span>Only certain groups of lactating people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="not-recommended-with-exceptions"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Not recommended but with exceptions</strong>
-    <span>A statement stating lactating people should not receive vaccination, with certain  exexceptions provided.</span>
+    <span>A statement stating lactating people should not receive vaccine, with certain  exceptions.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
