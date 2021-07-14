@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h2>Vaccine Comparison</h2>
+    <h2>Vaccine comparison summary</h2>
+    <p>This table shows counts of most recent policy positions, by vaccine, for both pregnancy and lactation.</p>
     <b-table
       :items="vaccineList"
       primary-key="id"
@@ -10,6 +11,9 @@
       sort-by="countryCount"
       sort-desc
     >
+      <template #head(countryCount)>
+        Countries administering <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries in which each vaccine is presently being administered.'" />
+      </template>
       <template #cell(displayName)="data">
         <nuxt-link :to="`/vaccine/${data.item.id}`">
           {{ data.value }}
@@ -38,6 +42,12 @@
         />
       </template>
     </b-table>
+    <b-row class="mt-5">
+      <h4>
+        Color key
+      </h4>
+      <PolicyPositionsIndicators />
+    </b-row>
   </div>
 </template>
 
@@ -47,7 +57,7 @@ export default {
     return {
       vaccineListFields: [
         { key: 'displayName', label: 'Name', sortable: true },
-        { key: 'countryCount', label: 'Countries', sortable: true },
+        { key: 'countryCount', label: 'Countries', class: 'text-center', sortable: true },
         { key: 'pregnancy', label: 'Pregnancy policy positions' },
         { key: 'lactation', label: 'Lactation policy positions' }
       ]
