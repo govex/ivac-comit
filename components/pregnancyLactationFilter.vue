@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-alert variant="success" class="d-flex flex-column flex-nowrap justify-content-stretch" show>
-      <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
+      <div class="d-flex flex-row flex-nowrap justify-content-between align-items-center">
         <span>{{ filterText }}.</span>
         <span>
           <!-- <b-button v-if="filtering" variant="link" size="sm" :to="emptyRouteObject">
@@ -17,16 +17,16 @@
           </b-button>
         </span>
       </div>
-      <div class="d-flex flex-row flex-nowrap justify-content-start">
+      <div class="mt-2 d-flex flex-row justify-content-between">
+        <span class="pr-2" style="width: 10em">Change date <b-icon-info-circle v-b-popover.hover="'Use this slider to explore the global policy landscape as it evolved over time. While we try to determine each policy\'s publication date, in some cases it isn\'t available so we use the date we examined the policy.'" /></span>
         <input
           v-model="timeWarpIndex"
           type="range"
           min="0"
           :max="timeWarpDates.length - 1"
-          class="w-75 custom-range"
+          class="form-control-range"
           @change="timeWarpIndexChanged"
         >
-        <span>{{ timeWarpText }}</span>
       </div>
     </b-alert>
     <b-sidebar
@@ -144,9 +144,9 @@ export default {
     filterText () {
       if (this.selectedVaccine === 'all') {
         if (this.selectedPolicyPositions.length === this.policyPositions.length) {
-          return 'Showing the most permissive policy position for each country for all vaccines'
+          return `Showing the most permissive policy position ${this.timeWarpText} for each country for all vaccines`
         } else {
-          return 'Showing countries where the most permissive policy position for all vaccines is ' + this.selectedPolicyPositions
+          return `Showing countries where the most permissive policy position ${this.timeWarpText} for all vaccines is ${this.selectedPolicyPositions}`
             .map((selectedPolicyPosition) => {
               const policyPosition = this.policyPositions
                 .find(policyPosition => policyPosition.value === selectedPolicyPosition)
@@ -157,14 +157,14 @@ export default {
       } else if (this.selectedPolicyPositions.length === this.policyPositions.length) {
         const vaccine = this.vaccines.find(vaccine => vaccine.value === this.selectedVaccine)
         if (vaccine) {
-          return `Showing the most recent policy position for each country for ${vaccine.text}`
+          return `Showing the most recent policy position ${this.timeWarpText} for each country for ${vaccine.text}`
         } else {
           return 'The filtering system encountered an error. Please try reloading the page'
         }
       } else {
         const vaccine = this.vaccines.find(vaccine => vaccine.value === this.selectedVaccine)
         if (vaccine) {
-          return `Showing countries where the most recent policy position for ${vaccine.text} is ` + this.selectedPolicyPositions
+          return `Showing countries where the most recent policy position ${this.timeWarpText} for ${vaccine.text} is ` + this.selectedPolicyPositions
             .map((selectedPolicyPosition) => {
               const policyPosition = this.policyPositions
                 .find(policyPosition => policyPosition.value === selectedPolicyPosition)
