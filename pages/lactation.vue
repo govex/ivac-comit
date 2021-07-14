@@ -145,7 +145,7 @@ export default {
   },
   computed: {
     countryListItems () {
-      let countryListItems = this.$store.state.coreData.countries
+      let countryListItems = this.$store.state.countries
         .reduce((result, country) => {
           if (country.wbRegion) {
             // get the most permissive/recent policy for across the vaccines specified, based upon lactation code
@@ -207,7 +207,7 @@ export default {
       return this.$route.query.vaccine
     },
     whoAuthority () {
-      return this.$store.state.coreData.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
+      return this.$store.state.authorities.find(authority => authority.id === 'recFs2GvQUntKmKPz')
     },
     whoAuthorityVaccineRecommendations () {
       if (this.vaccinesFilters) {

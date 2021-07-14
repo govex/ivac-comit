@@ -72,7 +72,7 @@ export default {
       const authorityId = this.authorityId === 'who'
         ? 'recFs2GvQUntKmKPz'
         : this.authorityId
-      return this.$store.state.coreData.authorities.find(authority => authority.id === authorityId)
+      return this.$store.state.authorities.find(authority => authority.id === authorityId)
     },
     authorityId () {
       return this.$route.params.authority

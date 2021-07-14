@@ -39,7 +39,7 @@ export default {
     }
   },
   created () {
-    this.countryListItems = this.$store.state.coreData.countries
+    this.countryListItems = this.$store.state.countries
       .reduce((result, country) => {
         if (country.wbRegion) {
           const mostPermissivePolicy = this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode' })

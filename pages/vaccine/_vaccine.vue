@@ -125,7 +125,7 @@ export default {
         : []
     },
     vaccine () {
-      return this.$store.state.coreData.vaccines.find(vaccine => vaccine.id === this.vaccineId)
+      return this.$store.state.vaccines.find(vaccine => vaccine.id === this.vaccineId)
     },
     vaccineId () {
       return this.$route.params.vaccine

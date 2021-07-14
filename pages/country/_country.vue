@@ -193,13 +193,13 @@ export default {
     country () {
       const countryCode = this.countryCode?.toUpperCase()
       if (countryCode === 'GLOBAL') {
-        return this.$store.state.coreData.countries.find(country => country.id === 'recqmhXt2Ey2DiVOd')
+        return this.$store.state.countries.find(country => country.id === 'recqmhXt2Ey2DiVOd')
       }
-      let country = this.$store.state.coreData.countries.find(country => country.iso3166Alpha2Code === countryCode)
+      let country = this.$store.state.countries.find(country => country.iso3166Alpha2Code === countryCode)
       if (country) {
         return country
       }
-      country = this.$store.state.coreData.countries.find(country => country.id === this.countryCode)
+      country = this.$store.state.countries.find(country => country.id === this.countryCode)
       if (country) {
         return country
       }

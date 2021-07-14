@@ -116,7 +116,7 @@ export default {
         { code: 'pregnancy', key: 'pregnancyCode', component: 'PregnancyLactationCodeIcons' },
         { code: 'lactation', key: 'lactationCode', component: 'PregnancyLactationCodeIcons' }
       ],
-      countriesToDisplay: this.$store.state.coreData.countries.filter(country => country.name !== 'Global').map(country => country.id)
+      countriesToDisplay: this.$store.state.countries.filter(country => country.name !== 'Global').map(country => country.id)
     }
   },
   computed: {
@@ -166,14 +166,14 @@ export default {
         })
     },
     countriesNotGlobal () {
-      return this.$store.state.coreData.countries
+      return this.$store.state.countries
         .filter(country => country.name !== 'Global')
     },
     otherCodes () {
       return this.codes.filter(codeItem => codeItem.code !== this.code.code)
     },
     vaccines () {
-      return this.$store.state.coreData.vaccines
+      return this.$store.state.vaccines
         .slice()
         .filter((vaccine) => {
           return vaccine.policies && vaccine.policies.length > 1

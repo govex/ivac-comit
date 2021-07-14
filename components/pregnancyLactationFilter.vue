@@ -113,7 +113,7 @@ export default {
   },
   data () {
     const vaccines = [{ value: 'all', text: 'All' }]
-      .concat(this.$store.state.coreData.vaccines
+      .concat(this.$store.state.vaccines
         .map((vaccine) => {
           return { value: vaccine.id, text: vaccine.displayName }
         })
@@ -206,7 +206,7 @@ export default {
       }
     },
     timeWarpDates () {
-      const twInfo = this.$store.state.coreData.policies.reduce((range, policy) => {
+      const twInfo = this.$store.state.policies.reduce((range, policy) => {
         const policyDate = policy['datePublished/lastUpdated'] || policy.dateAccessed
         range.max = policyDate > range.max ? policyDate : range.max
         range.min = policyDate < range.min ? policyDate : range.min

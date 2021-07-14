@@ -84,7 +84,7 @@ export default {
       }, [])
     },
     vaccines () {
-      return this.$store.state.coreData.vaccines.filter(vaccine => vaccine.displayName)
+      return this.$store.state.vaccines.filter(vaccine => vaccine.displayName)
     }
   }
 
