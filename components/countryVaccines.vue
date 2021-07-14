@@ -16,7 +16,7 @@
         </template>
         <template #cell(displayName)="data">
           <b-link :to="`/vaccine/${data.item.id}`">
-            {{ data.value }}
+            <span style="font-size: 1.25rem">{{ data.value }}</span>
           </b-link>
         </template>
         <template #head(otherNames)>
@@ -62,12 +62,12 @@ export default {
   data () {
     return {
       vaccineListFields: [
-        { key: 'displayName', sortable: true },
-        { key: 'otherNames' },
-        { key: 'owidAdministration', sortable: true, class: 'text-center' },
-        { key: 'mostPermissivePregnancyCode', sortable: true, class: 'text-center' },
-        { key: 'mostPermissiveLactationCode', sortable: true, class: 'text-center' },
-        { key: 'otherCountryCount', sortable: true }
+        { key: 'displayName', sortable: true, class: 'align-middle' },
+        { key: 'otherNames', class: 'align-middle' },
+        { key: 'owidAdministration', sortable: true, class: 'text-center align-middle' },
+        { key: 'mostPermissivePregnancyCode', sortable: true, class: 'text-center align-middle' },
+        { key: 'mostPermissiveLactationCode', sortable: true, class: 'text-center align-middle' },
+        { key: 'otherCountryCount', sortable: true, class: 'align-middle' }
       ]
     }
   },

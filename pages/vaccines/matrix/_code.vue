@@ -6,6 +6,7 @@
       shadow
       backdrop
       backdrop-variant="dark"
+      small
     >
       <div class="p-3">
         <div class="d-flex justify-content-end align-items-baseline text-primary">

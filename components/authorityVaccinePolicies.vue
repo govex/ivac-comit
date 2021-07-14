@@ -16,7 +16,7 @@
         </template>
         <template #cell(displayName)="data">
           <b-link :to="`/vaccine/${data.item.id}`">
-            {{ data.value }}
+            <span style="font-size: 1.25rem">{{ data.value }}</span>
           </b-link>
         </template>
         <template #head(otherNames)>
@@ -56,11 +56,11 @@ export default {
   data () {
     return {
       vaccineListFields: [
-        { key: 'displayName', sortable: true },
-        { key: 'otherNames' },
-        { key: 'mostRecentPregnancyCode', sortable: true, class: 'text-center' },
-        { key: 'mostRecentLactationCode', sortable: true, class: 'text-center' },
-        { key: 'policyDate', sortable: true, class: 'text-center' }
+        { key: 'displayName', sortable: true, class: 'align-middle' },
+        { key: 'otherNames', class: 'align-middle' },
+        { key: 'mostRecentPregnancyCode', sortable: true, class: 'text-center align-middle' },
+        { key: 'mostRecentLactationCode', sortable: true, class: 'text-center align-middle' },
+        { key: 'policyDate', sortable: true, class: 'text-center align-middle' }
       ]
     }
   },

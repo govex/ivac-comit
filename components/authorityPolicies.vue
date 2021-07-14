@@ -44,7 +44,7 @@
           <template v-else-if="data.value">
             <div v-for="vaccine of data.value" :key="vaccine.id">
               <b-link :to="`/vaccine/${vaccine.id}`">
-                {{ vaccine.displayName }}
+                <span style="font-size: 1.25rem">{{ vaccine.displayName }}</span>
               </b-link>
             </div>
           </template>
@@ -82,12 +82,12 @@ export default {
   data () {
     return {
       policyListFields: [
-        { key: 'documentType', sortable: true },
-        { key: 'vaccines' },
-        { key: 'pregnancyCode', class: 'text-center', sortable: true },
-        { key: 'lactationCode', class: 'text-center', sortable: true },
-        { key: 'datePublished/lastUpdated', label: 'Date', sortable: true },
-        { key: 'link', label: '', class: 'text-center' }
+        { key: 'documentType', class: 'align-middle', sortable: true },
+        { key: 'vaccines', class: 'align-middle' },
+        { key: 'pregnancyCode', class: 'text-center align-middle', sortable: true },
+        { key: 'lactationCode', class: 'text-center align-middle', sortable: true },
+        { key: 'datePublished/lastUpdated', label: 'Date', class: 'align-middle', sortable: true },
+        { key: 'link', label: '', class: 'text-center align-middle' }
       ]
     }
   }

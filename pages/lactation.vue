@@ -83,7 +83,7 @@
         </template>
         <template #cell(name)="data">
           <b-link :to="data | countryUrl">
-            {{ data.item.name }}
+            <span style="font-size: 1.25rem">{{ data.item.name }}</span>
           </b-link>
         </template>
         <template #cell(mostPermissiveLactationCode)="data">
