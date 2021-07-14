@@ -12,11 +12,11 @@
       sort-desc
     >
       <template #head(countryCount)>
-        Countries administering <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries in which each vaccine is presently being administered.'" />
+        Countries <br> administering <br> <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries in which each vaccine is presently being administered.'" />
       </template>
       <template #cell(displayName)="data">
         <nuxt-link :to="`/vaccine/${data.item.id}`">
-          {{ data.value }}
+          <span style="font-size: 1.25rem">{{ data.value }}</span>
         </nuxt-link>
       </template>
       <template #cell(pregnancy)="data">
@@ -56,8 +56,8 @@ export default {
   data () {
     return {
       vaccineListFields: [
-        { key: 'displayName', label: 'Name', sortable: true },
-        { key: 'countryCount', label: 'Countries', class: 'text-center', sortable: true },
+        { key: 'displayName', label: 'Name', sortable: true, class: 'align-middle' },
+        { key: 'countryCount', label: 'Countries', class: 'text-center align-middle', sortable: true },
         { key: 'pregnancy', label: 'Pregnancy policy positions' },
         { key: 'lactation', label: 'Lactation policy positions' }
       ]

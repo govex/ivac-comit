@@ -1,27 +1,27 @@
-// custom.scss
+// comit.scss
 
-// All of your custom SCSS variables go first
-$primary:       #0E1723 ;
-$secondary:     #ffffff ;
-$light:         #F1F5F9 ;
-$dark:          #54BDC6 ;//then bootstrap & bootstrap-vue should be added after 
+// custom SCSS variables go first
+$primary:                         #0E1723 ;
+$secondary:                       #ffffff ;
+$light:                           #F1F5F9 ;
+$dark:                            #54BDC6 ;
 
+$link-color:                      #3d888f ;
 
-$link-color:    #54BDC6 ;
+$recommended:                     #3D7632  ;
+$permitted-for-all:               #54BCD6  ;
+$permitted-with-qualifications:   #FDB430  ;
+$not-recommended-with-exceptions: #FA774A  ;
+$prohibited:                      #9B002D  ;
+$no-language:                     darkgray ;
+$in-transition:                   #FF00FF  ;
+$unclear:                         #FF0000  ;
+$subgroup:                        blue     ;
 
-
-$recommended:                     #3D7632 ;
-$permitted-for-all:               #54BCD6 ;
-$permitted-with-qualifications:   #FDB430 ;
-$not-recommended-with-exceptions: #FA774A ;
-$prohibited:                      #9B002D ;
-$no-language:                     darkgray;
-$in-transition:                   #FF00FF;
-$unclear:                         #FF0000;
-
+//then bootstrap & bootstrap-vue should be added after 
 //so that they inherit the custom SCSS variables
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-vue/src/index';
+@import 'bootstrap/scss/bootstrap' ;
+@import 'bootstrap-vue/src/index' ;
 
 //all other custom scss files or css should be added here
 html, body { min-height: 100vh }
@@ -44,4 +44,4 @@ html, body { min-height: 100vh }
 .in-transition-bg {border: 3px solid $in-transition}
 .unclear { stroke: $unclear; stroke-width: 7; stroke-dasharray: 100 0; }
 .unclear-bg {border: 3px solid $unclear; stroke: $unclear}
-.subgroup-icon {color: blue; fill: blue;}
+.subgroup-icon {color: $subgroup; fill: $subgroup;}

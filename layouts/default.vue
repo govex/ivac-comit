@@ -94,7 +94,7 @@
             </p>
             <p>
               If you have questions or comments, or would like to notify us of any technical issues you are experiencing with COMIT, please
-              <b-link to="/about/contact" class="text-light">
+              <b-link to="/about/contact">
                 get in touch
               </b-link>
               . We welcome and appreciate your valuable feedback.

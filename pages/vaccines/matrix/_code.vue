@@ -71,6 +71,7 @@
       bordered
       small
       hover
+      tbody-td-class="align-middle"
     >
       <template #head()="data">
         <template v-if="data.column === 'name'">
@@ -95,7 +96,7 @@
       <template #cell()="data">
         <template v-if="data.field.key === 'name'">
           <NuxtLink :to="`/country/${data.item.code ? data.item.code.toLowerCase() : data.item.id}`">
-            {{ data.item.name }}
+            <span style="font-size: 1.25rem">{{ data.item.name }}</span>
           </NuxtLink>
         </template>
         <template v-else>
@@ -129,10 +130,11 @@ export default {
     },
     countryListFields () {
       return [
-        { key: 'name', label: 'Country / territory', sortable: true }
+        { key: 'name', label: 'Country / territory', sortable: true, class: 'align-middle' }
       ].concat(this.vaccines
         .map((vaccine) => {
           return {
+            class: 'align-middle',
             key: vaccine.id,
             label: vaccine.displayName,
             policyCount: this.countryListItems.reduce((count, countryItem) => {
