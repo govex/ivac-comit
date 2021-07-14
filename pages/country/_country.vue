@@ -37,11 +37,8 @@
           <div class="card w-50 m-2 p-4 justify-content-start">
             <h2>Pregnancy</h2>
             <template v-if="mostPermissivePregnancyCode">
-              <h1>
-                <PregnancyLactationCodeIcons :codes="mostPermissivePregnancyCode" />
-              </h1>
-              <span class="m-3">{{ mostPermissivePregnancyCode | showValues }}</span>
-              <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" show>
+              <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyCodes" />
+              <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" class="my-3" show>
                 Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
               </b-alert>
               <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
@@ -61,10 +58,7 @@
           <div class="card w-50 m-2 p-4 justify-content-start">
             <h2>Lactation</h2>
             <template v-if="mostPermissiveLactationCode">
-              <h1>
-                <PregnancyLactationCodeIcons :codes="mostPermissiveLactationCode" />
-              </h1>
-              <span class="m-3">{{ mostPermissiveLactationCode | showValues }}</span>
+              <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationCodes" />
               <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
                 Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
               </b-alert>
@@ -84,10 +78,6 @@
           </div>
         </div>
       </div>
-      <h4 class="mt-4">
-        Legend
-      </h4>
-      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
       <div class="my-5">
         <h2>Vaccines</h2>
         <CountryVaccines :country="country">
@@ -129,6 +119,10 @@
           <span>No documents available.</span>
         </template>
       </div>
+      <h4 class="mt-4">
+        Legend
+      </h4>
+      <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
     </div>
     <div v-else>
       We couldn't find that country.
@@ -208,6 +202,20 @@ export default {
     countryCode () {
       return this.$route.params.country
     },
+    mostPermissiveLactationCode () {
+      if (this.country) {
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })?.lactationCode
+      } else {
+        return undefined
+      }
+    },
+    mostPermissiveLactationCodes () {
+      if (this.mostPermissiveLactationCode) {
+        return this.mostPermissiveLactationCode.map(code => code.rank)
+      } else {
+        return []
+      }
+    },
     mostPermissivePregnancyCode () {
       if (this.country) {
         return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })?.pregnancyCode
@@ -215,11 +223,11 @@ export default {
         return undefined
       }
     },
-    mostPermissiveLactationCode () {
-      if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })?.lactationCode
+    mostPermissivePregnancyCodes () {
+      if (this.mostPermissivePregnancyCode) {
+        return this.mostPermissivePregnancyCode.map(code => code.rank)
       } else {
-        return undefined
+        return []
       }
     }
   }
