@@ -11,10 +11,10 @@
           <b-navbar-nav class="w-100 justify-content-around lead">
             <b-nav-item-dropdown text="Policies">
               <b-dropdown-item to="/pregnancy">
-                Pregnancy data explorer
+                Pregnancy explorer
               </b-dropdown-item>
               <b-dropdown-item to="/lactation">
-                Lactation data explorer
+                Lactation explorer
               </b-dropdown-item>
               <b-dropdown-item to="/vaccines/matrix/pregnancy">
                 Pregnancy vaccine/country matrix
