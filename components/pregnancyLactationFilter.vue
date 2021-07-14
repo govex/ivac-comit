@@ -199,8 +199,11 @@ export default {
       }
     },
     timeWarpDate () {
-      if (this.timeWarpIndex === Infinity) { return undefined }
-      else { return this.timeWarpDates[this.timeWarpIndex] }
+      if (this.timeWarpIndex === Infinity) {
+        return undefined
+      } else {
+        return this.timeWarpDates[this.timeWarpIndex]
+      }
     },
     timeWarpDates () {
       const twInfo = this.$store.state.coreData.policies.reduce((range, policy) => {
@@ -221,7 +224,7 @@ export default {
       return timeWarpDates
     },
     timeWarpText () {
-      return (this.timeWarpIndex <= this.timeWarpDates.length - 2) 
+      return (this.timeWarpIndex <= this.timeWarpDates.length - 2)
         ? 'as of ' + this.timeWarpDate
         : 'at present'
     }
