@@ -6,11 +6,7 @@
           Covid-19 vaccine policies on pregnancy
           <span class="text-muted" style="font-size: 1rem"><b-link :to="{path: '/lactation', query: $route.query}">(switch to lactation)</b-link></span>
         </h1>
-        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" />
-      </b-row>
-      <b-row class="flex-column justify-content-center align-items-center">
-        <input v-model="timeWarpIndex" type="range" min="0" :max="timeWarpDates.length - 1" class="w-75 custom-range">
-        <span>{{ (timeWarpIndex <= timeWarpDates.length - 2) ? timeWarpDate : 'Present' }}</span>
+        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" @timeWarpDateChanged="filterTimeWarpDateChanged" />
       </b-row>
       <b-row class="flex-column">
         <client-only>
@@ -138,7 +134,7 @@ export default {
         { key: 'wbRegion', label: 'Region', class: 'align-middle text-truncate', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle text-truncate', sortable: true }
       ],
-      timeWarpIndex: Number.MAX_VALUE
+      timeWarpDate: undefined
     }
   },
   head () {
@@ -203,28 +199,6 @@ export default {
     policyPositionFilters () {
       return this.$route.query.policyPositions?.split(',').map(value => parseInt(value)) || undefined
     },
-    timeWarpDate () {
-      if (this.timeWarpIndex === Infinity) { return undefined }
-      else { return this.timeWarpDates[this.timeWarpIndex] }
-    },
-    timeWarpDates () {
-      const twInfo = this.$store.state.coreData.policies.reduce((range, policy) => {
-        const policyDate = policy['datePublished/lastUpdated'] || policy.dateAccessed
-        range.max = policyDate > range.max ? policyDate : range.max
-        range.min = policyDate < range.min ? policyDate : range.min
-        return range
-      }, { min: '9999-99-99', max: '0000-00-00' })
-      if (twInfo.min > twInfo.max) { return [] }
-      const timeWarpDates = []
-      twInfo.min = new Date(twInfo.min)
-      twInfo.max = new Date(twInfo.max)
-      do {
-        timeWarpDates.push(twInfo.min.toISOString().slice(0, 10))
-        twInfo.min.setDate(twInfo.min.getDate() + 14)
-      } while (twInfo.min < twInfo.max)
-      timeWarpDates.push(twInfo.max.toISOString().slice(0,10))
-      return timeWarpDates
-    },
     vaccinesFilters () {
       return this.$route.query.vaccine
     },
@@ -236,6 +210,11 @@ export default {
         return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, [this.vaccinesFilters])
       }
       return undefined
+    }
+  },
+  methods: {
+    filterTimeWarpDateChanged (newDate) {
+      this.timeWarpDate = newDate
     }
   }
 }

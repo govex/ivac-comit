@@ -1,20 +1,33 @@
 <template>
   <div>
-    <b-alert variant="success" class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline" show>
-      <span>{{ filterText }}.</span>
-      <span>
-        <!-- <b-button v-if="filtering" variant="link" size="sm" :to="emptyRouteObject">
-          clear
-        </b-button> -->
-        <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
-          <template v-if="!filtering">
-            Filter by vaccine / policy position
-          </template>
-          <template v-else>
-            Change vaccine / policy position filter
-          </template>
-        </b-button>
-      </span>
+    <b-alert variant="success" class="d-flex flex-column flex-nowrap justify-content-stretch" show>
+      <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
+        <span>{{ filterText }}.</span>
+        <span>
+          <!-- <b-button v-if="filtering" variant="link" size="sm" :to="emptyRouteObject">
+            clear
+          </b-button> -->
+          <b-button v-b-toggle.collapse-filter variant="primary" size="sm">
+            <template v-if="!filtering">
+              Filter by vaccine / policy position
+            </template>
+            <template v-else>
+              Change vaccine / policy position filter
+            </template>
+          </b-button>
+        </span>
+      </div>
+      <div class="d-flex flex-row flex-nowrap justify-content-start">
+        <input
+          v-model="timeWarpIndex"
+          type="range"
+          min="0"
+          :max="timeWarpDates.length - 1"
+          class="w-75 custom-range"
+          @change="timeWarpIndexChanged"
+        >
+        <span>{{ timeWarpText }}</span>
+      </div>
     </b-alert>
     <b-sidebar
       id="collapse-filter"
@@ -118,22 +131,12 @@ export default {
       { text: 'Not recommended', value: 5 }
     ]
     const toBeSelectedPolicyPositions = Array.from(this.selectedPolicyPositions)
-
-    return { vaccines, toBeSelectedVaccine, policyPositions, toBeSelectedPolicyPositions }
+    const timeWarpIndex = Number.MAX_VALUE
+    return { vaccines, toBeSelectedVaccine, policyPositions, toBeSelectedPolicyPositions, timeWarpIndex }
   },
   computed: {
     emptyRouteObject () {
       return { query: {} }
-    },
-    routeObject () {
-      const routeObject = { query: {} }
-      if (this.toBeSelectedPolicyPositions.length < this.policyPositions.length && this.toBeSelectedPolicyPositions.length > 0) {
-        routeObject.query.policyPositions = this.toBeSelectedPolicyPositions.join(',')
-      }
-      if (this.toBeSelectedVaccine !== 'all') {
-        routeObject.query.vaccine = this.toBeSelectedVaccine
-      }
-      return routeObject
     },
     filtering () {
       return (this.selectedPolicyPositions.length < this.policyPositions.length || this.selectedVaccine !== 'all')
@@ -173,6 +176,16 @@ export default {
         }
       }
     },
+    routeObject () {
+      const routeObject = { query: {} }
+      if (this.toBeSelectedPolicyPositions.length < this.policyPositions.length && this.toBeSelectedPolicyPositions.length > 0) {
+        routeObject.query.policyPositions = this.toBeSelectedPolicyPositions.join(',')
+      }
+      if (this.toBeSelectedVaccine !== 'all') {
+        routeObject.query.vaccine = this.toBeSelectedVaccine
+      }
+      return routeObject
+    },
     selectedVaccineText () {
       if (this.selectedVaccine === 'all') {
         return 'all vaccines'
@@ -184,18 +197,48 @@ export default {
           return '[unknown vaccine]'
         }
       }
+    },
+    timeWarpDate () {
+      if (this.timeWarpIndex === Infinity) { return undefined }
+      else { return this.timeWarpDates[this.timeWarpIndex] }
+    },
+    timeWarpDates () {
+      const twInfo = this.$store.state.coreData.policies.reduce((range, policy) => {
+        const policyDate = policy['datePublished/lastUpdated'] || policy.dateAccessed
+        range.max = policyDate > range.max ? policyDate : range.max
+        range.min = policyDate < range.min ? policyDate : range.min
+        return range
+      }, { min: '9999-99-99', max: '0000-00-00' })
+      if (twInfo.min > twInfo.max) { return [] }
+      const timeWarpDates = []
+      twInfo.min = new Date(twInfo.min)
+      twInfo.max = new Date(twInfo.max)
+      do {
+        timeWarpDates.push(twInfo.min.toISOString().slice(0, 10))
+        twInfo.min.setDate(twInfo.min.getDate() + 14)
+      } while (twInfo.min < twInfo.max)
+      timeWarpDates.push(twInfo.max.toISOString().slice(0, 10))
+      return timeWarpDates
+    },
+    timeWarpText () {
+      return (this.timeWarpIndex <= this.timeWarpDates.length - 2) 
+        ? 'as of ' + this.timeWarpDate
+        : 'at present'
     }
   },
   methods: {
+    filterCancel () {
+      this.toBeSelectedVaccine = this.selectedVaccine
+      this.toBeSelectedPolicyPositions = this.selectedPolicyPositions
+    },
     selectAllPolicyPositions () {
       this.toBeSelectedPolicyPositions = [1, 2, 3, 4, 5]
     },
     selectNonePolicyPositions () {
       this.toBeSelectedPolicyPositions = []
     },
-    filterCancel () {
-      this.toBeSelectedVaccine = this.selectedVaccine
-      this.toBeSelectedPolicyPositions = this.selectedPolicyPositions
+    timeWarpIndexChanged () {
+      this.$emit('timeWarpDateChanged', this.timeWarpDate)
     }
   }
 }

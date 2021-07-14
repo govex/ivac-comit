@@ -6,7 +6,7 @@
           Covid-19 vaccine policies on lactation
           <span class="text-muted" style="font-size: 1rem"><b-link :to="{path: '/pregnancy', query: $route.query}">(switch to pregnancy)</b-link></span>
         </h1>
-        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" />
+        <PregnancyLactationFilter :selected-policy-positions="policyPositionFilters" :selected-vaccine="vaccinesFilters" @timeWarpDateChanged="filterTimeWarpDateChanged" />
       </b-row>
       <b-row class="flex-column">
         <client-only>
@@ -134,7 +134,8 @@ export default {
         { key: 'subgroups', label: 'Subgroups', class: 'text-center align-middle', sortable: true },
         { key: 'wbRegion', label: 'Region', class: 'text-truncate align-middle', sortable: true },
         { key: 'wbIncomeLevelName', label: 'Income Level', class: 'text-truncate align-middle', sortable: true }
-      ]
+      ],
+      timeWarpDate: undefined
     }
   },
   head () {
@@ -151,7 +152,8 @@ export default {
             const mostPermissiveLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy({
               country,
               code: 'lactationCode',
-              vaccineIds: this.vaccinesFilters
+              vaccineIds: this.vaccinesFilters,
+              beforeDate: this.timeWarpDate
             })
             const outputRow = {
               id: country.id,
@@ -212,6 +214,11 @@ export default {
         return this.$root.$getVaccineRecommendationsFromAuthority(this.whoAuthority, [this.vaccinesFilters])
       }
       return undefined
+    }
+  },
+  methods: {
+    filterTimeWarpDateChanged (newDate) {
+      this.timeWarpDate = newDate
     }
   }
 }
