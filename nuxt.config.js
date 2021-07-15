@@ -28,7 +28,8 @@ export default {
   plugins: [
     '~/plugins/getMostRecentOrPermissivePolicy.js',
     '~/plugins/listSortComparer.js',
-    '~/plugins/getVaccineRecommendationsFromAuthority.js'
+    '~/plugins/getVaccineRecommendationsFromAuthority.js',
+    '~/plugins/reconstructReferences.js'
     // '~plugins/vue-tippy.js'
   ],
 

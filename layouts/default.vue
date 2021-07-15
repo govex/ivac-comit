@@ -108,9 +108,17 @@
 
 <script>
 export default {
-  data () {
-    return {
-      showBetaBadge: process.env.HIDE_BETA_BADGE !== 'true'
+  async fetch () {
+    const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
+    const myReconstructedData = this.$root.$reconstructReferences(myData)
+    await this.$store.commit('countries/load', myReconstructedData.countries)
+    await this.$store.commit('authorities/load', myReconstructedData.authorities)
+    await this.$store.commit('policies/load', myReconstructedData.policies)
+    await this.$store.commit('vaccines/load', myReconstructedData.vaccines)
+  },
+  computed: {
+    showBetaBadge () {
+      return process.end.HIDE_BETA_BADGE !== 'true'
     }
   }
 }
