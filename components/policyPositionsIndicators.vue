@@ -88,7 +88,7 @@
         <b-icon-info-circle v-b-popover.hover="`The total number of countries with policies regarding ${statusWord} people.`" />
       </strong>
     </div> -->
-    <div v-if="showIntransition" class="indicator in-transition-bg text-dark">
+    <div v-if="showInTransition" class="indicator in-transition-bg text-dark">
       <h2 v-if="showCounts">
         {{ keyIndicators.inTransition }}
       </h2>
