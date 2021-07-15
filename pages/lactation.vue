@@ -10,7 +10,7 @@
       </b-row>
       <b-row class="flex-column">
         <client-only>
-          <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="mostPermissiveLactationCode" />
+          <GlobalMap default-fill-color="#A0A0A0" :country-list-items="countryListItems" style-property="mostPermissiveLactationCode" status-word="lactation" />
         </client-only>
       </b-row>
     </section>

@@ -13,7 +13,7 @@
             </div>
           </div>
           <div v-else>
-            This country had no specific pregnancy position in their policy or we could not obtain a policy for review.
+            This country had no specific position on {{ statusWord }} in their policy, or we could not obtain a policy for review.
           </div>
           <span v-if="popoverCountry.inTransition" class="text-warning">This country may be in the process of updating their policies.</span>
           <b-link :to="`/country/${popoverCountry.code}`" class="mt-2" style="border-top: 1px solid grey">
@@ -49,6 +49,10 @@ export default {
     policyPositionText: {
       type: String,
       default () { return 'Policy position' }
+    },
+    statusWord: {
+      type: String,
+      default () { return 'pregnancy' }
     },
     styleProperty: {
       type: String,
