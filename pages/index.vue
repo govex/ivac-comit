@@ -22,7 +22,7 @@
         As COVID-19 vaccines are being rolled out across the globe, many have wondered whether pregnant and lactating people can or should be vaccinated as part of broader immunization efforts. Countries have taken a variety of positions - ranging from highly restrictive policies that bar access to vaccines based on pregnancy or lactation status to widely permissive positions in which all pregnant or lactating people can receive vaccine, and in some cases, are recommended and encouraged to do so.
       </p>
       <p>
-        The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on country policies and the recommendations of professional medical societies as they respond to the dynamic state of the pandemic and emerging evidence.
+        The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.
       </p>
       <b-button variant="primary" to="/about/comit">
         Learn more
