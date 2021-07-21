@@ -209,9 +209,9 @@ export default {
       const twInfo = this.$store.state.policies.reduce((range, policy) => {
         const policyDate = policy['datePublished/lastUpdated'] || policy.dateAccessed
         range.max = policyDate > range.max ? policyDate : range.max
-        range.min = policyDate < range.min ? policyDate : range.min
+        // range.min = policyDate < range.min ? policyDate : range.min
         return range
-      }, { min: '9999-99-99', max: '0000-00-00' })
+      }, { min: '2021-03-15', max: '0000-00-00' })
       if (twInfo.min > twInfo.max) { return [] }
       const timeWarpDates = []
       twInfo.min = new Date(twInfo.min)
