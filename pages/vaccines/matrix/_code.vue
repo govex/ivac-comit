@@ -184,7 +184,7 @@ export default {
         .sort((vaccine1, vaccine2) => {
           return vaccine2.policies.length - vaccine1.policies.length
         })
-      vaccineResults.unshift({ id: 'vaccines-non-specific', displayName: '(No vaccine specified)' })
+      vaccineResults.unshift({ id: 'vaccines-non-specific', displayName: '(No vaccine product specified)' })
       return vaccineResults
     }
   },
