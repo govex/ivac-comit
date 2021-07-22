@@ -3,8 +3,19 @@ export default (somethingIWontUse, inject) => {
     // check for options and set defaults
     if (!options.country) { return undefined }
     if (!options.code) { return undefined }
-    if (!Array.isArray(options.vaccineIds)) { options.vaccineIds = [] }
-    if (!Array.isArray(options.authorityTypes)) { options.authorityTypes = ['Public Health Authority'] }
+
+    if (!options.vaccineIds) {
+      options.vaccineIds = []
+    } else if (!Array.isArray(options.vaccineIds)) {
+      options.vaccineIds = [options.vaccineIds]
+    }
+
+    if (!options.authorityTypes) {
+      options.authorityTypes = ['Public Health Authority']
+    } else if (!Array.isArray(options.authorityTypes)) {
+      options.authorityTypes = [options.authorityTypes]
+    }
+
     if (options.beforeDate) {
       try {
         const beforeDate = new Date(options.beforeDate)
