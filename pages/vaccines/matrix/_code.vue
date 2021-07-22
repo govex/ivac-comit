@@ -87,7 +87,7 @@
               {{ data.label }}
             </NuxtLink>
             <br>
-            <span class="text-muted small">
+            <span v-if="data.field.policyCount" class="text-muted small">
               {{ data.field.policyCount }}
               countries
             </span>
@@ -131,7 +131,7 @@ export default {
     },
     countryListFields () {
       return [
-        { key: 'name', label: 'Country / territory', sortable: true, class: 'align-middle' }
+        { key: 'name', label: 'Country / territory', sortable: true, class: 'align-middle country-name' }
       ].concat(this.vaccines
         .map((vaccine) => {
           return {
@@ -176,7 +176,7 @@ export default {
       return this.codes.filter(codeItem => codeItem.code !== this.code.code)
     },
     vaccines () {
-      return this.$store.state.vaccines
+      const vaccineResults = this.$store.state.vaccines
         .slice()
         .filter((vaccine) => {
           return vaccine.policies && vaccine.policies.length > 1
@@ -184,6 +184,8 @@ export default {
         .sort((vaccine1, vaccine2) => {
           return vaccine2.policies.length - vaccine1.policies.length
         })
+      vaccineResults.unshift({ id: 'vaccines-non-specific', displayName: '(No vaccine specified)' })
+      return vaccineResults
     }
   },
   methods: {
@@ -204,4 +206,5 @@ export default {
 
 <style scoped>
 .rotate { width: 3em; height: 250px; text-orientation: mixed; writing-mode: vertical-rl; transform: rotate(180deg)}
+.country-name {width: 20em;}
 </style>
