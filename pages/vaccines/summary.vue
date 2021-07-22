@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Vaccine comparison summary</h2>
+    <h2>Policy position summary by vaccine</h2>
     <p>This table shows counts of most recent policy positions, by vaccine, for both pregnancy and lactation.</p>
     <b-table
       :items="vaccineList"
@@ -15,9 +15,10 @@
         Countries <br> administering <br> <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries in which each vaccine is presently being administered.'" />
       </template>
       <template #cell(displayName)="data">
-        <nuxt-link :to="`/vaccine/${data.item.id}`">
+        <nuxt-link v-if="data.item.url" :to="`${data.item.url}`">
           <span style="font-size: 1.25rem">{{ data.value }}</span>
         </nuxt-link>
+        <span v-else style="font-size: 1.25rem">{{ data.value }}</span>
       </template>
       <template #cell(pregnancy)="data">
         <PolicyPositionsIndicators
@@ -65,11 +66,12 @@ export default {
   },
   computed: {
     vaccineList () {
-      return this.vaccines.reduce((results, vaccine) => {
+      return this.vaccinesWithNonSpecific.reduce((results, vaccine) => {
         const result = {
           id: vaccine.id,
           displayName: vaccine.displayName,
-          countryCount: vaccine.countries ? vaccine.countries.length : ' -',
+          url: vaccine.url,
+          countryCount: vaccine.countryCount,
           countries: vaccine.countries
             ? vaccine.countries.reduce((countryResults, country) => {
               return countryResults.concat({
@@ -85,6 +87,22 @@ export default {
     },
     vaccines () {
       return this.$store.state.vaccines.filter(vaccine => vaccine.displayName)
+        .map(vaccine => ({
+          id: vaccine.id,
+          displayName: vaccine.displayName,
+          countryCount: vaccine.countries ? vaccine.countries.length : ' -',
+          countries: vaccine.countries,
+          url: `/vaccine/${vaccine.id}`
+        }))
+    },
+    vaccinesWithNonSpecific () {
+      const unspecifiedVaccine = {
+        id: 'vaccines-non-specific',
+        displayName: '(No vaccine product specified)',
+        countryCount: 'Not applicable',
+        countries: this.$store.state.countries.filter(country => country.wbRegion)
+      }
+      return [unspecifiedVaccine].concat(this.vaccines)
     }
   }
 

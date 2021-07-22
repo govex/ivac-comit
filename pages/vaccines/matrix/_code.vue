@@ -83,9 +83,10 @@
         </template>
         <template v-else>
           <div class="rotate">
-            <NuxtLink :to="`/vaccine/${data.field.key}`">
+            <NuxtLink v-if="data.field.url" :to="`${data.field.url}`">
               {{ data.label }}
             </NuxtLink>
+            <span v-else>{{ data.label }}</span>
             <br>
             <span v-if="data.field.policyCount" class="text-muted small">
               {{ data.field.policyCount }}
@@ -132,12 +133,13 @@ export default {
     countryListFields () {
       return [
         { key: 'name', label: 'Country / territory', sortable: true, class: 'align-middle country-name' }
-      ].concat(this.vaccines
+      ].concat(this.vaccinesWithNonSpecific
         .map((vaccine) => {
           return {
             class: 'align-middle',
             key: vaccine.id,
             label: vaccine.displayName,
+            url: vaccine.url,
             policyCount: this.countryListItems.reduce((count, countryItem) => {
               if (countryItem[vaccine.id]) {
                 count++
@@ -156,7 +158,7 @@ export default {
             name: country.name,
             code: country.iso3166Alpha2Code
           }
-          for (const vaccine of this.vaccines) {
+          for (const vaccine of this.vaccinesWithNonSpecific) {
             countryListItem[vaccine.id] = this.$root.$getMostRecentOrPermissivePolicy({ country, code: this.code.key, vaccineIds: [vaccine.id] })?.[this.code.key]
           }
           return countryListItem
@@ -176,7 +178,7 @@ export default {
       return this.codes.filter(codeItem => codeItem.code !== this.code.code)
     },
     vaccines () {
-      const vaccineResults = this.$store.state.vaccines
+      return this.$store.state.vaccines
         .slice()
         .filter((vaccine) => {
           return vaccine.policies && vaccine.policies.length > 1
@@ -184,8 +186,18 @@ export default {
         .sort((vaccine1, vaccine2) => {
           return vaccine2.policies.length - vaccine1.policies.length
         })
-      vaccineResults.unshift({ id: 'vaccines-non-specific', displayName: '(No vaccine product specified)' })
-      return vaccineResults
+        .map(vaccine => ({
+          id: vaccine.id,
+          displayName: vaccine.displayName,
+          url: `/vaccine/${vaccine.id}`
+        }))
+    },
+    vaccinesWithNonSpecific () {
+      const unspecifiedVaccine = {
+        id: 'vaccines-non-specific',
+        displayName: '(No vaccine product specified)'
+      }
+      return [unspecifiedVaccine].concat(this.vaccines)
     }
   },
   methods: {
