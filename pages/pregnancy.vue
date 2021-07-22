@@ -194,7 +194,7 @@ export default {
       return countryListItems
     },
     filtering () {
-      return (this.vaccinesFilters || this.policyPositionFilters?.length > 0)
+      return (this.vaccinesFilters?.length > 0 || this.policyPositionFilters?.length > 0)
     },
     policyPositionFilters () {
       return this.$route.query.policyPositions?.split(',').map(value => parseInt(value)) || undefined
