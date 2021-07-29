@@ -4,7 +4,7 @@ description: "Our aim is to identify, collect, and present publicly available co
 ---
 
 
-Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in pregnant and lactating people. Information from publicly available sources is obtained from departments or ministries of health, and state-sponsored COVID-19 dedicated websites. Sources include vaccine recommendations for use, consent forms, fact sheets, FAQs, press releases, government websites and official government social media posts. Where multiple sources are available for a given country and public health authority, the one with the most permissive pregnancy or lactation code is displayed on the map, regardless of vaccine product. Filtering by vaccine product retrieves the most permissive pregnancy or lactation code for that vaccine in each country. All the sources retrieved for a given country, along with their classification, date published, and vaccine specification, can be viewed on the country profile page. The tracker reflects the most currently available data at the time of each round of survey completion, with surveys completed at least every 3 weeks. <a href="/documents/comit-data-entry-survey-2021-06-14.pdf" target="_blank">View our survey</a>.
+Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in pregnant and lactating people. Information from publicly available sources is obtained from departments or ministries of health, and state-sponsored COVID-19 dedicated websites. Sources include vaccine recommendations for use, consent forms, fact sheets, FAQs, press releases, government websites and official government social media posts. Where multiple sources are available for a given country and public health authority, the one with the most permissive pregnancy or lactation code is displayed on the map, regardless of vaccine product. Filtering by vaccine product retrieves the most permissive pregnancy or lactation code for that vaccine in each country. All the sources retrieved for a given country, along with their classification, date published, and vaccine specification, can be viewed on the country profile page. The tracker reflects the most currently available data at the time of each round of survey completion. <a href="/documents/comit-data-entry-survey-2021-06-14.pdf" target="_blank">View our survey</a>.
 
 For more information on our methods and procedures, view our <a href="/documents/comit-data-collection-protocol-2021-06-23.pdf" target="_blank">data collection protocol</a>.
 
@@ -15,7 +15,7 @@ For more information on our methods and procedures, view our <a href="/documents
 
 <br>
 
-### Pregnancy Policy Categories
+### Pregnancy policy categories
 
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="recommended"><b-icon-circle-fill /></h1>
@@ -56,7 +56,7 @@ For more information on our methods and procedures, view our <a href="/documents
   <h1 class="no-language"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">No position found</strong>
-    <span>In instances where no policies or positions regarding pregnancy and vaccination could be found, or where no position was clearly established, e.g., &quot;if pregnant, talk to your doctor.&quot;</span>
+    <span>In instances where: (1) no policies regarding vaccine rollout could be found; (2) policies and plans could be found, but no positions regarding pregnancy were found; or (3) no position was clearly established, e.g., &quot;if pregnant, talk to your doctor.&quot;</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
@@ -66,13 +66,20 @@ For more information on our methods and procedures, view our <a href="/documents
     <span>Where current policies are being revised.</span>
   </div>
 </div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="unclear-doc"><b-icon-circle /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Unclear</strong>
+    <span>Within the document reviewed, there is language that could be interpreted as indicating different policy positions.</span>
+  </div>
+</div>
 
 
 For more detailed information on how pregnancy policies were categorized, please see our <a href="/documents/comit-pregnancy-categories-codebook-2021-06-23.pdf" target="_blank">pregnancy categories codebook</a>.
 
 <br>
 
-### Lactation Policy Categories
+### Lactation policy categories
 
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="recommended"><b-icon-circle-fill /></h1>
@@ -92,14 +99,14 @@ For more detailed information on how pregnancy policies were categorized, please
   <h1 class="permitted-with-qualifications"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Permitted with qualifications</strong>
-    <span>Only certain groups of lactating people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccine.</span>
+    <span>Only certain groups of lactating people, e.g., health workers, people with underlying conditions, can, may, or can choose to receive vaccine.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
   <h1 class="not-recommended-with-exceptions"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">Not recommended but with exceptions</strong>
-    <span>A statement stating lactating people should not receive vaccine, with certain  exceptions.</span>
+    <span>A statement stating lactating people should not receive vaccine, with certain exceptions.</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
@@ -113,7 +120,7 @@ For more detailed information on how pregnancy policies were categorized, please
   <h1 class="no-language"><b-icon-circle-fill /></h1>
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">No position found</strong>
-    <span>In instances where no policies or positions regarding lactation and vaccination could be found, or where no position was clearly established, e.g., &quot;if breastfeeding, talk to your doctor.&quot;</span>
+    <span>In instances where: (1) no policies regarding vaccine rollout could be found; (2) policies and plans could be found, but no positions regarding lactation were found; or (3) no position was clearly established, e.g., &quot;if breastfeeding, talk to your doctor.&quot;</span>
   </div>
 </div>
 <div class="row d-flex flex-nowrap justify-content-start m-1">
@@ -121,6 +128,13 @@ For more detailed information on how pregnancy policies were categorized, please
   <div class="d-flex flex-column mx-3">
     <strong class="text-uppercase">In transition</strong>
     <span>Where current policies are being revised.</span>
+  </div>
+</div>
+<div class="row d-flex flex-nowrap justify-content-start m-1">
+  <h1 class="unclear-doc"><b-icon-circle /></h1>
+  <div class="d-flex flex-column mx-3">
+    <strong class="text-uppercase">Unclear</strong>
+    <span>Within the document reviewed, there is language that could be interpreted as indicating different policy positions.</span>
   </div>
 </div>
 
