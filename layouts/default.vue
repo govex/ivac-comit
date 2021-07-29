@@ -10,10 +10,10 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="w-100 justify-content-around lead">
             <b-nav-item-dropdown text="Policies">
-              <b-dropdown-item to="/pregnancy">
+              <b-dropdown-item to="/explore/public-health-authorities/pregnancy">
                 Pregnancy explorer
               </b-dropdown-item>
-              <b-dropdown-item to="/lactation">
+              <b-dropdown-item to="/explore/public-health-authorities/lactation">
                 Lactation explorer
               </b-dropdown-item>
               <b-dropdown-item to="/vaccines/matrix/pregnancy">
@@ -118,7 +118,7 @@ export default {
   },
   computed: {
     showBetaBadge () {
-      return process.end.HIDE_BETA_BADGE !== 'true'
+      return process.env.HIDE_BETA_BADGE !== 'true'
     }
   }
 }

@@ -125,11 +125,11 @@ export default {
     extendRoutes (routes, resolve) {
       routes.push({
         path: '/pregnancy',
-        redirect: '/explore/pregnancy'
+        redirect: '/explore/public-health-authorities/pregnancy'
       })
       routes.push({
         path: '/lactation',
-        redirect: '/explore/lactation'
+        redirect: '/explore/public-health-authorities/lactation'
       })
     }
   },
