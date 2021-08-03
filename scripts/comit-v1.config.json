@@ -1,0 +1,101 @@
+{
+  "input": {
+    "countries": {
+      "filename": "/scripts/countries.json",
+      "fields": [
+        "id",
+        "Authorities",
+        "birthrate",
+        "iso3166CountryName",
+        "iso3166Alpha2Code",
+        "Name",
+        "vaccines",
+        "vaccineEvents",
+        "wbRegion",
+        "wbIncomeLevelName",
+        "wbIncomeLevelSort",
+        "wbPopulation2019"
+      ]
+    },
+    "authorities": {
+      "filename": "/scripts/authorities.json",
+      "fields": [
+        "id",
+        "Authority type",
+        "Countries",
+        "Name",
+        "policies",
+        "reviewEvents",
+        "Website 1",
+        "Website 2",
+        "Website 3"
+      ]
+    },
+    "authorityReviewEvents": {
+      "filename": "/scripts/authority-review-events.json",
+      "fields": [
+        "Date"
+      ]
+    },
+    "policies": {
+      "filename": "/scripts/policy-tracker.json",
+      "fields": [
+        "id",
+        "Authorities",
+        "countries",
+        "Date accessed",
+        "Date published/last updated",
+        "Document type",
+        "Entry number",
+        "Fertility code",
+        "Lactation code",
+        "Lactation continuation after vaccine",
+        "Lactation counseling and information",
+        "Lactation qualifications",
+        "Link",
+        "Pregnancy code",
+        "Pregnancy counseling and information",
+        "Pregnancy Qualifications",
+        "Pregnancy test",
+        "Pre-conception code",
+        "Recommended delay (months)",
+        "Risks benefits enumerated",
+        "Second dose after inadvertent pregnancy",
+        "Suspended Vaccines",
+        "Vaccines",
+        "Vaccines Non-Specific"
+      ]
+    },
+    "policiesSelectChoices": {
+      "filename": "/scripts/policy-tracker-select-choices.json"
+    },
+    "vaccineCountryEvents": {
+      "filename": "/scripts/vaccine-country-events.json",
+      "fields": [
+        "Country",
+        "EventDate",
+        "EventType",
+        "Resumption qualification(s)",
+        "Source",
+        "Vaccine"
+      ]
+    },
+    "vaccines": {
+      "filename": "/scripts/vaccines.json",
+      "fields":  [
+        "id",
+        "Countries",
+        "Display Name",
+        "Manufacturer",
+        "Name",
+        "Platform",
+        "Policies",
+        "Other Names"
+      ]
+    }
+  },
+  "output": {
+    "normalFilename": "/static/data/comit-v1.json",
+    "minifiedFilename": "/static/data/comit-v1.min.json"
+  }
+}
