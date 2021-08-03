@@ -88,3 +88,7 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# ignore JSON files for automated updates except the configuration file
+scripts/*.json
+!comit-v1.config.json

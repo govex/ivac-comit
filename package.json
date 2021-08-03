@@ -8,7 +8,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
-    "lint": "npm run lint:js"
+    "lint": "npm run lint:js",
+    "generate-website-data": "node -r dotenv/config scripts/airtable-downloader.js && node scripts/generate-website-data-files.js"
   },
   "dependencies": {
     "@nuxt/content": "^1.14.0",
@@ -24,7 +25,10 @@
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
+    "airtable": "^0.11.1",
     "babel-eslint": "^10.1.0",
+    "camelcase-keys": "^6.2.2",
+    "dotenv": "^9.0.2",
     "eslint": "^7.31.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.14.0"
