@@ -29,7 +29,7 @@
     "babel-eslint": "^10.1.0",
     "camelcase-keys": "^6.2.2",
     "dotenv": "^9.0.2",
-    "eslint": "^7.31.0",
+    "eslint": "^7.32.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.15.1"
   },
