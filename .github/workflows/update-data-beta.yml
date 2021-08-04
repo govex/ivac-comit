@@ -28,3 +28,12 @@ jobs:
 
       - name: process-data
         run: node scripts/generate-website-data-files.js
+
+      - name: add updated data file to commit
+        run: git add static/data/comit-v1.min.json
+
+      - name: commit data update
+        run: git commit -m "automated data update"
+
+      - name: push data update
+        run: git push
