@@ -8,14 +8,17 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        
       - run: git config --global user.email "andrew@centersforcivicimpact.org"
       - run: git config --global user.name "Automated Data Update"
 
-      - name: setup-node
+      - name: use nodejs
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-        run: npm install
+
+      - name: install dependencies
+        run: npm ci
 
       - name: download-data
         env: 
