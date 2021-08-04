@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.branch }}
         
       - run: git config --global user.email "andrew@centersforcivicimpact.org"
       - run: git config --global user.name "Automated Data Update"
