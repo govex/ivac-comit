@@ -1,6 +1,8 @@
 name: update-data-beta
 on: 
   workflow_dispatch:
+  repository-dispatch:
+    types: [update-data]
 
 jobs:
   update-data-beta:
