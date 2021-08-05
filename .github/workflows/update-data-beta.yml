@@ -47,5 +47,5 @@ jobs:
         uses: jasongitmail/fast-webhook@v1
         with:
           url: ${{ secrets.AIRTABLE_WEBHOOK_URL }}
-          json: '{"action-output": {"status": "${{ job.status }}", "recordId": "${{ github.event.client_payload.recordId ", "environment": "${{ github.event.client_payload.branch }}"}}'
+          json: '{"action-output": {"status": "${{ job.status }}", "recordId": "${{ github.event.client_payload.recordId }}", "environment": "${{ github.event.client_payload.branch }}"}}'
 
