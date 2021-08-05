@@ -1,6 +1,5 @@
 name: update-data-beta
 on: 
-  workflow_dispatch:
   repository_dispatch:
     types: [update-data]
 
@@ -46,6 +45,6 @@ jobs:
         if: ${{ always() }}
         uses: jasongitmail/fast-webhook@v1
         with:
-          url: ${{ secrets.AIRTABLE_WEBHOOK_URL }}
+          url: ${{ github.event.client_payload.callbackUrl }}
           json: '{"action-output": {"status": "${{ job.status }}", "recordId": "${{ github.event.client_payload.recordId }}", "environment": "${{ github.event.client_payload.branch }}"}}'
 
