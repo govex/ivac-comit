@@ -41,3 +41,11 @@ jobs:
 
       - name: push data update
         run: git push
+
+      - name: send job status back to airtable
+        if: ${{ always() }}
+        uses: jasongitmail/fast-webhook@v1
+          with:
+          url: ${{ secrets.AIRTABLE_WEBHOOK_URL }}
+          json: '{"action-output": {"status": "${{ job.status }}", "recordId": "${{ github.event.client_payload.recordId ", "environment": "${{ github.event.client_payload.branch }}"}}'
+
