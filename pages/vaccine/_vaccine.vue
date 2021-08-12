@@ -108,20 +108,24 @@ export default {
   },
   computed: {
     countryListItems () {
-      return this.vaccine.countries
-        ? this.vaccine.countries
+      return this.$store.state.countries
+        ? this.$store.state.countries
           .reduce((result, country) => {
-            const outputRow = {
-              name: country.name,
-              code: country.iso3166Alpha2Code,
-              wbIncomeLevelName: country.wbIncomeLevelName,
-              wbIncomeLevelSort: country.wbIncomeLevelSort,
-              wbRegion: country.wbRegion,
-              mostRecentPregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [this.vaccine.id] })?.pregnancyCode,
-              mostRecentLactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [this.vaccine.id] })?.lactationCode
+            if (country.wbRegion) {
+              const outputRow = {
+                name: country.name,
+                code: country.iso3166Alpha2Code,
+                wbIncomeLevelName: country.wbIncomeLevelName,
+                wbIncomeLevelSort: country.wbIncomeLevelSort,
+                wbRegion: country.wbRegion,
+                mostRecentPregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [this.vaccine.id] })?.pregnancyCode,
+                mostRecentLactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [this.vaccine.id] })?.lactationCode
+              }
+              result.push(outputRow)
             }
-            return result.concat(outputRow)
+            return result
           }, [])
+          .filter(countryItem => countryItem.mostRecentPregnancyCode || countryItem.mostRecentLactationCode)
         : []
     },
     vaccine () {
