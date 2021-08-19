@@ -1,0 +1,818 @@
+[
+  {
+    "id": "rec08rvgywd94Svly",
+    "fields": {
+      "fieldName": "Pregnancy counseling and information",
+      "possibleValue": "Pregnant people MUST consult provider",
+      "valueRank": 1,
+      "name": "Pregnancy counseling and information: Pregnant people MUST consult provider",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "rec0EKhnzw46ZgHYU",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Vaccination in pregnancy supported by preclinical/DART data",
+      "name": "Risks benefits enumerated: Vaccination in pregnancy supported by preclinical/DART data",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "rec0icuVuVVEl34U5",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Available human data",
+      "name": "Risks benefits enumerated: Available human data",
+      "Created": "2021-05-26T19:25:28.000Z"
+    }
+  },
+  {
+    "id": "rec2OuPdH6dvx1MSU",
+    "fields": {
+      "fieldName": "Needs team review",
+      "possibleValue": "Fertility code",
+      "name": "Needs team review: Fertility code",
+      "Created": "2021-05-03T18:09:36.000Z"
+    }
+  },
+  {
+    "id": "rec2g5Sm4UCED5LNY",
+    "fields": {
+      "fieldName": "Lactation qualifications",
+      "possibleValue": "Provider consultation required",
+      "valueRank": 3,
+      "name": "Lactation qualifications: Provider consultation required",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "rec4gi3H1t7iA1fck",
+    "fields": {
+      "fieldName": "Lactation qualifications",
+      "possibleValue": "If received 1st dose with this vaccine",
+      "valueRank": 5,
+      "name": "Lactation qualifications: If received 1st dose with this vaccine",
+      "Created": "2021-05-26T19:25:27.000Z"
+    }
+  },
+  {
+    "id": "rec4l6cHH3vUgvXl7",
+    "fields": {
+      "fieldName": "Pregnancy test",
+      "possibleValue": "Not recommended",
+      "valueRank": 2,
+      "name": "Pregnancy test: Not recommended",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "rec5h8y3qHft5oHj3",
+    "fields": {
+      "fieldName": "Lactation counseling and information",
+      "possibleValue": "Lactating people CAN/MAY consult provider",
+      "valueRank": 3,
+      "name": "Lactation counseling and information: Lactating people CAN/MAY consult provider",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "rec6OBRnh1JabmkWT",
+    "fields": {
+      "fieldName": "Second dose after inadvertent pregnancy",
+      "possibleValue": "Can choose to receive or delay",
+      "valueRank": 2,
+      "name": "Second dose after inadvertent pregnancy: Can choose to receive or delay",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "rec6fAG23OiXMGJLd",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "Guidance statement",
+      "valueRank": 1,
+      "name": "Document type: Guidance statement",
+      "Created": "2021-06-12T19:25:29.000Z"
+    }
+  },
+  {
+    "id": "rec6i0pdNgsyp6Dxk",
+    "fields": {
+      "fieldName": "Fertility code",
+      "possibleValue": "No language",
+      "valueRank": 999,
+      "name": "Fertility code: No language",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "rec6rVufb4ZJtZwSh",
+    "fields": {
+      "fieldName": "Translator",
+      "possibleValue": "Human",
+      "name": "Translator: Human",
+      "Created": "2021-05-03T18:09:28.000Z"
+    }
+  },
+  {
+    "id": "rec7HtaVYwm0YOlNf",
+    "fields": {
+      "fieldName": "Lactation code",
+      "possibleValue": "No position found",
+      "valueRank": 999,
+      "name": "Lactation code: No position found",
+      "Created": "2021-06-02T19:25:32.000Z"
+    }
+  },
+  {
+    "id": "rec8FVXaMOUp1TWJv",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Vaccination in pregnancy discouraged due to lack of preclinical/DART data",
+      "name": "Risks benefits enumerated: Vaccination in pregnancy discouraged due to lack of preclinical/DART data",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "rec8f5E3kDp8fIiHo",
+    "fields": {
+      "fieldName": "Team member",
+      "possibleValue": "Rachel Gur Arie",
+      "name": "Team member: Rachel Gur Arie",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "rec9DTgH5ftzDrSUX",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "Consent form/screening checklist",
+      "valueRank": 2,
+      "name": "Document type: Consent form/screening checklist",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "rec9N1Un2WbarrpIM",
+    "fields": {
+      "fieldName": "Lactation code",
+      "possibleValue": "Not recommended but with exceptions",
+      "valueRank": 4,
+      "name": "Lactation code: Not recommended but with exceptions",
+      "Created": "2021-05-19T19:25:37.000Z"
+    }
+  },
+  {
+    "id": "rec9TpBCzD7macz7x",
+    "fields": {
+      "fieldName": "Pregnancy counseling and information",
+      "possibleValue": "Pregnancy provider consultation NOT required",
+      "valueRank": 4,
+      "name": "Pregnancy counseling and information: Pregnancy provider consultation NOT required",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "recAdR3qA6jAUAZZy",
+    "fields": {
+      "fieldName": "Lactation qualifications",
+      "possibleValue": "Elevated risk of serious disease",
+      "valueRank": 2,
+      "name": "Lactation qualifications: Elevated risk of serious disease",
+      "Created": "2021-06-03T19:25:34.000Z"
+    }
+  },
+  {
+    "id": "recAnmhGO7Jein5iP",
+    "fields": {
+      "fieldName": "Team member",
+      "possibleValue": "Sheila Roy",
+      "name": "Team member: Sheila Roy",
+      "Created": "2021-06-04T19:25:29.000Z"
+    }
+  },
+  {
+    "id": "recBOEbmXNSqdmOWj",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "Press release",
+      "valueRank": 6,
+      "name": "Document type: Press release",
+      "Created": "2021-05-03T18:09:32.000Z"
+    }
+  },
+  {
+    "id": "recCLQKCm1JgqTi1N",
+    "fields": {
+      "fieldName": "Fertility code",
+      "possibleValue": "No effect",
+      "valueRank": 1,
+      "name": "Fertility code: No effect",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recCtWUyt2IaGgwGG",
+    "fields": {
+      "fieldName": "Lactation counseling and information",
+      "possibleValue": "Lactating people SHOULD consult provider / \"talk to provider\"",
+      "valueRank": 2,
+      "name": "Lactation counseling and information: Lactating people SHOULD consult provider / \"talk to provider\"",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "recDmZqeZGuSLSr1F",
+    "fields": {
+      "fieldName": "Lactation qualifications",
+      "possibleValue": "Elevated risk of exposure",
+      "valueRank": 1,
+      "name": "Lactation qualifications: Elevated risk of exposure",
+      "Created": "2021-05-03T18:09:30.000Z"
+    }
+  },
+  {
+    "id": "recEUMa8OxQ7AG2Ph",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "Elevated risk of serious disease (underlying condition, co-morbidity, age)",
+      "valueRank": 2,
+      "name": "Pregnancy Qualifications: Elevated risk of serious disease (underlying condition, co-morbidity, age)",
+      "Created": "2021-06-03T19:25:33.000Z"
+    }
+  },
+  {
+    "id": "recEXu07eUYViOyh4",
+    "fields": {
+      "fieldName": "Lactation qualifications",
+      "possibleValue": "No Language",
+      "valueRank": 999,
+      "name": "Lactation qualifications: No Language",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "recFlGXq8fEt8ICLz",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "Prescription required",
+      "valueRank": 5,
+      "name": "Pregnancy Qualifications: Prescription required",
+      "Created": "2021-05-03T18:09:25.000Z"
+    }
+  },
+  {
+    "id": "recGbphuiNlehvstE",
+    "fields": {
+      "fieldName": "Second dose after inadvertent pregnancy",
+      "possibleValue": "No language",
+      "valueRank": 999,
+      "name": "Second dose after inadvertent pregnancy: No language",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "recH5hm71cus3KbSU",
+    "fields": {
+      "fieldName": "Team member",
+      "possibleValue": "Caitlin Salloum",
+      "name": "Team member: Caitlin Salloum",
+      "Created": "2021-06-04T19:25:30.000Z"
+    }
+  },
+  {
+    "id": "recHPkNtEG6kw3y5v",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Low theoretical risk of vaccine in pregnancy",
+      "name": "Risks benefits enumerated: Low theoretical risk of vaccine in pregnancy",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "recIJCDl8f5TcEqeO",
+    "fields": {
+      "fieldName": "Needs team review",
+      "possibleValue": "Pregnancy code",
+      "name": "Needs team review: Pregnancy code",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "recMN56do1w0R8oA1",
+    "fields": {
+      "fieldName": "Translator",
+      "possibleValue": "Other",
+      "name": "Translator: Other",
+      "Created": "2021-05-03T18:09:28.000Z"
+    }
+  },
+  {
+    "id": "recMeMZZ4e9kNMbMr",
+    "fields": {
+      "fieldName": "Pre-conception code",
+      "possibleValue": "No need to delay",
+      "valueRank": 1,
+      "name": "Pre-conception code: No need to delay",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recMtevhdH4ZEx9PA",
+    "fields": {
+      "fieldName": "Fertility code",
+      "possibleValue": "Unknown effect",
+      "valueRank": 2,
+      "name": "Fertility code: Unknown effect",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recNHgjPGPS9uAx5f",
+    "fields": {
+      "fieldName": "Pre-conception code",
+      "possibleValue": "Unknown if need to delay",
+      "name": "Pre-conception code: Unknown if need to delay",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recNntVZLUfwIJYLP",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "Advises administration in 2nd and 3rd trimester",
+      "valueRank": 3,
+      "name": "Pregnancy Qualifications: Advises administration in 2nd and 3rd trimester",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "recOgwTgiUcGN7wan",
+    "fields": {
+      "fieldName": "Lactation qualifications",
+      "possibleValue": "Prescription required",
+      "valueRank": 4,
+      "name": "Lactation qualifications: Prescription required",
+      "Created": "2021-05-05T18:22:28.000Z"
+    }
+  },
+  {
+    "id": "recPKMwXEmUSUzwB1",
+    "fields": {
+      "fieldName": "Lactation continuation after vaccine",
+      "possibleValue": "Yes",
+      "valueRank": 1,
+      "name": "Lactation continuation after vaccine: Yes",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recPtQdA588i5QXI4",
+    "fields": {
+      "fieldName": "Pregnancy counseling and information",
+      "possibleValue": "Pregnant people SHOULD consult provider / \"talk to your doctor\" ",
+      "valueRank": 2,
+      "name": "Pregnancy counseling and information: Pregnant people SHOULD consult provider / \"talk to your doctor\" ",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "recSBQLOwD4uBORMa",
+    "fields": {
+      "fieldName": "Lactation code",
+      "possibleValue": "Recommended for some or all",
+      "valueRank": 1,
+      "name": "Lactation code: Recommended for some or all",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recSFirZEWC9K0Nyo",
+    "fields": {
+      "fieldName": "Needs team review",
+      "possibleValue": "Other issue",
+      "name": "Needs team review: Other issue",
+      "Created": "2021-05-03T18:09:36.000Z"
+    }
+  },
+  {
+    "id": "recTXcySMyNJlihhF",
+    "fields": {
+      "fieldName": "Lactation code",
+      "possibleValue": "Not recommended",
+      "valueRank": 5,
+      "name": "Lactation code: Not recommended",
+      "Created": "2021-05-03T18:09:30.000Z"
+    }
+  },
+  {
+    "id": "recVeY6R54K9d2neR",
+    "fields": {
+      "fieldName": "Pregnancy test",
+      "possibleValue": "Required",
+      "valueRank": 1,
+      "name": "Pregnancy test: Required",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "recVmiRQYkXSi0uRu",
+    "fields": {
+      "fieldName": "Pregnancy code",
+      "possibleValue": "No position found",
+      "valueRank": 999,
+      "name": "Pregnancy code: No position found",
+      "Created": "2021-06-02T19:25:32.000Z"
+    }
+  },
+  {
+    "id": "recWptCGXvJlERylK",
+    "fields": {
+      "fieldName": "Needs team review",
+      "possibleValue": "Lactation code",
+      "name": "Needs team review: Lactation code",
+      "Created": "2021-05-03T18:09:36.000Z"
+    }
+  },
+  {
+    "id": "recWqmONThpaS83vG",
+    "fields": {
+      "fieldName": "Pregnancy counseling and information",
+      "possibleValue": "Pregnant people MAY/CAN consult provider",
+      "valueRank": 3,
+      "name": "Pregnancy counseling and information: Pregnant people MAY/CAN consult provider",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "recX088DBhrsOwEoM",
+    "fields": {
+      "fieldName": "Pregnancy code",
+      "possibleValue": "Recommended for some or all",
+      "valueRank": 1,
+      "name": "Pregnancy code: Recommended for some or all",
+      "Created": "2021-05-03T18:09:27.000Z"
+    }
+  },
+  {
+    "id": "recY3sHMM8cYn8fnB",
+    "fields": {
+      "fieldName": "Second dose after inadvertent pregnancy",
+      "possibleValue": "Receive second dose on schedule",
+      "valueRank": 1,
+      "name": "Second dose after inadvertent pregnancy: Receive second dose on schedule",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "recYBa6YNbszrLHNL",
+    "fields": {
+      "fieldName": "Fertility code",
+      "possibleValue": "No known effect",
+      "valueRank": 3,
+      "name": "Fertility code: No known effect",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recZ1aYhoyCy5uSj0",
+    "fields": {
+      "fieldName": "Team member",
+      "possibleValue": "Elana Jaffe",
+      "name": "Team member: Elana Jaffe",
+      "Created": "2021-05-03T18:09:28.000Z"
+    }
+  },
+  {
+    "id": "recZUSE4W1wesOfi3",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "Only if received 1st dose with this vaccine",
+      "valueRank": 6,
+      "name": "Pregnancy Qualifications: Only if received 1st dose with this vaccine",
+      "Created": "2021-05-26T19:25:27.000Z"
+    }
+  },
+  {
+    "id": "recZZUrx60aS1uvU8",
+    "fields": {
+      "fieldName": "Needs team review",
+      "possibleValue": "Pre-conception code",
+      "name": "Needs team review: Pre-conception code",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "recbUlVserYtLe57V",
+    "fields": {
+      "fieldName": "Pregnancy code",
+      "possibleValue": "Permitted",
+      "valueRank": 2,
+      "name": "Pregnancy code: Permitted",
+      "Created": "2021-05-03T18:09:27.000Z"
+    }
+  },
+  {
+    "id": "recbV3jrQELTNd5RV",
+    "fields": {
+      "fieldName": "Pregnancy code",
+      "possibleValue": "Not recommended",
+      "valueRank": 5,
+      "name": "Pregnancy code: Not recommended",
+      "Created": "2021-05-03T18:09:27.000Z"
+    }
+  },
+  {
+    "id": "recck4o3w7vKQcKC0",
+    "fields": {
+      "fieldName": "Team member",
+      "possibleValue": "Eleonor Zavala",
+      "name": "Team member: Eleonor Zavala",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recdx3ah4eZqp03NB",
+    "fields": {
+      "fieldName": "Second dose after inadvertent pregnancy",
+      "possibleValue": "Delay second dose",
+      "valueRank": 3,
+      "name": "Second dose after inadvertent pregnancy: Delay second dose",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "receTOk3wijjMAzmK",
+    "fields": {
+      "fieldName": "Pregnancy test",
+      "possibleValue": "No language",
+      "valueRank": 999,
+      "name": "Pregnancy test: No language",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "recfRIh6SqWuJAEvl",
+    "fields": {
+      "fieldName": "Pregnancy code",
+      "possibleValue": "Permitted with qualifications",
+      "valueRank": 3,
+      "name": "Pregnancy code: Permitted with qualifications",
+      "Created": "2021-05-03T18:09:27.000Z"
+    }
+  },
+  {
+    "id": "recfoDQG9JL6Lt9Wo",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Absence of clinical vaccine data in pregnancy",
+      "name": "Risks benefits enumerated: Absence of clinical vaccine data in pregnancy",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "recfp70oxLvFoayDA",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Protective benefits of vaccine",
+      "name": "Risks benefits enumerated: Protective benefits of vaccine",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "recftQC8fWLf3bSoz",
+    "fields": {
+      "fieldName": "Pregnancy test",
+      "possibleValue": "Not required",
+      "valueRank": 3,
+      "name": "Pregnancy test: Not required",
+      "Created": "2021-05-03T18:09:35.000Z"
+    }
+  },
+  {
+    "id": "reci3jI8DlsJPI61C",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "FAQ",
+      "valueRank": 4,
+      "name": "Document type: FAQ",
+      "Created": "2021-05-03T18:09:32.000Z"
+    }
+  },
+  {
+    "id": "reciQTlHDSe61C99i",
+    "fields": {
+      "fieldName": "Pregnancy counseling and information",
+      "possibleValue": "No language",
+      "valueRank": 999,
+      "name": "Pregnancy counseling and information: No language",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "recil9d1OZ1j34dyq",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "Risk of covid in pregnancy",
+      "name": "Risks benefits enumerated: Risk of covid in pregnancy",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "reck6Nz47JeMRTXrz",
+    "fields": {
+      "fieldName": "Lactation counseling and information",
+      "possibleValue": "No language",
+      "valueRank": 999,
+      "name": "Lactation counseling and information: No language",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "reckUc0OMuiiM0hdM",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "Official social media post",
+      "valueRank": 7,
+      "name": "Document type: Official social media post",
+      "Created": "2021-05-03T18:09:32.000Z"
+    }
+  },
+  {
+    "id": "recksR0AmaaqG0sNI",
+    "fields": {
+      "fieldName": "Pre-conception code",
+      "possibleValue": "Delay pregnancy/conception language",
+      "valueRank": 2,
+      "name": "Pre-conception code: Delay pregnancy/conception language",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recmnHkRKO2xuwaB6",
+    "fields": {
+      "fieldName": "Risks benefits enumerated",
+      "possibleValue": "None listed",
+      "name": "Risks benefits enumerated: None listed",
+      "Created": "2021-05-03T18:09:34.000Z"
+    }
+  },
+  {
+    "id": "recmzWHOVg8E7EUlI",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "Provider consultation required",
+      "valueRank": 4,
+      "name": "Pregnancy Qualifications: Provider consultation required",
+      "Created": "2021-05-03T18:09:25.000Z"
+    }
+  },
+  {
+    "id": "recnRYPXuqoIiWNlz",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "Government website",
+      "valueRank": 5,
+      "name": "Document type: Government website",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recootLODSmPW3Zin",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "Elevated risk of exposure (occupational, housing)",
+      "valueRank": 1,
+      "name": "Pregnancy Qualifications: Elevated risk of exposure (occupational, housing)",
+      "Created": "2021-05-03T18:09:25.000Z"
+    }
+  },
+  {
+    "id": "recp3lyHhm39PBLKx",
+    "fields": {
+      "fieldName": "Pregnancy Qualifications",
+      "possibleValue": "No Language",
+      "valueRank": 999,
+      "name": "Pregnancy Qualifications: No Language",
+      "Created": "2021-05-03T18:09:26.000Z"
+    }
+  },
+  {
+    "id": "recpY7S0HODLEqOIm",
+    "fields": {
+      "fieldName": "Pre-conception code",
+      "possibleValue": "Talk to your doctor",
+      "name": "Pre-conception code: Talk to your doctor",
+      "Created": "2021-06-07T19:25:37.000Z"
+    }
+  },
+  {
+    "id": "recqOlcm0eiWLDW4B",
+    "fields": {
+      "fieldName": "Lactation continuation after vaccine",
+      "possibleValue": "No language",
+      "valueRank": 999,
+      "name": "Lactation continuation after vaccine: No language",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recqedFSE0FWdFb4l",
+    "fields": {
+      "fieldName": "Pregnancy code",
+      "possibleValue": "Not recommended but with exceptions",
+      "valueRank": 4,
+      "name": "Pregnancy code: Not recommended but with exceptions",
+      "Created": "2021-05-03T18:09:27.000Z"
+    }
+  },
+  {
+    "id": "recr97WADO8vIwT67",
+    "fields": {
+      "fieldName": "Pre-conception code",
+      "possibleValue": "No language ",
+      "valueRank": 999,
+      "name": "Pre-conception code: No language ",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recsv4kFZRGWYoa1Q",
+    "fields": {
+      "fieldName": "Lactation code",
+      "possibleValue": "Permitted with qualifications",
+      "valueRank": 3,
+      "name": "Lactation code: Permitted with qualifications",
+      "Created": "2021-05-03T18:09:30.000Z"
+    }
+  },
+  {
+    "id": "rectXkvQocEw4UK77",
+    "fields": {
+      "fieldName": "Lactation counseling and information",
+      "possibleValue": "Lactating people MUST consult provider",
+      "valueRank": 1,
+      "name": "Lactation counseling and information: Lactating people MUST consult provider",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "recuhfzwWhkf3qhB5",
+    "fields": {
+      "fieldName": "Pre-conception code",
+      "possibleValue": "Avoid vaccination ",
+      "name": "Pre-conception code: Avoid vaccination ",
+      "Created": "2021-06-07T19:25:37.000Z"
+    }
+  },
+  {
+    "id": "recwaVGpeN2sMQdWW",
+    "fields": {
+      "fieldName": "Lactation code",
+      "possibleValue": "Permitted",
+      "valueRank": 2,
+      "name": "Lactation code: Permitted",
+      "Created": "2021-05-03T18:09:29.000Z"
+    }
+  },
+  {
+    "id": "recxbq5gbx2bxtyg4",
+    "fields": {
+      "fieldName": "Lactation counseling and information",
+      "possibleValue": "Lactation consultation NOT required",
+      "valueRank": 4,
+      "name": "Lactation counseling and information: Lactation consultation NOT required",
+      "Created": "2021-05-03T18:09:31.000Z"
+    }
+  },
+  {
+    "id": "recyNIEESvhaWoKRB",
+    "fields": {
+      "fieldName": "Translator",
+      "possibleValue": "Google",
+      "name": "Translator: Google",
+      "Created": "2021-05-03T18:09:28.000Z"
+    }
+  },
+  {
+    "id": "recyet9qhi5cy9keF",
+    "fields": {
+      "fieldName": "Lactation continuation after vaccine",
+      "possibleValue": "No",
+      "valueRank": 2,
+      "name": "Lactation continuation after vaccine: No",
+      "Created": "2021-05-03T18:09:33.000Z"
+    }
+  },
+  {
+    "id": "recz8q3UhDgCDGqNY",
+    "fields": {
+      "fieldName": "Document type",
+      "possibleValue": "Fact sheet",
+      "valueRank": 3,
+      "name": "Document type: Fact sheet",
+      "Created": "2021-05-03T18:09:32.000Z"
+    }
+  }
+]
