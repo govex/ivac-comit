@@ -103,7 +103,8 @@ export default {
   },
   head () {
     return {
-      title: `COMIT: ${this.vaccine ? this.vaccine.displayName : 'not found'}`
+      title: `${this.vaccine ? this.vaccine.displayName + ' policies and guidance for maternal COVID-19 immunization - COMIT' : 'not found'}`,
+      'og:description': `${this.vaccine ? 'Learn about global policies and guidance related to ' + this.vaccine.displayName + ' for maternal COVID-19 immunization.' : 'not found'}`
     }
   },
   computed: {

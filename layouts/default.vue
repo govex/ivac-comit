@@ -59,23 +59,7 @@
       </b-container>
     </b-container>
     <b-container class="d-flex flex-row justify-content-end sticky-top">
-      <b-button-group class="bg-secondary align-items-center">
-        <b-button variant="outline-primary" disabled>
-          <b-icon-share-fill /> Share
-        </b-button>
-        <b-button v-b-popover.bottom.hover="'Share this page on Twitter'" variant="outline-primary" class="ms-1" :href="twitterUrl" target="_blank">
-          <b-icon-twitter />
-        </b-button>
-        <b-button v-b-popover.bottom.hover="'Share this page on Facebook'" variant="outline-primary" class="ms-1" :href="facebookUrl" target="_blank">
-          <b-icon-facebook />
-        </b-button>
-        <b-button v-b-popover.bottom.hover="'Share this page via email'" variant="outline-primary" class="ms-1" :href="mailUrl" target="_blank">
-          <b-icon-envelope-open />
-        </b-button>
-        <b-button v-b-popover.bottom.hover="clipboardHoverText" variant="outline-primary" class="ms-1" @click="copyPageLink">
-          <b-icon-link />
-        </b-button>
-      </b-button-group>
+      <sharing-and-seo :title="title" :description="description" :image="image" />
     </b-container>
     <b-container>
       <Nuxt />
@@ -129,7 +113,9 @@
 export default {
   data () {
     return {
-      clipboardHoverText: 'Copy link'
+      description: 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.',
+      title: 'COMIT: Covid-19 Maternal Immunization Tracker',
+      image: '/static/img/comit-dark-background.png'
     }
   },
   async fetch () {
@@ -140,27 +126,21 @@ export default {
     await this.$store.commit('policies/load', myReconstructedData.policies)
     await this.$store.commit('vaccines/load', myReconstructedData.vaccines)
   },
-  computed: {
-    facebookUrl () {
-      return `https://www.facebook.com/sharer.php?p[url]=https://www.comitglobal.org${this.$route.fullPath}`
-    },
-    mailUrl () {
-      return `mailto:?subject=${this.$route.fullPath}&body=${this.$route.fullPath}`
-    },
-    showBetaBadge () {
-      return process.env.HIDE_BETA_BADGE !== 'true'
-    },
-    twitterUrl () {
-      return `https://twitter.com/intent/tweet?text=Hello%20world&url=https://www.comitglobal.org${this.$route.fullPath}`
+  head () {
+    const sefl = this
+    if (process.browser) {
+      this.title = document.title
     }
-  },
-  methods: {
-    copyPageLink () {
-      navigator.clipboard.writeText(`https://comitglobal.org${this.$route.fullPath}`)
-      this.clipboardHoverText = 'Copied!'
-      setTimeout(() => {
-        this.clipboardHoverText = 'Copy link'
-      }, 5000)
+    return {
+      changed ({ title, meta }) {
+        sefl.title = title
+        const metaDescription = meta.find(item => item.hid === 'description')
+        if (metaDescription) {
+          sefl.description = metaDescription.content
+        } else {
+          sefl.description = 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.'
+        }
+      }
     }
   }
 }

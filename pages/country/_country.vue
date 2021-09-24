@@ -167,7 +167,7 @@ export default {
   },
   head () {
     return {
-      title: `COMIT: ${this.country ? this.country.name : 'not found'}`
+      title: `${this.country ? this.country.name + ': policies and guidance for maternal COVID-19 immunization - COMIT' : 'not found'}`
     }
   },
   computed: {
