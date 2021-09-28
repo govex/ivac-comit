@@ -1,7 +1,7 @@
 const vaccineCountryEventsToUploadFilename = 'scripts/vaccine-country-events-to-upload.json'
 
 const Airtable = require('airtable')
-const vaccineCountryEventsToUpload = require(vaccineCountryEventsToUploadFilename)
+const vaccineCountryEventsToUpload = require(process.cwd() + '/' + vaccineCountryEventsToUploadFilename)
 
 if (process.env.AIRTABLE_API_KEY || process.env.AIRTABLE_BASE_ID || process.env.AIRTABLE_VACCINECOUNTRYEVENTS_TABLENAME) {
   const airtableAPIKey = process.env.AIRTABLE_API_KEY

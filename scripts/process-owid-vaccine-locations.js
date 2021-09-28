@@ -7,9 +7,9 @@ const outputFilename = 'scripts/vaccine-country-events-to-upload.json'
 const outputErrorsFilename = 'scripts/owid-vaccine-location-errors.json'
 
 // load the data from airtable files
-const countries = require(countriesFilename)
-const vaccines = require(vaccinesFilename)
-const vaccineCountryEvents = require(vaccineCountryEventsFilename)
+const countries = require(process.cwd() + '/' + countriesFilename)
+const vaccines = require(process.cwd() + '/' + vaccinesFilename)
+const vaccineCountryEvents = require(process.cwd() + '/' + vaccineCountryEventsFilename)
 
 const fs = require('fs')
 
@@ -62,7 +62,7 @@ console.log(`loaded ${vaccineCountryEventsMap.size} vaccine-country-events`)
 console.warn(`found ${duplicateVaccineCountryEvents.length} duplicate vaccine-country-events`)
 if (duplicateVaccineCountryEvents.length > 0) { console.warn('***there may be an issue with the source vaccine-country-events data in airtable***') }
 
-fs.writeFile(duplicateVaccineCountryEventsFilename, JSON.stringify(duplicateVaccineCountryEvents, null, 2), 'utf8', (err) => {
+fs.writeFile(process.cwd() + '/' + duplicateVaccineCountryEventsFilename, JSON.stringify(duplicateVaccineCountryEvents, null, 2), 'utf8', (err) => {
   if (err) {
     console.error(err)
     process.exitCode = 1
@@ -73,7 +73,7 @@ fs.writeFile(duplicateVaccineCountryEventsFilename, JSON.stringify(duplicateVacc
 
 const owidVaccineLocations = []
 const fcsv = require('fast-csv')
-fcsv.parseFile(owidVaccineLocationsFilename, { headers: true })
+fcsv.parseFile(process.cwd() + '/' + owidVaccineLocationsFilename, { headers: true })
   // don't continue if there is an error
   .on('error', (error) => { console.error(error); process.exit(1) })
   // add each row to the array
@@ -116,7 +116,7 @@ fcsv.parseFile(owidVaccineLocationsFilename, { headers: true })
     }, { newEvents: [], errors: [] })
 
     // write the output file to readable format
-    fs.writeFile(outputFilename, JSON.stringify(output.newEvents, null, 2), 'utf8', (err) => {
+    fs.writeFile(process.cwd() + '/' + outputFilename, JSON.stringify(output.newEvents, null, 2), 'utf8', (err) => {
       if (err) {
         console.error(err)
         process.exitCode = 1
@@ -125,7 +125,7 @@ fcsv.parseFile(owidVaccineLocationsFilename, { headers: true })
       }
     })
 
-    fs.writeFile(outputErrorsFilename, JSON.stringify(output.errors, null, 2), 'utf8', (err) => {
+    fs.writeFile(process.cwd() + '/' + outputErrorsFilename, JSON.stringify(output.errors, null, 2), 'utf8', (err) => {
       if (err) {
         console.error(err)
         process.exitCode = 1
