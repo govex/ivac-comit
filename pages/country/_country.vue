@@ -3,6 +3,7 @@
     <div v-if="country" class="w-100">
       <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
         <h1>{{ country.name }}</h1>
+        <article>{{ _pageDescription }} </article>
         <div class="w-100 d-flex row my-5 text-center justify-content-around align-items-stretch">
           <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
             <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
@@ -167,10 +168,31 @@ export default {
   },
   head () {
     return {
-      title: `COMIT: ${this.country ? this.country.name : 'not found'}`
+      title: this._pageTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this._pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: this._pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: this._pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: this._pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
+        { hid: 'og:title', property: 'og:title', content: this._pageTitle },
+        { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:image', property: 'og:image', content: this._pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
+      ]
     }
   },
   computed: {
+    _pageTitle () {
+      return `${this.country.name}'s policy positions, vaccines, and resources`
+    },
+    _pageDescription () {
+      return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name}'s position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
+    },
+    _pageImage () {
+      return '/img/comit-dark-background.png'
+    },
     authoritiesByType () {
       const authoritiesByType = [
         { displayName: 'Public Health Authorities', authorityType: 'Public Health Authority', authorities: [] }
@@ -229,7 +251,23 @@ export default {
       } else {
         return []
       }
+    },
+    mostRecentPhaReviewDate () {
+      return this.authoritiesByType
+        .filter(authorityType => authorityType.authorityType === 'Public Health Authority')
+        .flatMap(authorityType => (authorityType.authorities || []))
+        .map(authority => (authority.reviewEvents || []).slice(-1)[0])
+        .reduce((mostRecent, reviewEvent) => {
+          if (reviewEvent > mostRecent) {
+            return reviewEvent
+          }
+          return mostRecent
+        }, '0000-00-00')
     }
+  },
+  mounted () {
+    this.$route.meta.title = `${this.country.name} details`
+    this.$route.meta.description = `Explore our information about ${this.country.name}, including current overall policy positions, recommendations by vaccine, vaccines being distributed, and other guidance we have found.`
   }
 }
 </script>

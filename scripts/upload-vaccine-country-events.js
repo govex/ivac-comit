@@ -6,7 +6,7 @@ const vaccineCountryEventsToUpload = require(process.cwd() + '/' + vaccineCountr
 if (process.env.AIRTABLE_API_KEY || process.env.AIRTABLE_BASE_ID || process.env.AIRTABLE_VACCINECOUNTRYEVENTS_TABLENAME) {
   const airtableAPIKey = process.env.AIRTABLE_API_KEY
   const base = new Airtable({ apiKey: airtableAPIKey }).base(process.env.AIRTABLE_BASE_ID)
-  console.log(`airtable connection initialized; uploading ${vaccineCountryEventsToUpload.length} response records`)
+  console.log(`airtable connection initialized; uploading ${vaccineCountryEventsToUpload.length} ${process.env.AIRTABLE_VACCINECOUNTRYEVENTS_TABLENAME} records`)
   for (const vaccineCountryEvent of vaccineCountryEventsToUpload) {
     base(process.env.AIRTABLE_VACCINECOUNTRYEVENTS_TABLENAME).create(
       vaccineCountryEvent, (err, record) => {

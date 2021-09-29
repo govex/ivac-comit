@@ -77,20 +77,35 @@ export default {
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'COMIT: Covid-19 Maternal Immunization Tracker',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-      { rel: 'manifest', href: '/site.webmanifest' }
-    ]
+  head () {
+    const _pageTitle = 'Covid-19 Maternal Immunization Tracker'
+    const _pageDescription = 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.'
+    const _pageImage = '/img/comit-dark-background.png'
+    return {
+      title: _pageTitle,
+      titleTemplate: '%s | COMIT',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: _pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: _pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: _pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: _pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: _pageTitle },
+        { hid: 'og:title', property: 'og:title', content: _pageTitle },
+        { hid: 'og:description', property: 'og:description', content: _pageDescription },
+        { hid: 'og:image', property: 'og:image', content: _pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: _pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: _pageTitle }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+        { rel: 'manifest', href: '/site.webmanifest' }
+      ]
+    }
   },
 
   module: {
