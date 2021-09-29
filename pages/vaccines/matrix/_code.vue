@@ -133,6 +133,7 @@ export default {
         { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
         { hid: 'og:title', property: 'og:title', content: this._pageTitle },
         { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:url', property: 'og:url', content: this._pageUrl },
         { hid: 'og:image', property: 'og:image', content: this._pageImage },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
@@ -147,7 +148,10 @@ export default {
       return `This table shows the most recent policy position for vaccination during ${this.code.code}, by country, for each vaccine.`
     },
     _pageImage () {
-      return '/img/comit-dark-background.png'
+      return 'https://www.comitglobal.org/img/comit-dark-background.png'
+    },
+    _pageUrl () {
+      return `https://wwww.comitglobal.org${this.$route.path}`
     },
     code () {
       const codeItem = this.codes.find(codeItem => codeItem.code === this.$route.params.code)

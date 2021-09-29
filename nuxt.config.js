@@ -80,7 +80,8 @@ export default {
   head () {
     const _pageTitle = 'Covid-19 Maternal Immunization Tracker'
     const _pageDescription = 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.'
-    const _pageImage = '/img/comit-dark-background.png'
+    const _pageImage = 'https://www.comitglobal.org/img/comit-dark-background.png'
+    const _pageUrl = 'https://www.comitglobal.org/'
     return {
       title: _pageTitle,
       titleTemplate: '%s | COMIT',
@@ -88,7 +89,7 @@ export default {
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'description', name: 'description', content: _pageDescription },
-        { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
+        { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
         { hid: 'twitter:site', name: 'twitter:site', content: '@johnshopkins' },
         { hid: 'twitter:title', name: 'twitter:title', content: _pageTitle },
         { hid: 'twitter:description', name: 'twitter:description', content: _pageDescription },
@@ -97,6 +98,7 @@ export default {
         { hid: 'og:title', property: 'og:title', content: _pageTitle },
         { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:description', property: 'og:description', content: _pageDescription },
+        { hid: 'og:url', property: 'og:url', content: _pageUrl },
         { hid: 'og:image', property: 'og:image', content: _pageImage },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: _pageImage },
         { hid: 'og:image:alt', property: 'og:image:alt', content: _pageTitle }
