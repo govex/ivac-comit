@@ -58,6 +58,9 @@
         <em>COVID-19 Vaccine policies for pregnant and lactating people worldwide.</em>
       </b-container>
     </b-container>
+    <b-container class="d-flex flex-row justify-content-end sticky-top">
+      <sharing-and-seo />
+    </b-container>
     <b-container>
       <Nuxt />
     </b-container>
@@ -115,11 +118,6 @@ export default {
     await this.$store.commit('authorities/load', myReconstructedData.authorities)
     await this.$store.commit('policies/load', myReconstructedData.policies)
     await this.$store.commit('vaccines/load', myReconstructedData.vaccines)
-  },
-  computed: {
-    showBetaBadge () {
-      return process.env.HIDE_BETA_BADGE !== 'true'
-    }
   }
 }
 </script>
