@@ -185,10 +185,10 @@ export default {
   },
   computed: {
     _pageTitle () {
-      return `${this.country.name}'s policy positions, vaccines, and resources`
+      return `${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"} Covid-19 maternity policy positions, vaccines, and resources`
     },
     _pageDescription () {
-      return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name}'s position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
+      return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
     },
     _pageImage () {
       return '/img/comit-dark-background.png'
