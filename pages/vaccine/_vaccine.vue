@@ -26,13 +26,12 @@
         <h2>
           {{ countryListItems.length }}
           <template v-if="countryListItems.length === 1">
-            Country
+            Country / territory
           </template>
           <template v-else>
-            Countries
+            Countries / territories
           </template>
-          Administering
-          <b-icon-info-circle v-b-popover.hover="'Based upon information from Our World In Data'" />
+          <b-icon-info-circle v-b-popover.hover="'This list contains countries which have ever administed this vaccine or have ever issued a policy position which specifically mentions this vaccine.'" />
         </h2>
         <b-table
           hover
@@ -45,7 +44,10 @@
           :sort-compare="$root.$listSortComparer"
         >
           <template #head(name)>
-            Country / territory<b-icon-info-circle v-b-popover.hover="'The country / territory name'" />
+            Country / territory <b-icon-info-circle v-b-popover.hover="'The country / territory name'" />
+          </template>
+          <template #head(administered)>
+            Administered <b-icon-info-circle v-b-popover.hover="'Indicates whether this vaccine was ever administered in this country, according to Our World In Data.'" />
           </template>
           <template #head(mostRecentPregnancyCode)>
             Pregnancy policy <b-icon-info-circle v-b-popover.hover="'The most recent policy specifically mentioning this vacccine for people who are pregnant.'" />
@@ -61,8 +63,11 @@
           </template>
           <template #cell(name)="data">
             <b-link :to="data | countryUrl">
-              {{ data.item.name }}
+              <span style="font-size: 1.25em">{{ data.item.name }}</span>
             </b-link>
+          </template>
+          <template #cell(administered)="data">
+            <b-icon-check-circle-fill v-if="data.value" class="text-success" />
           </template>
           <template #cell(mostRecentPregnancyCode)="data">
             <PregnancyLactationCodeIcons v-if="data.item.mostRecentPregnancyCode" :codes="data.item.mostRecentPregnancyCode" />
@@ -93,11 +98,12 @@ export default {
   data () {
     return {
       countryListFields: [
-        { key: 'name', label: 'Country', sortable: true },
-        { key: 'mostRecentPregnancyCode', label: 'Pregnancy Recommendation', class: 'text-center', sortable: true },
-        { key: 'mostRecentLactationCode', label: 'Lactation Recommendation', class: 'text-center', sortable: true },
-        { key: 'wbRegion', label: 'Region', sortable: true },
-        { key: 'wbIncomeLevelName', label: 'Income Level', sortable: true }
+        { key: 'name', label: 'Country', class: 'align-middle', sortable: true },
+        { key: 'administered', label: 'Administered', class: 'text-center align-middle', sortable: true },
+        { key: 'mostRecentPregnancyCode', label: 'Pregnancy Recommendation', class: 'text-center align-middle', sortable: true },
+        { key: 'mostRecentLactationCode', label: 'Lactation Recommendation', class: 'text-center align-middle', sortable: true },
+        { key: 'wbRegion', label: 'Region', class: 'align-middle', sortable: true },
+        { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle', sortable: true }
       ]
     }
   },
@@ -129,21 +135,44 @@ export default {
       return '/img/comit-dark-background.png'
     },
     countryListItems () {
-      return this.vaccine.countries
-        ? this.vaccine.countries
+      const policyPositionedCountries = new Map(this.$store.state.countries
+        ? this.$store.state.countries
           .reduce((result, country) => {
-            const outputRow = {
-              name: country.name,
-              code: country.iso3166Alpha2Code,
-              wbIncomeLevelName: country.wbIncomeLevelName,
-              wbIncomeLevelSort: country.wbIncomeLevelSort,
-              wbRegion: country.wbRegion,
-              mostRecentPregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [this.vaccine.id] })?.pregnancyCode,
-              mostRecentLactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [this.vaccine.id] })?.lactationCode
+            if (country.wbRegion) {
+              const outputRow = {
+                name: country.name,
+                code: country.iso3166Alpha2Code,
+                wbIncomeLevelName: country.wbIncomeLevelName,
+                wbIncomeLevelSort: country.wbIncomeLevelSort,
+                wbRegion: country.wbRegion,
+                mostRecentPregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [this.vaccine.id] })?.pregnancyCode,
+                mostRecentLactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [this.vaccine.id] })?.lactationCode
+              }
+              result.push([country.id, outputRow])
             }
-            return result.concat(outputRow)
+            return result
           }, [])
+          .filter(([id, countryItem]) => countryItem.mostRecentPregnancyCode || countryItem.mostRecentLactationCode)
         : []
+      )
+      for (const vaccineCountry of this.vaccine.countries) {
+        if (vaccineCountry.wbRegion) {
+          if (policyPositionedCountries.has(vaccineCountry.id)) {
+            policyPositionedCountries.get(vaccineCountry.id).administered = true
+          } else {
+            const outputRow = {
+              name: vaccineCountry.name,
+              code: vaccineCountry.iso3166Alpha2Code,
+              wbIncomeLevelName: vaccineCountry.wbIncomeLevelName,
+              wbIncomeLevelSort: vaccineCountry.wbIncomeLevelSort,
+              wbRegion: vaccineCountry.wbRegion,
+              administered: true
+            }
+            policyPositionedCountries.set(vaccineCountry.id, outputRow)
+          }
+        }
+      }
+      return Array.from(policyPositionedCountries.values())
     },
     vaccine () {
       return this.$store.state.vaccines.find(vaccine => vaccine.id === this.vaccineId)

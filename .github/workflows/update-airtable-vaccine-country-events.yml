@@ -1,0 +1,45 @@
+name: dev-update-airtable-vaccine-country-events
+on: 
+  workflow_dispatch:
+
+jobs:
+  update-owid:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: development
+        
+      - run: git config --global user.email "anicklin@jhu.edu"
+      - run: git config --global user.name "Automated Data Update"
+
+      - name: use nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: download data from airtable
+        env: 
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+        run: node scripts/airtable-downloader.js
+
+      - name: download owid vaccine locations data
+        run: |
+          echo "downloading OWID locations.csv... \c"
+          STATUS=$(curl -s -S -o scripts/owid-vaccine-locations.csv -w '%{http_code}' "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/locations.csv")
+          if [ $STATUS -eq 200 ]; then echo "success!"; else echo "error $STATUS"; rm scripts/owid-vaccine-locations.csv; exit 1; fi
+
+      - name: generate new data file for website
+        run: node scripts/process-owid-vaccine-locations.js
+
+      - name: upload records to github
+        env: 
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_VACCINECOUNTRYEVENTS_TABLENAME: "VaccineCountryEvents"
+        run: node -r dotenv/config scripts/upload-vaccine-country-events.js
