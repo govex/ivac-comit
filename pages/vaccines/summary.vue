@@ -93,7 +93,7 @@ export default {
       return 'https:/www.comitglobal.org/img/comit-dark-background.png'
     },
     _pageUrl () {
-      return `https://www.comitglobal.org${this.$sroute.path}`
+      return `https://www.comitglobal.org${this.$route.path}`
     },
     vaccineList () {
       return this.vaccinesWithNonSpecific.reduce((results, vaccine) => {
