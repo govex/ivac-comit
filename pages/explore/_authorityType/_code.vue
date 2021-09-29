@@ -194,6 +194,7 @@ export default {
         { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
         { hid: 'og:title', property: 'og:title', content: this._pageTitle },
         { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:url', property: 'og:url', content: this._pageUrl },
         { hid: 'og:image', property: 'og:image', content: this._pageImage },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
         { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
@@ -210,7 +211,10 @@ export default {
       return `Explore ${this.authorityType.filterValue.toLowerCase()} policies on Covid-19 vaccination during ${this.code.keyword}. Our interactive map presents the most permissive policy position by country, allowing you to filter for specific vaccines, policy positions, or even snapshots of the past.`
     },
     _pageImage () {
-      return '/img/comit-dark-background.png'
+      return 'https://www.comitglobal.org/img/comit-dark-background.png'
+    },
+    _pageUrl () {
+      return `https://www.comitglobal.org${this.$route.path}`
     },
     authorityType () {
       const authorityTypeItem = this.authorityTypes.find(item => item.key === this.$route.params.authorityType)
