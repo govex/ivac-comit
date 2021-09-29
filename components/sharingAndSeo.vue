@@ -1,5 +1,5 @@
 <template>
-  <b-button-group class="bg-secondary align-items-center">
+  <b-button-group class="bg-secondary align-items-center shadow-sm rounded">
     <b-button variant="outline-primary" disabled>
       Share
     </b-button>
