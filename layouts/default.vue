@@ -111,6 +111,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      clipboardHoverText: 'Copy link'
+    }
+  },
   async fetch () {
     const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
     const myReconstructedData = this.$root.$reconstructReferences(myData)
