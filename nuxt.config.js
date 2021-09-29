@@ -95,7 +95,7 @@ export default {
         { hid: 'twitter:image', name: 'twitter:image', content: _pageImage },
         { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: _pageTitle },
         { hid: 'og:title', property: 'og:title', content: _pageTitle },
-        { hid: 'og:type', property: 'og: type', content: 'website' },
+        { hid: 'og:type', property: 'og:type', content: 'website' },
         { hid: 'og:description', property: 'og:description', content: _pageDescription },
         { hid: 'og:image', property: 'og:image', content: _pageImage },
         { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: _pageImage },
