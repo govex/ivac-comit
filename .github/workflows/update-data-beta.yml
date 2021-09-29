@@ -30,7 +30,10 @@ jobs:
         run: node scripts/airtable-downloader.js
 
       - name: generate new data file for website
-        run: node scripts/generate-website-data-files.js
+        run: |
+          node scripts/generate-website-data-files.js
+          node scripts/authority-policy-position-timeseries.js static/data/comit-v1.min.json
+          noce scripts/country-policy-position-timeseries.js static/data/comit-v1.min.json
 
       - name: add data file to commit
         run: git add static/data/comit-v1.min.json
