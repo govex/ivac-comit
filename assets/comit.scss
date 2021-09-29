@@ -25,7 +25,8 @@ $subgroup:                        blue     ;
 
 //all other custom scss files or css should be added here
 html, body { min-height: 100vh }
-// nav {z-index: 99999;}
+nav {z-index: 1021;}
+.b-sidebar {z-index: 2000;}
 
 .recommended {color: $recommended; fill: $recommended}
 .recommended-bg {background-color: $recommended}
