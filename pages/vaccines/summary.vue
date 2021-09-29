@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Policy position summary by vaccine</h2>
-    <p>This table shows counts of most recent policy positions, by vaccine, for both pregnancy and lactation.</p>
+    <h2>{{ _pageTitle }}</h2>
+    <p>{{ _pageDescription }}</p>
     <b-table
       :items="vaccineList"
       primary-key="id"
@@ -12,7 +12,7 @@
       sort-desc
     >
       <template #head(countryCount)>
-        Countries <br> administering <br> <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries in which each vaccine is presently being administered.'" />
+        Countries <br> administering <br> <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries which have ever administered this vaccine, according to Our World In Data.'" />
       </template>
       <template #cell(displayName)="data">
         <nuxt-link v-if="data.item.url" :to="`${data.item.url}`">
@@ -64,7 +64,33 @@ export default {
       ]
     }
   },
+  head () {
+    return {
+      title: this._pageTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this._pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: this._pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: this._pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: this._pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
+        { hid: 'og:title', property: 'og:title', content: this._pageTitle },
+        { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:image', property: 'og:image', content: this._pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
+      ]
+    }
+  },
   computed: {
+    _pageTitle () {
+      return 'Maternal Covid-19 vaccination policy positions summary, by vaccine'
+    },
+    _pageDescription () {
+      return 'This table shows a list of vaccines, along with the number of countries administering each one, and counts of the most recent, most permissive policy positions for both pregnancy and lactation.'
+    },
+    _pageImage () {
+      return '/img/comit-dark-background.png'
+    },
     vaccineList () {
       return this.vaccinesWithNonSpecific.reduce((results, vaccine) => {
         const result = {

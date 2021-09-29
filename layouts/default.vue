@@ -59,7 +59,7 @@
       </b-container>
     </b-container>
     <b-container class="d-flex flex-row justify-content-end sticky-top">
-      <sharing-and-seo :title="title" :description="description" :image="image" />
+      <sharing-and-seo />
     </b-container>
     <b-container>
       <Nuxt />
@@ -111,13 +111,6 @@
 
 <script>
 export default {
-  data () {
-    return {
-      description: 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.',
-      title: 'COMIT: Covid-19 Maternal Immunization Tracker',
-      image: '/static/img/comit-dark-background.png'
-    }
-  },
   async fetch () {
     const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
     const myReconstructedData = this.$root.$reconstructReferences(myData)
@@ -125,23 +118,6 @@ export default {
     await this.$store.commit('authorities/load', myReconstructedData.authorities)
     await this.$store.commit('policies/load', myReconstructedData.policies)
     await this.$store.commit('vaccines/load', myReconstructedData.vaccines)
-  },
-  head () {
-    const sefl = this
-    if (process.browser) {
-      this.title = document.title
-    }
-    return {
-      changed ({ title, meta }) {
-        sefl.title = title
-        const metaDescription = meta.find(item => item.hid === 'description')
-        if (metaDescription) {
-          sefl.description = metaDescription.content
-        } else {
-          sefl.description = 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.'
-        }
-      }
-    }
   }
 }
 </script>

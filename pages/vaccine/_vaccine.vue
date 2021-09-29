@@ -103,11 +103,31 @@ export default {
   },
   head () {
     return {
-      title: `${this.vaccine ? this.vaccine.displayName + ' policies and guidance for maternal COVID-19 immunization - COMIT' : 'not found'}`,
-      'og:description': `${this.vaccine ? 'Learn about global policies and guidance related to ' + this.vaccine.displayName + ' for maternal COVID-19 immunization.' : 'not found'}`
+      title: this._pageTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this._pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: this._pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: this._pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: this._pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
+        { hid: 'og:title', property: 'og:title', content: this._pageTitle },
+        { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:image', property: 'og:image', content: this._pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
+      ]
     }
   },
   computed: {
+    _pageTitle () {
+      return this.vaccine ? this.vaccine.displayName + ' policies and guidance for maternal COVID-19 immunization' : 'not found'
+    },
+    _pageDescription () {
+      return this.vaccine ? 'Learn about global policies and guidance related to ' + this.vaccine.displayName + ' for maternal COVID-19 immunization.' : 'not found'
+    },
+    _pageImage () {
+      return '/img/comit-dark-background.png'
+    },
     countryListItems () {
       return this.vaccine.countries
         ? this.vaccine.countries

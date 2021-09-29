@@ -24,10 +24,30 @@ export default {
   },
   head () {
     return {
-      title: 'COMIT: ' + this.page.title,
+      title: this._pageTitle,
       meta: [
-        { hid: 'description', name: 'description', content: this.page.description }
+        { hid: 'description', name: 'description', content: this._pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: this._pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: this._pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: this._pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
+        { hid: 'og:title', property: 'og:title', content: this._pageTitle },
+        { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:image', property: 'og:image', content: this._pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
       ]
+    }
+  },
+  computed: {
+    _pageTitle () {
+      return this.page.title
+    },
+    _pageDescription () {
+      return this.page.description
+    },
+    _pageImage () {
+      return this.page.image || '/img/comit-dark-background.png'
     }
   }
 }

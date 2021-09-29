@@ -20,75 +20,9 @@
 
 <script>
 export default {
-  props: {
-    title: {
-      type: String,
-      default: 'This is a title'
-    },
-    description: {
-      type: String,
-      default: 'This is a description'
-    },
-    image: {
-      type: String,
-      default: 'https://via.placeholder.com/350x150'
-    }
-  },
   data () {
     return {
       clipboardHoverText: 'Copy to clipboard'
-    }
-  },
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: this.title
-        },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: this.description
-        },
-        {
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: this.image
-        },
-        {
-          hid: 'twitter:image:alt',
-          name: 'twitter:image:alt',
-          content: this.title
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: this.title
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: this.description
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: this.image
-        },
-        {
-          hid: 'og:image:secure_url',
-          property: 'og:image:secure_url',
-          content: this.image
-        },
-        {
-          hid: 'og:image:alt',
-          property: 'og:image:alt',
-          content: this.title
-        }
-      ]
     }
   },
   computed: {
@@ -98,11 +32,8 @@ export default {
     mailUrl () {
       return `mailto:?subject=${this.title}&body=https://www.comitglobal.org${this.$route.fullPath}`
     },
-    showBetaBadge () {
-      return process.env.HIDE_BETA_BADGE !== 'true'
-    },
     twitterUrl () {
-      return `https://twitter.com/intent/tweet?text=${this.title}&url=https://www.comitglobal.org${this.$route.fullPath}`
+      return `https://twitter.com/intent/tweet?url=https://www.comitglobal.org${this.$route.fullPath}`
     }
   },
   methods: {
@@ -114,6 +45,5 @@ export default {
       }, 5000)
     }
   }
-
 }
 </script>

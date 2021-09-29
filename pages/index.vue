@@ -51,10 +51,6 @@ export default {
         }
         return result
       }, [])
-
-    this.countryListItems.forEach((countryListItem) => {
-
-    })
   }
 }
 </script>
