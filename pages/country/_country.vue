@@ -3,7 +3,9 @@
     <div v-if="country" class="w-100">
       <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
         <h1>{{ country.name }}</h1>
-        <article>{{ _pageDescription }} </article>
+        <article>
+          {{ _pageDescription }}
+        </article>
         <div class="w-100 d-flex row my-5 text-center justify-content-around align-items-stretch">
           <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
             <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
@@ -34,52 +36,54 @@
             </b-card-body>
           </b-card>
         </div>
-        <div class="w-100 d-flex justify-content-around align-items-stretch text-center">
-          <div class="card w-50 m-2 p-4 justify-content-start">
-            <h2>Pregnancy</h2>
-            <template v-if="mostPermissivePregnancyCode">
-              <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyCodes" />
-              <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" class="my-3" show>
-                Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
-              </b-alert>
-              <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
-            </template>
-            <template v-else>
-              <h1>
-                <b-icon-question-circle />
-              </h1>
-              <span>No policy position found</span>
-            </template>
-            <b-link to="/pregnancy" class="mt-auto">
-              <b-button variant="link">
-                Compare to other countries
-              </b-button>
-            </b-link>
+        <template v-if="!isGlobalCountry">
+          <div class="w-100 d-flex justify-content-around align-items-stretch text-center">
+            <div class="card w-50 m-2 p-4 justify-content-start">
+              <h2>Pregnancy</h2>
+              <template v-if="mostPermissivePregnancyCode">
+                <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyCodes" />
+                <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" class="my-3" show>
+                  Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
+                </b-alert>
+                <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
+              </template>
+              <template v-else>
+                <h1>
+                  <b-icon-question-circle />
+                </h1>
+                <span>No policy position found</span>
+              </template>
+              <b-link to="/pregnancy" class="mt-auto">
+                <b-button variant="link">
+                  Compare to other countries
+                </b-button>
+              </b-link>
+            </div>
+            <div class="card w-50 m-2 p-4 justify-content-start">
+              <h2>Lactation</h2>
+              <template v-if="mostPermissiveLactationCode">
+                <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationCodes" />
+                <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
+                  Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
+                </b-alert>
+                <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
+              </template>
+              <template v-else>
+                <h1>
+                  <b-icon-question-circle />
+                </h1>
+                <span>No policy position found</span>
+              </template>
+              <b-link to="/lactation" class="mt-auto">
+                <b-button variant="link">
+                  Compare to other countries
+                </b-button>
+              </b-link>
+            </div>
           </div>
-          <div class="card w-50 m-2 p-4 justify-content-start">
-            <h2>Lactation</h2>
-            <template v-if="mostPermissiveLactationCode">
-              <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationCodes" />
-              <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
-                Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
-              </b-alert>
-              <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
-            </template>
-            <template v-else>
-              <h1>
-                <b-icon-question-circle />
-              </h1>
-              <span>No policy position found</span>
-            </template>
-            <b-link to="/lactation" class="mt-auto">
-              <b-button variant="link">
-                Compare to other countries
-              </b-button>
-            </b-link>
-          </div>
-        </div>
+        </template>
       </div>
-      <div class="my-5">
+      <div v-if="!isGlobalCountry" class="my-5">
         <h2>Vaccines</h2>
         <CountryVaccines :country="country">
           No information available.
@@ -189,7 +193,11 @@ export default {
       return `${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"} Covid-19 maternity policy positions, vaccines, and resources`
     },
     _pageDescription () {
-      return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
+      if (this.isGlobalCountry) {
+        return 'This page shows the resources and guidance of international health organizations.'
+      } else {
+        return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
+      }
     },
     _pageImage () {
       return 'https://www.comitglobal.org/img/comit-dark-background.png'
@@ -227,6 +235,9 @@ export default {
     },
     countryCode () {
       return this.$route.params.country
+    },
+    isGlobalCountry () {
+      return this.country.name === 'Global'
     },
     mostPermissiveLactationCode () {
       if (this.country) {
