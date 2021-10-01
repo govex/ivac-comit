@@ -211,7 +211,7 @@ export default {
         range.max = policyDate > range.max ? policyDate : range.max
         // range.min = policyDate < range.min ? policyDate : range.min
         return range
-      }, { min: '2021-03-15', max: '0000-00-00' })
+      }, { min: '2021-03-13', max: '2021-09-30' })
       if (twInfo.min > twInfo.max) { return [] }
       const timeWarpDates = []
       twInfo.min = new Date(twInfo.min)
