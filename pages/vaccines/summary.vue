@@ -95,33 +95,27 @@ export default {
     _pageUrl () {
       return `https://www.comitglobal.org${this.$route.path}`
     },
+    countriesNotGlobal () {
+      return (this.$store.state.countries || []).filter(country => country.wbRegion)
+    },
     vaccineList () {
-      return this.vaccinesWithNonSpecific.reduce((results, vaccine) => {
-        const result = {
+      return this.vaccinesWithNonSpecific.map((vaccine) => {
+        return {
           id: vaccine.id,
           displayName: vaccine.displayName,
           url: vaccine.url,
           countryCount: vaccine.countryCount,
-          countries: vaccine.countries
-            ? vaccine.countries.reduce((countryResults, country) => {
-              return countryResults.concat({
-                pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
-                lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode
-              })
-            }, [])
-            : []
+          countries: this.getCountryListByVaccine(vaccine)
         }
-        results.push(result)
-        return results
-      }, [])
+      })
     },
     vaccines () {
       return this.$store.state.vaccines.filter(vaccine => vaccine.displayName)
         .map(vaccine => ({
           id: vaccine.id,
           displayName: vaccine.displayName,
-          countryCount: vaccine.countries ? vaccine.countries.length : ' -',
-          countries: vaccine.countries,
+          countryCount: vaccine.countries ? (new Set(vaccine.countries)).size : '-',
+          // countries: this.getCountryListByVaccine(vaccine),
           url: `/vaccine/${vaccine.id}`
         }))
     },
@@ -130,11 +124,40 @@ export default {
         id: 'vaccines-non-specific',
         displayName: '(No vaccine product specified)',
         countryCount: 'Not applicable',
-        countries: this.$store.state.countries.filter(country => country.wbRegion)
+        countries: this.countryListItems
       }
       return [unspecifiedVaccine].concat(this.vaccines)
     }
+  },
+  methods: {
+    getCountryListByVaccine (vaccine) {
+      const policyPositionedCountries = new Map(this.countriesNotGlobal
+        .map((country) => {
+          return [country.id, {
+            name: country.name,
+            code: country.iso3166Alpha2Code,
+            pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
+            lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode
+          }]
+        })
+        .filter(([id, countryItem]) => countryItem.pregnancyCode || countryItem.lactationCode)
+      )
+      for (const vaccineCountry of (vaccine.countries || [])) {
+        if (vaccineCountry.wbRegion) {
+          if (policyPositionedCountries.has(vaccineCountry.id)) {
+            policyPositionedCountries.get(vaccineCountry.id).administered = true
+          } else {
+            const outputRow = {
+              name: vaccineCountry.name,
+              code: vaccineCountry.iso3166Alpha2Code,
+              administered: true
+            }
+            policyPositionedCountries.set(vaccineCountry.id, outputRow)
+          }
+        }
+      }
+      return Array.from(policyPositionedCountries.values())
+    }
   }
-
 }
 </script>
