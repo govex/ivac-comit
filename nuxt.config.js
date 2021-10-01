@@ -155,6 +155,19 @@ export default {
   },
 
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'server'
+  target: 'server',
 
+  render: {
+    static: {
+      // Add CORS header to static files.
+      setHeaders (res) {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.setHeader('Access-Control-Allow-Methods', 'GET')
+        res.setHeader(
+          'Access-Control-Allow-Headers',
+          'Origin, X-Requested-With, Content-Type, Accept'
+        )
+      }
+    }
+  }
 }
