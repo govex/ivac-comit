@@ -57,10 +57,10 @@
       </div>
     </b-sidebar>
     <h2>
-      Most recent policy positions by country, by vaccine for {{ code.code }}
-      <span v-for="codeItem of otherCodes" :key="codeItem.code" class="text-muted" style="font-size: 1rem"><NuxtLink :to="`${codeItem.code}`">(switch to {{ codeItem.code }})</NuxtLink></span>
+      {{ _pageTitle }}
+      <span class="text-muted" style="font-size: 1rem">(switch to <span v-for="codeItem of otherCodes" :key="codeItem.code"><NuxtLink :to="`${codeItem.code}`">{{ codeItem.code }}</NuxtLink> </span>)</span>
     </h2>
-    <p>This table shows the most recent policy position, by country, for each vaccine.</p>
+    <p>{{ _pageDescription }}</p>
     <b-alert variant="warning" show>
       <b-icon-exclamation-circle />
       Only vaccines mentioned in more than one policy are displayed here.
@@ -122,7 +122,37 @@ export default {
       countriesToDisplay: this.$store.state.countries.filter(country => country.name !== 'Global').map(country => country.id)
     }
   },
+  head () {
+    return {
+      title: this._pageTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this._pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: this._pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: this._pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: this._pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
+        { hid: 'og:title', property: 'og:title', content: this._pageTitle },
+        { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:url', property: 'og:url', content: this._pageUrl },
+        { hid: 'og:image', property: 'og:image', content: this._pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
+      ]
+    }
+  },
   computed: {
+    _pageTitle () {
+      return `Policy positions for ${this.code.code} by country, by Covid-19 vaccine`
+    },
+    _pageDescription () {
+      return `This table shows the most recent policy position for vaccination during ${this.code.code}, by country, for each vaccine.`
+    },
+    _pageImage () {
+      return 'https://www.comitglobal.org/img/comit-dark-background.png'
+    },
+    _pageUrl () {
+      return `https://wwww.comitglobal.org${this.$route.path}`
+    },
     code () {
       const codeItem = this.codes.find(codeItem => codeItem.code === this.$route.params.code)
       if (codeItem) {

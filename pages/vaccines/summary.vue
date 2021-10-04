@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Policy position summary by vaccine</h2>
-    <p>This table shows counts of most recent policy positions, by vaccine, for both pregnancy and lactation.</p>
+    <h2>{{ _pageTitle }}</h2>
+    <p>{{ _pageDescription }}</p>
     <b-table
       :items="vaccineList"
       primary-key="id"
@@ -12,7 +12,7 @@
       sort-desc
     >
       <template #head(countryCount)>
-        Countries <br> administering <br> <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries in which each vaccine is presently being administered.'" />
+        Countries <br> administering <br> <b-icon-info-circle v-b-popover.hover="'Indicates the number of countries which have ever administered this vaccine, according to Our World In Data.'" />
       </template>
       <template #cell(displayName)="data">
         <nuxt-link v-if="data.item.url" :to="`${data.item.url}`">
@@ -64,34 +64,58 @@ export default {
       ]
     }
   },
+  head () {
+    return {
+      title: this._pageTitle,
+      meta: [
+        { hid: 'description', name: 'description', content: this._pageDescription },
+        { hid: 'twitter:title', name: 'twitter:title', content: this._pageTitle },
+        { hid: 'twitter:description', name: 'twitter:description', content: this._pageDescription },
+        { hid: 'twitter:image', name: 'twitter:image', content: this._pageImage },
+        { hid: 'twitter:image:alt', name: 'twitter:image:alt', content: this._pageTitle },
+        { hid: 'og:title', property: 'og:title', content: this._pageTitle },
+        { hid: 'og:description', property: 'og:description', content: this._pageDescription },
+        { hid: 'og:url', property: 'og:url', content: this._pageUrl },
+        { hid: 'og:image', property: 'og:image', content: this._pageImage },
+        { hid: 'og:image:secure_url', property: 'og:image:secure_url', content: this._pageImage },
+        { hid: 'og:image:alt', property: 'og:image:alt', content: this._pageTitle }
+      ]
+    }
+  },
   computed: {
+    _pageTitle () {
+      return 'Maternal Covid-19 vaccination policy positions summary, by vaccine'
+    },
+    _pageDescription () {
+      return 'This table shows a list of vaccines, along with the number of countries administering each one, and counts of the most recent, most permissive policy positions for both pregnancy and lactation.'
+    },
+    _pageImage () {
+      return 'https:/www.comitglobal.org/img/comit-dark-background.png'
+    },
+    _pageUrl () {
+      return `https://www.comitglobal.org${this.$route.path}`
+    },
+    countriesNotGlobal () {
+      return (this.$store.state.countries || []).filter(country => country.wbRegion)
+    },
     vaccineList () {
-      return this.vaccinesWithNonSpecific.reduce((results, vaccine) => {
-        const result = {
+      return this.vaccinesWithNonSpecific.map((vaccine) => {
+        return {
           id: vaccine.id,
           displayName: vaccine.displayName,
           url: vaccine.url,
           countryCount: vaccine.countryCount,
-          countries: vaccine.countries
-            ? vaccine.countries.reduce((countryResults, country) => {
-              return countryResults.concat({
-                pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
-                lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode
-              })
-            }, [])
-            : []
+          countries: this.getCountryListByVaccine(vaccine)
         }
-        results.push(result)
-        return results
-      }, [])
+      })
     },
     vaccines () {
       return this.$store.state.vaccines.filter(vaccine => vaccine.displayName)
         .map(vaccine => ({
           id: vaccine.id,
           displayName: vaccine.displayName,
-          countryCount: vaccine.countries ? vaccine.countries.length : ' -',
-          countries: vaccine.countries,
+          countryCount: vaccine.countries ? (new Set(vaccine.countries)).size : '-',
+          // countries: this.getCountryListByVaccine(vaccine),
           url: `/vaccine/${vaccine.id}`
         }))
     },
@@ -100,11 +124,40 @@ export default {
         id: 'vaccines-non-specific',
         displayName: '(No vaccine product specified)',
         countryCount: 'Not applicable',
-        countries: this.$store.state.countries.filter(country => country.wbRegion)
+        countries: this.countryListItems
       }
       return [unspecifiedVaccine].concat(this.vaccines)
     }
+  },
+  methods: {
+    getCountryListByVaccine (vaccine) {
+      const policyPositionedCountries = new Map(this.countriesNotGlobal
+        .map((country) => {
+          return [country.id, {
+            name: country.name,
+            code: country.iso3166Alpha2Code,
+            pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
+            lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode
+          }]
+        })
+        .filter(([id, countryItem]) => countryItem.pregnancyCode || countryItem.lactationCode)
+      )
+      for (const vaccineCountry of (vaccine.countries || [])) {
+        if (vaccineCountry.wbRegion) {
+          if (policyPositionedCountries.has(vaccineCountry.id)) {
+            policyPositionedCountries.get(vaccineCountry.id).administered = true
+          } else {
+            const outputRow = {
+              name: vaccineCountry.name,
+              code: vaccineCountry.iso3166Alpha2Code,
+              administered: true
+            }
+            policyPositionedCountries.set(vaccineCountry.id, outputRow)
+          }
+        }
+      }
+      return Array.from(policyPositionedCountries.values())
+    }
   }
-
 }
 </script>

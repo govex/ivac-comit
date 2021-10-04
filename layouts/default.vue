@@ -10,10 +10,10 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="w-100 justify-content-around lead">
             <b-nav-item-dropdown text="Policies">
-              <b-dropdown-item to="/pregnancy">
+              <b-dropdown-item to="/explore/public-health-authorities/pregnancy">
                 Pregnancy explorer
               </b-dropdown-item>
-              <b-dropdown-item to="/lactation">
+              <b-dropdown-item to="/explore/public-health-authorities/lactation">
                 Lactation explorer
               </b-dropdown-item>
               <b-dropdown-item to="/vaccines/matrix/pregnancy">
@@ -57,6 +57,9 @@
       <b-container>
         <em>COVID-19 Vaccine policies for pregnant and lactating people worldwide.</em>
       </b-container>
+    </b-container>
+    <b-container class="d-flex flex-row justify-content-end sticky-top">
+      <sharing-and-seo />
     </b-container>
     <b-container>
       <Nuxt />
@@ -108,6 +111,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      clipboardHoverText: 'Copy link'
+    }
+  },
   async fetch () {
     const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
     const myReconstructedData = this.$root.$reconstructReferences(myData)
@@ -115,11 +123,6 @@ export default {
     await this.$store.commit('authorities/load', myReconstructedData.authorities)
     await this.$store.commit('policies/load', myReconstructedData.policies)
     await this.$store.commit('vaccines/load', myReconstructedData.vaccines)
-  },
-  computed: {
-    showBetaBadge () {
-      return process.end.HIDE_BETA_BADGE !== 'true'
-    }
   }
 }
 </script>

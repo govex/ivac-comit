@@ -9,7 +9,7 @@
           <div class="h-100 d-flex flex-column align-items-center justify-content-around p-3">
             <h5>How many countries / territories have policy positions on the use of COVID-19 vaccines in pregnancy?</h5>
             <PolicyPositionsIndicators :country-list-items="countryListItems" indicator-property="mostPermissivePregnancyCode" :displayed-indicators="[1,2,3,4,5]" link="/pregnancy" />
-            <b-button to="/pregnancy" variant="primary" size="lg" prefetch>
+            <b-button to="/explore/public-health-authorities/pregnancy" variant="primary" size="lg" prefetch>
               Explore the Data
             </b-button>
           </div>
@@ -51,10 +51,6 @@ export default {
         }
         return result
       }, [])
-
-    this.countryListItems.forEach((countryListItem) => {
-
-    })
   }
 }
 </script>

@@ -144,9 +144,9 @@ export default {
     filterText () {
       if (this.selectedVaccine === 'all') {
         if (this.selectedPolicyPositions.length === this.policyPositions.length) {
-          return `Showing the most permissive policy position ${this.timeWarpText} for each country for all vaccines`
+          return `Showing the most permissive policy position ${this.timeWarpText} for each country for any vaccines`
         } else {
-          return `Showing countries where the most permissive policy position ${this.timeWarpText} for all vaccines is ` + this.selectedPolicyPositions
+          return `Showing countries where the most permissive policy position ${this.timeWarpText} for any vaccines is ` + this.selectedPolicyPositions
             .map((selectedPolicyPosition) => {
               const policyPosition = this.policyPositions
                 .find(policyPosition => policyPosition.value === selectedPolicyPosition)
@@ -211,7 +211,7 @@ export default {
         range.max = policyDate > range.max ? policyDate : range.max
         // range.min = policyDate < range.min ? policyDate : range.min
         return range
-      }, { min: '2021-03-15', max: '0000-00-00' })
+      }, { min: '2021-03-13', max: '0000-00-00' })
       if (twInfo.min > twInfo.max) { return [] }
       const timeWarpDates = []
       twInfo.min = new Date(twInfo.min)
