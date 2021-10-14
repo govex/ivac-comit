@@ -38,17 +38,20 @@ for (const selectChoice of inputData.policiesSelectChoices) {
 // map the authority review events for lookup
 const authorityReviewEventsMap = inputData.authorityReviewEvents
   .reduce((arem, are) => {
-    const authorityId = are.fields.Authority[0]
-    const eventDate = are.fields.Date.split('T')[0]
-    const eventArray = arem.get(authorityId)
-    if (eventArray) {
-      if (!eventArray.includes(eventDate)) {
-        eventArray.push(eventDate)
+    if (are.fields.authority) {
+      const authorityId = are.fields.Authority[0]
+      const eventDate = are.fields.Date.split('T')[0]
+      const eventArray = arem.get(authorityId)
+      if (eventArray) {
+        if (!eventArray.includes(eventDate)) {
+          eventArray.push(eventDate)
+        }
+        return arem
+      } else {
+        return arem.set(authorityId, [eventDate])
       }
-      return arem
-    } else {
-      return arem.set(authorityId, [eventDate])
     }
+    return arem
   }, new Map())
 for (let [value] of authorityReviewEventsMap.values()) {
   value = Array.from(new Set(value))
