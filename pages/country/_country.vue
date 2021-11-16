@@ -41,7 +41,7 @@
             <div class="card w-50 m-2 p-4 justify-content-start">
               <h2>Pregnancy</h2>
               <template v-if="mostPermissivePregnancyCode">
-                <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyCodes" />
+                <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyIndicators" />
                 <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" class="my-3" show>
                   Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
                 </b-alert>
@@ -62,7 +62,7 @@
             <div class="card w-50 m-2 p-4 justify-content-start">
               <h2>Lactation</h2>
               <template v-if="mostPermissiveLactationCode">
-                <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationCodes" />
+                <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationIndicators" />
                 <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
                   Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
                 </b-alert>
@@ -196,7 +196,12 @@ export default {
       if (this.isGlobalCountry) {
         return 'This page shows the resources and guidance of international health organizations.'
       } else {
-        return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
+        try {
+          return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
+        } catch(e) {
+          console.error(e)
+          return ''
+        }
       }
     },
     _pageImage () {
@@ -253,14 +258,14 @@ export default {
         return []
       }
     },
-    mostPermissivePregnancyCode () {
+    mostPermissivePregnancyIndicators () {
       if (this.country) {
         return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })?.pregnancyCode
       } else {
         return undefined
       }
     },
-    mostPermissivePregnancyCodes () {
+    mostPermissivePregnancyIndicators () {
       if (this.mostPermissivePregnancyCode) {
         return this.mostPermissivePregnancyCode.map(code => code.rank)
       } else {
