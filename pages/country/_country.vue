@@ -193,9 +193,30 @@ export default {
       return `${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"} Covid-19 maternity policy positions, vaccines, and resources`
     },
     _pageDescription () {
+      console.log(this.mostPermissivePregnancyCode)
+      console.log(this.mostPermissiveLactationCode)
       if (this.isGlobalCountry) {
         return 'This page shows the resources and guidance of international health organizations.'
       } else {
+        return [
+          'As of ',
+          new Date(this.mostRecentPhaReviewDate).toLocaleDateString(),
+          ' ',
+          this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s",
+          ' position on Covid-19 vaccination while pregnant is ',
+          this.mostPermissivePregnancyCode 
+            ? this.mostPermissivePregnancyCode.length > 1 
+              ? 'unclear' 
+              : this.mostPermissivePregnancyCode[0].value.toLowerCase()
+            : 'unknown',
+          ', and its position on vaccination while lactating is ',
+          this.mostPermissiveLactationCode
+            ? this.mostPermissiveLactationCode.length > 1 
+              ? 'unclear' 
+              : this.mostPermissiveLactationCode[0].value.toLowerCase()
+            : 'unknown',
+          '.'
+        ].join('')
         try {
           return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
         } catch(e) {
@@ -251,14 +272,14 @@ export default {
         return undefined
       }
     },
-    mostPermissiveLactationCodes () {
+    mostPermissiveLactationIndicators () {
       if (this.mostPermissiveLactationCode) {
         return this.mostPermissiveLactationCode.map(code => code.rank)
       } else {
         return []
       }
     },
-    mostPermissivePregnancyIndicators () {
+    mostPermissivePregnancyCode () {
       if (this.country) {
         return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })?.pregnancyCode
       } else {
