@@ -57,7 +57,7 @@ for (let [value] of authorityReviewEventsMap.values()) {
   value = Array.from(new Set(value))
 }
 console.log(`${inputData.authorityReviewEvents.length} authorityReviewEvents loaded`)
-console.log(`${authorityReviewEventsMap.size} authorityReviewEvents loaded to map`)
+console.log(`${authorityReviewEventsMap.size} authorities with reviewEvents loaded to map`)
 
 // iterate through the countries to process each one; push the result to the output.countries array.
 for (const country of inputData.countries) {
