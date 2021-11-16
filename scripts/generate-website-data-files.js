@@ -38,7 +38,7 @@ for (const selectChoice of inputData.policiesSelectChoices) {
 // map the authority review events for lookup
 const authorityReviewEventsMap = inputData.authorityReviewEvents
   .reduce((arem, are) => {
-    if (are.fields.authority) {
+    if (are.fields.Authority) {
       const authorityId = are.fields.Authority[0]
       const eventDate = are.fields.Date.split('T')[0]
       const eventArray = arem.get(authorityId)
@@ -57,6 +57,7 @@ for (let [value] of authorityReviewEventsMap.values()) {
   value = Array.from(new Set(value))
 }
 console.log(`${inputData.authorityReviewEvents.length} authorityReviewEvents loaded`)
+console.log(`${authorityReviewEventsMap.size} authorityReviewEvents loaded to map`)
 
 // iterate through the countries to process each one; push the result to the output.countries array.
 for (const country of inputData.countries) {
