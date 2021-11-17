@@ -59,9 +59,10 @@
           {{ data.item['datePublished/lastUpdated'] || 'unknown' }}
         </template>
         <template #cell(link)="data">
-          <b-link :href="data.value" target="_blank">
+          <b-link v-if="data.value" :href="data.value" target="_blank">
             <b-icon-box-arrow-up-right v-b-popover.hover="'View this policy document in a new browser tab'" />
           </b-link>
+          <b-icon-x-square v-else class="text-muted" v-b-popover.hover="'A link to this document is not available.'" />
         </template>
       </b-table>
     </template>
