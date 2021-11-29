@@ -109,7 +109,7 @@
             <PregnancyTestLabel :codes="[data.value]" />
           </template>
           <template #cell(booster)="data">
-            <BoosterIcons :codes="data.value" />
+            <BoosterIcons :codes="data | ensureArray" />
           </template>
           <template #cell(subgroups)="data">
             <componemt :is="code.subgroupComponent" :codes="data | ensureArray" />
