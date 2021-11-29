@@ -10,9 +10,9 @@
         />
         <x-b-icon-asterisk v-if="code.value.startsWith('Recommended for high risk pregnancies')" :key="code.value" v-b-popover.hover.top="code.value" />
         <svg
-          v-if="code.value.startsWith('Recommended for pregnant people at high risk of transmission or serious disease')"
+          v-if="code.value.startsWith('Recommended for high risk pregnancies')"
           :key="code.value"
-          v-b-popover.hover.top="code.value"
+          v-b-popover.hover.top="'Recommended for pregnant people at high risk of transmission or serious disease'"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           viewBox="0 -3 95 92"
