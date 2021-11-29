@@ -151,6 +151,10 @@ export default {
         path: '/lactation',
         redirect: '/explore/public-health-authorities/lactation'
       })
+      routes.push({
+        path: '/authority/:id',
+        redirect: '/organization/:id'
+      })
     }
   },
 

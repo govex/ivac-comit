@@ -217,12 +217,6 @@ export default {
             : 'unknown',
           '.'
         ].join('')
-        try {
-          return `As of ${new Date(this.mostRecentPhaReviewDate).toLocaleDateString()}, ${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"}  position on Covid-19 vaccination while pregnant is ${this.mostPermissivePregnancyCode.length > 1 ? 'unclear' : this.mostPermissiveLactationCode[0].value.toLowerCase()}, and its position on vaccination while lactating is ${this.mostPermissiveLactationCode.length > 1 ? 'unclear' : this.mostPermissivePregnancyCode[0].value.toLowerCase()}.`
-        } catch(e) {
-          console.error(e)
-          return ''
-        }
       }
     },
     _pageImage () {
