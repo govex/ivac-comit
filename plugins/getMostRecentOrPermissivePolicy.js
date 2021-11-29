@@ -1,17 +1,36 @@
 export default (somethingIWontUse, inject) => {
   inject('getMostRecentOrPermissivePolicy', (options) => {
-    // check for options and set defaults
-    if (!options.country) { return undefined }
+
+    const defaults = {
+      authority: undefined,
+      authorityTypes: ['Public Health Authority'],
+      beforeDate: undefined,
+      code: 'pregnancyCode',
+      vaccineIds: [],
+    }
+
+    // check for options and set defaults and return undefined if required options are not provided
+
+    // if neither a country or a specific authority was provided, return nothing
+    if (!options.country && !options.authority) { return undefined }
+
+    // if we got a country but it doesn't have any authorities, return nothing
+    if (options.country) {
+      if (!options.country.authorities) { return undefined }
+    }
+
+    // if we don't know which code to use, return nothing
     if (!options.code) { return undefined }
 
     if (!options.vaccineIds) {
-      options.vaccineIds = []
+      options.vaccineIds = defaults.vaccineIds
     } else if (!Array.isArray(options.vaccineIds)) {
       options.vaccineIds = [options.vaccineIds]
     }
 
+    // if no authority types were specified, set the default to 
     if (!options.authorityTypes) {
-      options.authorityTypes = ['Public Health Authority']
+      options.authorityTypes = defaults.authorityTypes
     } else if (!Array.isArray(options.authorityTypes)) {
       options.authorityTypes = [options.authorityTypes]
     }
@@ -21,15 +40,22 @@ export default (somethingIWontUse, inject) => {
         const beforeDate = new Date(options.beforeDate)
         options.beforeDate = beforeDate.toISOString().slice(0, 10)
       } catch {
-        options.beforeDate = undefined
+        options.beforeDate = defaults.beforeDate
       }
     }
 
-    // filter the authorities, by authority type, or return all authorities if no authorityTypes specified.
-    const phas = options.authorityTypes.length === 0
-      ? (options.country.authorities || [])
-      : (options.country.authorities || [])
-          .filter(authority => options.authorityTypes.includes(authority.authorityType))
+    // now figure out the answer
+
+    // produce a list of authorities to evaluate; usually this will be just one result
+    const phas = options.authority
+      // if we have been provided an authority then use it
+      ? [options.authority]
+      // if we haven't been provided an authority, filter this result for all authorities of the specified type
+      // : options.country.authorities.filter(a => options.authorityTypes.includes(a))
+      : options.authorityTypes.length === 0
+        ? (options.country.authorities || [])
+        : (options.country.authorities || [])
+            .filter(authority => options.authorityTypes.includes(authority.authorityType))
 
     // if we don't have any authorities, there's no more work to do
     if (phas.length === 0) { return undefined }
