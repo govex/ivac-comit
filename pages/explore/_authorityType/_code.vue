@@ -24,7 +24,7 @@
           <div class="d-flex flex-row flex-nowrap justify-content-between align-items-baseline">
             <template v-if="!whoAuthorityVaccineRecommendations">
               <span>The World Health Organization (WHO) makes recommendations for specific vaccines.</span>
-              <b-button to="/authority/who" variant="info">
+              <b-button to="/organization/who" variant="info">
                 View WHO recommendations
               </b-button>
             </template>
@@ -35,13 +35,13 @@
                 </b-link>
                 <PregnancyLactationCodeIcons v-if="vaccine[code.authorityPolicyKey]" :codes="vaccine[code.authorityPolicyKey]" />
               </div>
-              <b-button to="/authority/who" variant="info">
+              <b-button to="/organization/who" variant="info">
                 View WHO recommendations for all vaccines
               </b-button>
             </template>
             <template v-else>
               <span>We could not find a WHO recommendation for the specifed vaccine.</span>
-              <b-button to="/authority/who" variant="info">
+              <b-button to="/organization/who" variant="info">
                 View WHO recommendations for all vaccines
               </b-button>
             </template>
@@ -79,6 +79,9 @@
           <template #head(pregnancyTest)>
             Pregnancy test <b-icon-info-circle v-b-popover.hover="'What does the policy say about getting a pregnancy test before vaccination?'" />
           </template>
+          <template #head(booster)>
+            Booster <b-icon-info-circle v-b-popover.hover="'What does the policy say about getting a booster vaccination while pregnant?'" />
+          </template>
           <template #head(subgroups)>
             Subgroups <b-icon-info-circle v-b-popover.hover="'Specific subgroups'" />
           </template>
@@ -104,6 +107,9 @@
           </template>
           <template #cell(pregnancyTest)="data">
             <PregnancyTestLabel :codes="[data.value]" />
+          </template>
+          <template #cell(booster)="data">
+            <BoosterIcons :codes="data.value" />
           </template>
           <template #cell(subgroups)="data">
             <componemt :is="code.subgroupComponent" :codes="data | ensureArray" />
@@ -139,7 +145,7 @@ export default {
       authorityTypes: [
         { key: 'public-health-authorities', label: 'Public Health Authorities', filterValue: 'Public Health Authority' },
         { key: 'regulatory-bodies', label: 'Regulatory Bodies', filterValue: 'Regulatory body' },
-        { key: 'professional-societies', label: 'Professional Societies', filterValue: 'Professional society' }
+        { key: 'professional-societies', label: 'Professional Societies', filterValue: 'Professional Society' }
       ],
       codes: [
         {
@@ -152,6 +158,7 @@ export default {
             { key: 'subgroups', class: 'text-center align-middle' },
             { key: 'pregnancyProviderVisit', class: 'text-center align-middle', sortable: true },
             { key: 'pregnancyTest', class: 'text-center align-middle', sortable: true },
+            { key: 'booster', class: 'text-center align-middle', sortable: true },
             { key: 'wbRegion', label: 'Region', class: 'align-middle text-truncate', sortable: true },
             { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle text-truncate', sortable: true }
           ],
@@ -239,7 +246,8 @@ export default {
               country,
               code: this.code.policyKey,
               vaccineIds: this.vaccinesFilters,
-              beforeDate: this.timeWarpDate
+              beforeDate: this.timeWarpDate,
+              authorityTypes: [this.authorityType.filterValue]
             })
             const outputRow = {
               id: country.id,
@@ -247,6 +255,7 @@ export default {
               code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
               inTransition: country.inTransition,
               subgroups: mostRecentOrPermissivePolicy?.pregnancyQualifications,
+              booster: mostRecentOrPermissivePolicy?.booster,
               mostPermissiveCode: mostRecentOrPermissivePolicy?.[this.code.policyKey],
               pregnancyTest: mostRecentOrPermissivePolicy?.pregnancyTest,
               pregnancyProviderVisit: mostRecentOrPermissivePolicy?.pregnancyCounselingAndInformation,
