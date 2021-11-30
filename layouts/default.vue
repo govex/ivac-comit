@@ -3,7 +3,7 @@
     <b-navbar toggleable="md" variant="primary" type="dark" style="padding: 0 1rem">
       <div class="container">
         <b-navbar-brand to="/">
-          <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
+          <img height="75px" src="/img/comit-dark-background.png" alt="COMIT: COVID-19 Maternal Immunization Tracker">
           <!-- <sup v-if="showBetaBadge"><b-badge variant="warning">beta</b-badge></sup> -->
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
@@ -26,6 +26,15 @@
                 Vaccine comparison summary
               </b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-nav-item-dropdown text="Recommendations">
+              <b-dropdown-item to="/explore/professional-societies/pregnancy">
+                Pregnancy explorer
+              </b-dropdown-item>
+              <b-dropdown-item to="/explore/professional-societies/lactation">
+                Lactation explorer
+              </b-dropdown-item>
+            </b-nav-item-dropdown>
+
             <b-nav-item to="/about/methodology">
               Our Approach
             </b-nav-item>
@@ -55,7 +64,7 @@
     </b-navbar>
     <b-container fluid class="bg-dark text-light mb-4">
       <b-container>
-        <em>COVID-19 Vaccine policies for pregnant and lactating people worldwide.</em>
+        <em>COVID-19 Vaccine policies and recommendations for pregnant and lactating people worldwide.</em>
       </b-container>
     </b-container>
     <b-container class="d-flex flex-row justify-content-end sticky-top">
@@ -67,9 +76,9 @@
     <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
         <b-row class="align-items-center justify-content-between mb-3">
-          <img width="30%" src="/img/comit-dark-background.png">
+          <img width="30%" src="/img/comit-dark-background.png" alt="COMIT: COVID-19 Maternal Immunization Tracker">
           <!-- <span>A project of</span> -->
-          <img width="50%" src="/img/universitylogo-bi-cir-combined-gentona-pdflogo.svg">
+          <img width="50%" src="/img/universitylogo-bi-cir-combined-gentona-pdflogo.svg" alt="Johns Hopkins University Berman Institute for Bioethics and Center for Immunization Research">
         </b-row>
         <b-row class="justify-content-start mb-5">
           <b-col>
