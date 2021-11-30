@@ -83,6 +83,9 @@ export default {
     const _pageImage = 'https://www.comitglobal.org/img/comit-dark-background.png'
     const _pageUrl = 'https://www.comitglobal.org/'
     return {
+      htmlAttrs: {
+        lang: 'en'
+      },
       title: _pageTitle,
       titleTemplate: '%s | COMIT',
       meta: [
