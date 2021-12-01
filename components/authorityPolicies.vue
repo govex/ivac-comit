@@ -60,9 +60,9 @@
         </template>
         <template #cell(link)="data">
           <b-link v-if="data.value" :href="data.value" target="_blank">
-            <b-icon-box-arrow-up-right v-b-popover.hover="'View this policy document in a new browser tab'" />
+            <b-icon-box-arrow-up-right v-b-popover.hover="'View this resource in a new browser tab'" />
           </b-link>
-          <b-icon-x-square v-else class="text-muted" v-b-popover.hover="'A link to this document is not available.'" />
+          <b-icon-x-square v-else class="text-muted" v-b-popover.hover="'A link to this resource is not available.'" />
         </template>
       </b-table>
     </template>
