@@ -5,7 +5,7 @@
         :fields="policyListFields"
         head-variant="dark"
         hover
-        :items="policies"
+        :items="displayedPolicies"
         primary-key="id"
         responsive
         small
@@ -13,20 +13,9 @@
         :sort-compare="$root.$listSortComparer"
         sort-desc
       >
-        <template #head(documentType)>
-          Document type <b-icon-info-circle v-b-popover.hover="'Indicates the type of document in which this policy position was observed.'" />
-        </template>
-        <template #head(vaccines)>
-          Vaccines <b-icon-info-circle v-b-popover.hover="'Indicates any vaccines which were mentioned as part of this policy position.'" />
-        </template>
-        <template #head(pregnancyCode)>
-          Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for pregnant people.'" />
-        </template>
-        <template #head(lactationCode)>
-          Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the position of this policy on vaccination for lactating people.'" />
-        </template>
-        <template #head(policyDate)>
-          Date <b-icon-info-circle v-b-popover.hover="'The date this policy was published or updated.'" />
+        <template #head()="data">
+          {{ data.field.label }}
+          <b-icon-info-circle v-if="data.field.description" v-b-popover.hover="data.field.description" />
         </template>
         <template #cell(documentType)="data">
           <template v-if="data.value">
@@ -49,20 +38,31 @@
             </div>
           </template>
         </template>
+        <template #cell(subgroups)="data">
+          <PregnancySubgroupsIcons :codes="data.value" />
+        </template>
         <template #cell(pregnancyCode)="data">
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #cell(lactationCode)="data">
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
-        <template #cell(policyDate)="data">
-          {{ data.item['datePublished/lastUpdated'] || 'unknown' }}
+        <template #cell(booster)="data">
+          <BoosterIcons :codes="data.value" />
+        </template>
+        <template #cell(date)="data">
+          <span style="white-space: nowrap">{{ data.value }}</span>
         </template>
         <template #cell(link)="data">
           <b-link v-if="data.value" :href="data.value" target="_blank">
             <b-icon-box-arrow-up-right v-b-popover.hover="'View this resource in a new browser tab'" />
           </b-link>
           <b-icon-x-square v-else class="text-muted" v-b-popover.hover="'A link to this resource is not available.'" />
+        </template>
+        <template #row-details="row">
+          <template v-if="row.item.isMediaArticle">
+            <b-alert variant="warning" show><b-icon-triangle-fill /> This information was obtained from a media article, and may not accurately reflect the position of this organization.</b-alert>
+          </template>
         </template>
       </b-table>
     </template>
@@ -83,14 +83,39 @@ export default {
   data () {
     return {
       policyListFields: [
-        { key: 'documentType', class: 'align-middle', sortable: true },
-        { key: 'vaccines', class: 'align-middle' },
-        { key: 'pregnancyCode', class: 'text-center align-middle', sortable: true },
-        { key: 'lactationCode', class: 'text-center align-middle', sortable: true },
-        { key: 'datePublished/lastUpdated', label: 'Date', class: 'align-middle', sortable: true },
+        { key: 'documentType', label: 'Document type', description: 'Indicates the type of resource reviewed.', class: 'align-middle', sortable: true },
+        { key: 'vaccines', label: 'Vaccines', description: 'Indicates any vaccines which were mentioned as part of this resource.', class: 'align-middle' },
+        { key: 'subgroups', label: 'Subgroups', description: 'Specific subgroups', class: 'align-middle' },
+        { key: 'pregnancyCode', label: 'Pregnancy', description: 'Indicates the position of this resource on vaccination for pregnant people.', class: 'text-center align-middle', sortable: true },
+        { key: 'lactationCode', label: 'Lacation', description: 'Indicates the position of this resource on vaccination for lactating people.', class: 'text-center align-middle', sortable: true },
+        { key: 'booster', label: 'Booster', description: 'What does this resource say about getting a booster vaccination while pregnant?', class: 'text-center align-middle' },
+        { key: 'date', label: 'Date', description: 'The date this policy was published or updated.', class: 'align-middle', sortable: true },
         { key: 'link', label: '', class: 'text-center align-middle' }
       ]
+    }
+  },
+  computed: {
+    displayedPolicies () {
+      return this.policies.map(p => ({
+        booster: p.booster,
+        date: p['datePublished/lastUpdated'],
+        documentType: p.documentType,
+        isMediaArticle: (p.documentType || []).map(dt => dt.value).includes('Media article'),
+        lactationCode: p.lactationCode,
+        link: p.link,
+        pregnancyCode: p.pregnancyCode,
+        subgroups: p.pregnancyQualifications,
+        vaccines: p.vaccines,
+        _showDetails: (p.documentType || []).map(dt => dt.value).includes('Media article'),
+      }))
     }
   }
 }
 </script>
+
+<style>
+.table-hover tbody .b-table-details tr:hover {
+  color: unset;
+  background-color: unset;
+}
+</style>
