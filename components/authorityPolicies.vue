@@ -2,16 +2,16 @@
   <div>
     <template v-if="policies && policies.length > 0">
       <b-table
+        :fields="policyListFields"
+        head-variant="dark"
         hover
         :items="policies"
         primary-key="id"
-        :fields="policyListFields"
         responsive
-        sort-by="datePublished/lastUpdated"
-        sort-desc
         small
-        head-variant="dark"
+        sort-by="datePublished/lastUpdated"
         :sort-compare="$root.$listSortComparer"
+        sort-desc
       >
         <template #head(documentType)>
           Document type <b-icon-info-circle v-b-popover.hover="'Indicates the type of document in which this policy position was observed.'" />
