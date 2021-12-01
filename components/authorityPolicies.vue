@@ -9,7 +9,7 @@
         primary-key="id"
         responsive
         small
-        sort-by="datePublished/lastUpdated"
+        sort-by="date"
         :sort-compare="$root.$listSortComparer"
         sort-desc
       >
@@ -39,7 +39,7 @@
           </template>
         </template>
         <template #cell(subgroups)="data">
-          <PregnancySubgroupsIcons :codes="data.value" />
+          <PregnancySubgroupsIcons :codes="data.value | ensureArray" />
         </template>
         <template #cell(pregnancyCode)="data">
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
@@ -48,7 +48,7 @@
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
         <template #cell(booster)="data">
-          <BoosterIcons :codes="data.value" />
+          <BoosterIcons :codes="data.value | ensureArray" />
         </template>
         <template #cell(date)="data">
           <span style="white-space: nowrap">{{ data.value }}</span>
@@ -74,6 +74,11 @@
 
 <script>
 export default {
+  filters: {
+    ensureArray (value) {
+      return Array.isArray(value) ? value : undefined
+    },
+  },
   props: {
     policies: {
       type: Array,
