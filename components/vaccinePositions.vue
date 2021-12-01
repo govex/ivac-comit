@@ -59,7 +59,6 @@ export default {
         { key: 'mostPermissivePregnancyCode', sortable: true, class: 'text-center align-middle', label: 'Pregnancy', description: 'Indicates the most recent position where this vaccine is specifically mentioned for use during pregnancy.' },
         { key: 'mostPermissiveLactationCode', sortable: true, class: 'text-center align-middle', label: 'Lactation', description: 'Indicates the most recent position where this vaccine is specifically mentioned for use during lactation.' },
         { key: 'otherCountryCount', sortable: true, class: 'text-center align-middle', countryOnly: true, label: 'Other countries', description: 'Indicates how many other countries are administering this vaccine, according to Our World In Data.' },
-        { key: 'date', sortable: true, class: 'text-right align-middle', label: 'Date', description: 'The date of the most recent position where this vaccine is specifically mentioned for use' },
       ]
     }
   },
@@ -112,7 +111,6 @@ export default {
             mostPermissivePregnancyCode: selectedPregnancyPolicy ? selectedPregnancyPolicy.pregnancyCode : undefined,
             mostPermissiveLactationCode: selectedLactationPolicy ? selectedLactationPolicy.lactationCode : undefined,
             otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0,
-            date: dates.pop()
           }
         })
       } else if (this.authority) {
@@ -143,7 +141,6 @@ export default {
             mostPermissivePregnancyCode: selectedPregnancyPolicy ? selectedPregnancyPolicy.pregnancyCode : undefined,
             mostPermissiveLactationCode: selectedLactationPolicy ? selectedLactationPolicy.lactationCode : undefined,
             otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0,
-            date: dates.pop()
           }
         })
       } else {
