@@ -158,7 +158,7 @@ export default {
             { key: 'subgroups', class: 'text-center align-middle' },
             { key: 'pregnancyProviderVisit', class: 'text-center align-middle', sortable: true },
             { key: 'pregnancyTest', class: 'text-center align-middle', sortable: true },
-            { key: 'booster', class: 'text-center align-middle', sortable: true },
+            { key: 'booster', class: 'text-center align-middle' },
             { key: 'wbRegion', label: 'Region', class: 'align-middle text-truncate', sortable: true },
             { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle text-truncate', sortable: true }
           ],
