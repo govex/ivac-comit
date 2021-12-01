@@ -12,37 +12,23 @@
         sort-by="displayName"
         :sort-compare="$root.$listSortComparer"
       >
-        <template #head(displayName)>
-          Name <b-icon-info-circle v-b-popover.hover="'The name of the vaccine'" />
+        <template #head()="data">
+          <span>{{ data.label }} {{ data.key }}</span>
+          <b-icon-info-circle v-if="data.description" v-b-popover.hover="data.description" />
         </template>
         <template #cell(displayName)="data">
           <b-link :to="`/vaccine/${data.item.id}`">
             <span style="font-size: 1.25rem">{{ data.value }}</span>
           </b-link>
         </template>
-        <template #head(otherNames)>
-          Other names <b-icon-info-circle v-b-popover.hover="'Additional names by which this vaccine may be known'" />
-        </template>
-        <template #head(owidAdministration)>
-          Administered <b-icon-info-circle v-b-popover.hover="'Indicates whether this vaccine has been administered in this country, according to Our World In Data.'" />
-        </template>
         <template #cell(owidAdministration)="data">
           <span v-if="data.value" class="text-success"><b-icon-check-circle-fill v-b-popover.hover="'This vaccine has been administered in this country.'" /></span>
-        </template>
-        <template #head(mostPermissivePregnancyCode)>
-          Pregnancy <b-icon-info-circle v-b-popover.hover="'Indicates the most recent position where this vaccine is specifically mentioned for use during pregnancy.'" />
         </template>
         <template #cell(mostPermissivePregnancyCode)="data">
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
-        <template #head(mostPermissiveLactationCode)>
-          Lactation <b-icon-info-circle v-b-popover.hover="'Indicates the most recent position where this vaccine is specifically mentioned for use during lactation.'" />
-        </template>
         <template #cell(mostPermissiveLactationCode)="data">
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
-        </template>
-        <template #head(otherCountryCount)>
-          Other countries <b-icon-info-circle v-b-popover.hover="'Indicates how many other countries are administering this vaccine, according to Our World In Data.'" />
         </template>
       </b-table>
     </template>
@@ -67,12 +53,13 @@ export default {
   data () {
     return {
       fields: [
-        { key: 'displayName', sortable: true, class: 'align-middle' },
-        { key: 'otherNames', class: 'align-middle' },
-        { key: 'owidAdministration', sortable: true, class: 'text-center align-middle', countryOnly: true },
-        { key: 'mostPermissivePregnancyCode', sortable: true, class: 'text-center align-middle' },
-        { key: 'mostPermissiveLactationCode', sortable: true, class: 'text-center align-middle' },
-        { key: 'otherCountryCount', sortable: true, class: 'text-right align-middle', countryOnly: true },
+        { key: 'displayName', sortable: true, class: 'align-middle', label: 'Name', description: 'The name of the vaccine' },
+        // { key: 'otherNames', sortable: false, class: 'align-middle', label: 'Other names', description: 'Additional names by which this vaccine may be known' },
+        { key: 'owidAdministration', sortable: true, class: 'text-center align-middle', countryOnly: true, label: 'Administered', description: 'Indicates whether this vaccine has been administered in this country, according to Our World In Data.' },
+        { key: 'mostPermissivePregnancyCode', sortable: true, class: 'text-center align-middle', label: 'Pregnancy', description: 'Indicates the most recent position where this vaccine is specifically mentioned for use during pregnancy.' },
+        { key: 'mostPermissiveLactationCode', sortable: true, class: 'text-center align-middle', label: 'Lactation', description: 'Indicates the most recent position where this vaccine is specifically mentioned for use during lactation.' },
+        { key: 'otherCountryCount', sortable: true, class: 'text-center align-middle', countryOnly: true, label: 'Other countries', description: 'Indicates how many other countries are administering this vaccine, according to Our World In Data.' },
+        { key: 'date', sortable: true, class: 'text-right align-middle', label: 'Date', description: 'The date of the most recent position where this vaccine is specifically mentioned for use' },
       ]
     }
   },
@@ -111,14 +98,21 @@ export default {
         }
         // now turn the map of vaccines into the list we need
         return Array.from(vaccinesMap.values()).map((vaccine) => {
+          const selectedPregnancyPolicy = this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })
+          const selectedLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode', vaccineIds: [vaccine.id] })
+          const dates = []
+          selectedPregnancyPolicy ? dates.push(selectedPregnancyPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
+          selectedLactationPolicy ? dates.push(selectedLactationPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
+          dates.sort()
           return {
             id: vaccine.id,
             displayName: vaccine.displayName,
             otherNames: vaccine.otherNames,
             owidAdministration: vaccine.owidAdministration,
-            mostPermissivePregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
-            mostPermissiveLactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode,
-            otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0
+            mostPermissivePregnancyCode: selectedPregnancyPolicy ? selectedPregnancyPolicy.pregnancyCode : undefined,
+            mostPermissiveLactationCode: selectedLactationPolicy ? selectedLactationPolicy.lactationCode : undefined,
+            otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0,
+            date: dates.pop()
           }
         })
       } else if (this.authority) {
@@ -135,14 +129,21 @@ export default {
           }
         }
         return Array.from(vaccinesMap.values()).map(vaccine => {
+          const selectedPregnancyPolicy = this.$root.$getMostRecentOrPermissivePolicy({ authority: this.authority, code: 'pregnancyCode', vaccineIds: [vaccine.id] })
+          const selectedLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy({ authority: this.authority, code: 'lactationCode', vaccineIds: [vaccine.id] })
+          const dates = []
+          selectedPregnancyPolicy ? dates.push(selectedPregnancyPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
+          selectedLactationPolicy ? dates.push(selectedLactationPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
+          dates.sort()
           return {
             id: vaccine.id,
             displayName: vaccine.displayName,
             otherNames: vaccine.otherNames,
             owidAdministration: vaccine.owidAdministration,
-            mostPermissivePregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ authority: this.authority, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
-            mostPermissiveLactationCode: this.$root.$getMostRecentOrPermissivePolicy({ authority: this.authority, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode,
-            otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0
+            mostPermissivePregnancyCode: selectedPregnancyPolicy ? selectedPregnancyPolicy.pregnancyCode : undefined,
+            mostPermissiveLactationCode: selectedLactationPolicy ? selectedLactationPolicy.lactationCode : undefined,
+            otherCountryCount: vaccine.countries ? vaccine.countries.length - 1 : 0,
+            date: dates.pop()
           }
         })
       } else {
