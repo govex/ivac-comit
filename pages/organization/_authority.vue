@@ -5,7 +5,7 @@
         <h1>
           {{ authority.name }}
         </h1>
-        <span v-if="authority.reviewEvents">Last reviewed on {{ authority.reviewEvents.slice(-1)[0] }}</span>
+        <span v-if="authority.reviewEvents" style="white-space: nowrap">Last reviewed on {{ authority.reviewEvents.slice(-1)[0] }}</span>
       </div>
       <div class="w-100 mb-5 align-items-baseline">
         <b-badge variant="success">
@@ -58,9 +58,9 @@
           </b-link>
         </div>
       </div>
-      <h4 class="mt-4">
+      <div class="h4 mt-4">
         Legend
-      </h4>
+      </div>
       <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
     </template>
     <template v-else>
