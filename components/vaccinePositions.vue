@@ -13,8 +13,8 @@
         :sort-compare="$root.$listSortComparer"
       >
         <template #head()="data">
-          <span>{{ data.label }} {{ data.key }}</span>
-          <b-icon-info-circle v-if="data.description" v-b-popover.hover="data.description" />
+          <span>{{ data.field.label }}</span>
+          <b-icon-info-circle v-if="data.field.description" v-b-popover.hover="data.field.description" />
         </template>
         <template #cell(displayName)="data">
           <b-link :to="`/vaccine/${data.item.id}`">
@@ -99,10 +99,6 @@ export default {
         return Array.from(vaccinesMap.values()).map((vaccine) => {
           const selectedPregnancyPolicy = this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })
           const selectedLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode', vaccineIds: [vaccine.id] })
-          const dates = []
-          selectedPregnancyPolicy ? dates.push(selectedPregnancyPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
-          selectedLactationPolicy ? dates.push(selectedLactationPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
-          dates.sort()
           return {
             id: vaccine.id,
             displayName: vaccine.displayName,
@@ -129,10 +125,6 @@ export default {
         return Array.from(vaccinesMap.values()).map(vaccine => {
           const selectedPregnancyPolicy = this.$root.$getMostRecentOrPermissivePolicy({ authority: this.authority, code: 'pregnancyCode', vaccineIds: [vaccine.id] })
           const selectedLactationPolicy = this.$root.$getMostRecentOrPermissivePolicy({ authority: this.authority, code: 'lactationCode', vaccineIds: [vaccine.id] })
-          const dates = []
-          selectedPregnancyPolicy ? dates.push(selectedPregnancyPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
-          selectedLactationPolicy ? dates.push(selectedLactationPolicy['datePublished/lastUpdated'] || policy2.dateAccessed || 'unknown') : null
-          dates.sort()
           return {
             id: vaccine.id,
             displayName: vaccine.displayName,
