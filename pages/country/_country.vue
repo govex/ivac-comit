@@ -1,111 +1,139 @@
 <template>
   <div>
-    <div v-if="country" class="w-100">
-      <div class="w-100 d-flex flex-column align-items-baseline justify-content-between">
-        <h1>{{ country.name }}</h1>
-        <article>
-          {{ _pageDescription }}
-        </article>
-        <div class="w-100 d-flex row my-5 text-center justify-content-around align-items-stretch">
-          <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
-            <b-card-title> {{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
-            <b-card-body>
-              Population
-              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-            </b-card-body>
-          </b-card>
-          <b-card v-if="country.birthrate" class="flex-fill m-2">
-            <b-card-title> {{ country.birthrate | friendlyNumber }}</b-card-title>
-            <b-card-body>
-              Birth rate
-              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-            </b-card-body>
-          </b-card>
-          <b-card v-if="country.wbIncomeLevelName" class="flex-fill m-2">
-            <b-card-title>{{ country.wbIncomeLevelName.replace(' income', '') }}</b-card-title>
-            <b-card-body>
-              Income level
-              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-            </b-card-body>
-          </b-card>
-          <b-card v-if="country.wbRegion" class="flex-fill m-2">
-            <b-card-title>{{ country.wbRegion }}</b-card-title>
-            <b-card-body>
-              Region
-              <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
-            </b-card-body>
-          </b-card>
-        </div>
-        <template v-if="!isGlobalCountry">
-          <div class="w-100 d-flex justify-content-around align-items-stretch text-center">
-            <div class="card w-50 m-2 p-4 justify-content-start">
-              <h2>Pregnancy</h2>
-              <template v-if="mostPermissivePregnancyCode">
-                <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyIndicators" />
-                <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" class="my-3" show>
-                  Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
-                </b-alert>
-                <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
-              </template>
-              <template v-else>
-                <h1>
-                  <b-icon-question-circle />
-                </h1>
-                <span>No policy position found</span>
-              </template>
-              <b-link to="/pregnancy" class="mt-auto">
-                <b-button variant="link">
-                  Compare to other countries
-                </b-button>
-              </b-link>
-            </div>
-            <div class="card w-50 m-2 p-4 justify-content-start">
-              <h2>Lactation</h2>
-              <template v-if="mostPermissiveLactationCode">
-                <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationIndicators" />
-                <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
-                  Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
-                </b-alert>
-                <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
-              </template>
-              <template v-else>
-                <h1>
-                  <b-icon-question-circle />
-                </h1>
-                <span>No policy position found</span>
-              </template>
-              <b-link to="/lactation" class="mt-auto">
-                <b-button variant="link">
-                  Compare to other countries
-                </b-button>
-              </b-link>
-            </div>
+    <template v-if="country">
+      <h1>{{ country.name }}</h1>
+      <article>
+        {{ _pageDescription }}
+      </article>
+      <div class="d-flex flex-column align-items-baseline justify-content-between">
+        <h2 class="mt-5">Current Overview</h2>
+        <!-- <div class="w-100 d-flex flex-row justify-content-center"> -->
+          <div class="w-100 d-flex flex-row text-center justify-content-between align-items-stretch">
+            <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
+              <b-card-title aria-labelledby="population-label">{{ country.wbPopulation2019 | friendlyNumber }}</b-card-title>
+              <b-card-body>
+                <span id="population-label">Population</span>
+                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+              </b-card-body>
+            </b-card>
+            <b-card v-if="country.birthrate" class="flex-fill m-2">
+              <b-card-title aria-labelledby="birthrate-label">{{ country.birthrate | friendlyNumber }}</b-card-title>
+              <b-card-body id="birthrate-label">
+                Birth rate
+                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+              </b-card-body>
+            </b-card>
+            <b-card v-if="country.wbIncomeLevelName" class="flex-fill m-2">
+              <b-card-title aria-labelledby="income-level-label">{{ country.wbIncomeLevelName.replace(' income', '') }}</b-card-title>
+              <b-card-body>
+                <span id="income-level-label">Income level</span>
+                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+              </b-card-body>
+            </b-card>
+            <b-card v-if="country.wbRegion" class="flex-fill m-2">
+              <b-card-title aria-labelledby="region-label">{{ country.wbRegion }}</b-card-title>
+              <b-card-body>
+                <span id="region-label">Region</span>
+                <b-icon-info-circle v-b-popover.hover="'most recent data from the World Bank'" />
+              </b-card-body>
+            </b-card>
           </div>
+        <!-- </div> -->
+
+        <template v-if="!isGlobalCountry">
+          <div class="w-100 rounded bg-light p-3 my-5">
+            <h3>Public health authority policies</h3>
+            <div class="w-100 d-flex justify-content-around align-items-stretch text-center">
+              <div class="card w-50 m-2 p-4 justify-content-start">
+                <span class="h2">Pregnancy</span>
+                <template v-if="mostPermissivePregnancyCode">
+                  <PolicyPositionsIndicators :displayed-indicators="mostPermissivePregnancyIndicators" />
+                  <b-alert v-if="mostPermissivePregnancyCode && mostPermissivePregnancyCode.length > 1" variant="danger" class="my-3" show>
+                    Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
+                  </b-alert>
+                  <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
+                </template>
+                <template v-else>
+                  <h1>
+                    <b-icon-question-circle />
+                  </h1>
+                  <span>No policy position found</span>
+                </template>
+                <b-link to="/explore/public-health-authorities/pregnancy" class="mt-auto">
+                  <b-button variant="link">
+                    Compare to other countries
+                  </b-button>
+                </b-link>
+              </div>
+              <div class="card w-50 m-2 p-4 justify-content-start">
+                <span class="h2">Lactation</span>
+                <template v-if="mostPermissiveLactationCode">
+                  <PolicyPositionsIndicators :displayed-indicators="mostPermissiveLactationIndicators" />
+                  <b-alert v-if="mostPermissiveLactationCode && mostPermissiveLactationCode.length > 1" variant="danger" show>
+                    Within the documents we reviewed, there is language that could be interpreted as indicating different policy positions
+                  </b-alert>
+                  <span class="my-2">Most permissive recommendation across all vaccines in country.</span>
+                </template>
+                <template v-else>
+                  <h1>
+                    <b-icon-question-circle />
+                  </h1>
+                  <span>No policy position found</span>
+                </template>
+                <b-link to="/explore/public-health-authorities/lactation" class="mt-auto">
+                  <b-button variant="link">
+                    Compare to other countries
+                  </b-button>
+                </b-link>
+              </div>
+            </div>
+            <template v-if="professionalSocietyRecommendations.length > 0">
+              <h3 class="mt-5">Professional society positions</h3>
+              <b-table
+                head-variant="dark"
+                hover
+                :fields="professionalSocietyRecommendationFields"
+                :items="professionalSocietyRecommendations"
+                small
+              >
+                <template #cell(name)="data">
+                  <b-link :to="`/organization/${data.item.id}`">
+                    <span style="font-size: 1.25rem">{{ data.value }}</span>
+                  </b-link>
+                </template>
+
+                <template #cell(pregnancyRecommendationCode)="data">
+                  <pregnancy-lactation-code-icons :codes="data.value" />
+                </template>
+
+                <template #cell(lactationRecommendationCode)="data">
+                  <pregnancy-lactation-code-icons :codes="data.value" />
+                </template>
+
+              </b-table>
+            </template>
+          </div>
+        <h2>Public health authority policies by vaccine</h2>
+        <VaccinePositions :country="country">
+            No information available.
+        </VaccinePositions>
         </template>
       </div>
-      <div v-if="!isGlobalCountry" class="my-5">
-        <h2>Vaccines</h2>
-        <CountryVaccines :country="country">
-          No information available.
-        </CountryVaccines>
-      </div>
-      <h2 class="mb-5">
-        Resources &amp; guidance
-      </h2>
-      <div v-for="authorityByType of authoritiesByType" :key="authorityByType.authorityType" class="mb-5">
+      <div v-for="authorityByType of authoritiesByType" :key="authorityByType.authorityType" class="my-5">
+        <h2>{{ authorityByType.displayName }}</h2>
         <template v-if="authorityByType.authorities.length > 0">
           <template v-for="authority of authorityByType.authorities">
-            <div :key="authority.id" class="w-100">
-              <div class="d-flex justify-content-between align-items-baseline mt-3">
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                  <h4>
-                    <b-link :to="`/authority/${authority.id}`">
+            <div :key="authority.id" class="w-100 bg-light rounded p-3 mt-3">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <div class="d-flex flex-row justify-content-between align-items-start">
+                  <h3>
+                    <b-link :to="`/organization/${authority.id}`">
                       {{ authority.name }}
                     </b-link>
-                  </h4>
-                  <b-badge variant="success" class="mx-2">
+                  </h3>
+                  <!-- <b-badge variant="success" class="mx-2">
                     {{ authority.authorityType }}
-                  </b-badge>
+                  </b-badge> -->
                   <span class="mx-2">
                     <b-link v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1" target="_blank"><b-icon-globe /></b-link>
                     <b-link v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></b-link>
@@ -114,6 +142,11 @@
                 </div>
                 <span v-if="authority.reviewEvents">Most recently reviewed by us on {{ authority.reviewEvents.slice(-1)[0] }}</span>
               </div>
+              <h4 class="mt-4">{{ authorityByType.vaccinePositionsLabel }}</h4>
+              <VaccinePositions :authority="authority">
+                No information available.
+              </VaccinePositions>
+              <h4 class="mt-4">Resources &amp; Guidance</h4>
               <AuthorityPolicies :policies="authority.policies | sortedByDate">
                 No documents available.
               </AuthorityPolicies>
@@ -121,14 +154,14 @@
           </template>
         </template>
         <template v-else>
-          <span>No documents available.</span>
+          <span class="text-muted">We were unable to identify any {{ authorityByType.displayName }} associated with this country.</span>
         </template>
       </div>
-      <h4 class="mt-4">
+      <div class="mt-4 h4">
         Legend
-      </h4>
+      </div>
       <PolicyPositionsIndicators :displayed-indicators="[1,2,3,4,5,999]" />
-    </div>
+    </template>
     <div v-else>
       We couldn't find that country.
     </div>
@@ -136,7 +169,23 @@
 </template>
 
 <script>
+import pregnancyLactationCodeIcons from '~/components/pregnancyLactationCodeIcons.vue'
 export default {
+  components: { pregnancyLactationCodeIcons },
+  data () {
+    return {
+      professionalSocietyRecommendationFields: [
+        { key: 'name', label: 'Name', sortable: true },
+        { key: 'pregnancyRecommendationCode', label: 'Pregnancy', class: 'text-center'},
+        { key: 'lactationRecommendationCode', label: 'Lactation', class: 'text-center'},
+      ],
+      authorityTypes: [
+        { displayName: 'Public Health Authorities', authorityType: 'Public Health Authority', authorities: [], vaccinePositionsLabel: 'Current policies by vaccine' },
+        // { displayName: 'Regulatory Bodies', authorityType: 'Regulatory Body', authorities: [] },
+        { displayName: 'Professional Societies', authorityType: 'Professional Society', authorities: [], vaccinePositionsLabel: 'Current positions by vaccine' },
+      ]
+    }
+  },
   filters: {
     friendlyNumber: (value) => {
       if (typeof (value) === 'number') {
@@ -190,14 +239,16 @@ export default {
   },
   computed: {
     _pageTitle () {
-      return `${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"} Covid-19 maternity policy positions, vaccines, and resources`
+      if (this.country) {
+        return `${this.country.name.endsWith('s') ? this.country.name + "'" : this.country.name + "'s"} Covid-19 maternity policy positions, vaccines, and resources`
+      } else {
+        return 'not found'
+      }
     },
     _pageDescription () {
-      console.log(this.mostPermissivePregnancyCode)
-      console.log(this.mostPermissiveLactationCode)
       if (this.isGlobalCountry) {
         return 'This page shows the resources and guidance of international health organizations.'
-      } else {
+      } else if (this.country) {
         return [
           'As of ',
           new Date(this.mostRecentPhaReviewDate).toLocaleDateString(),
@@ -217,6 +268,8 @@ export default {
             : 'unknown',
           '.'
         ].join('')
+      } else {
+        return 'not found'
       }
     },
     _pageImage () {
@@ -226,11 +279,7 @@ export default {
       return `https://www.comitglobal.org${this.$route.path}`
     },
     authoritiesByType () {
-      const authoritiesByType = [
-        { displayName: 'Public Health Authorities', authorityType: 'Public Health Authority', authorities: [] }
-        // { displayName: 'Regulatory Bodies', authorityType: 'Regulatory Body', authorities: [] },
-        // { displayName: 'Professional Societies', authorityType: 'Professional Society', authorities: [] }
-      ]
+      const authoritiesByType = this.authorityTypes
       if (this.country?.authorities) {
         for (const authorityByType of authoritiesByType) {
           authorityByType.authorities = this.country.authorities.filter(authority => authority.authorityType === authorityByType.authorityType)
@@ -257,7 +306,11 @@ export default {
       return this.$route.params.country
     },
     isGlobalCountry () {
-      return this.country.name === 'Global'
+      if (this.country) {
+        return this.country.name === 'Global'
+      } else {
+        return false
+      }
     },
     mostPermissiveLactationCode () {
       if (this.country) {
@@ -298,6 +351,26 @@ export default {
           }
           return mostRecent
         }, '0000-00-00')
+    },
+    professionalSocietyRecommendations () {
+      if (this.country) {
+        return this.country.authorities
+          .filter(authority => authority.authorityType === 'Professional Society')
+          .map(a => {
+            const pregnancyRecommendation = this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode', authority: a })
+            const lactationRecommendation = this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode', authority: a })
+            return {
+              id: a.id,
+              name: a.name,
+              pregnancyRecommendation,
+              pregnancyRecommendationCode: pregnancyRecommendation?.pregnancyCode || [],
+              lactationRecommendation,
+              lactationRecommendationCode: lactationRecommendation?.lactationCode || []
+            }
+          })
+      } else {
+        return []
+      }
     }
   },
   mounted () {
