@@ -8,7 +8,6 @@
           v-b-popover.hover.top="code.value"
           class="subgroup-icon"
         />
-        <x-b-icon-asterisk v-if="code.value.startsWith('Recommended for high risk pregnancies')" :key="code.value" v-b-popover.hover.top="code.value" />
         <svg
           v-if="code.value.startsWith('Recommended for high risk pregnancies')"
           :key="code.value"
