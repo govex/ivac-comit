@@ -218,7 +218,7 @@ export default {
       twInfo.max = new Date(twInfo.max)
       do {
         timeWarpDates.push(twInfo.min.toISOString().slice(0, 10))
-        twInfo.min.setDate(twInfo.min.getDate() + 14)
+        twInfo.min.setDate(twInfo.min.getDate() + 1)
       } while (twInfo.min < twInfo.max)
       timeWarpDates.push(twInfo.max.toISOString().slice(0, 10))
       return timeWarpDates
