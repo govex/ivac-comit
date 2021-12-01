@@ -26,9 +26,10 @@
       <h2 class="mt-5">
         Most recent vaccine policy positions
       </h2>
-      <AuthorityVaccinePolicies :authority="authority">
+
+      <VaccinePositions :authority="authority">
         No information available.
-      </AuthorityVaccinePolicies>
+      </VaccinePositions>
 
       <h2 class="mt-5">
         Resources &amp; guidance
