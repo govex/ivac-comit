@@ -90,10 +90,10 @@ export default {
       policyListFields: [
         { key: 'documentType', label: 'Document type', description: 'Indicates the type of resource reviewed.', class: 'align-middle', sortable: true },
         { key: 'vaccines', label: 'Vaccines', description: 'Indicates any vaccines which were mentioned as part of this resource.', class: 'align-middle' },
-        { key: 'subgroups', label: 'Subgroups', description: 'Specific subgroups', class: 'align-middle' },
         { key: 'pregnancyCode', label: 'Pregnancy', description: 'Indicates the position of this resource on vaccination for pregnant people.', class: 'text-center align-middle', sortable: true },
-        { key: 'lactationCode', label: 'Lacation', description: 'Indicates the position of this resource on vaccination for lactating people.', class: 'text-center align-middle', sortable: true },
+        { key: 'subgroups', label: 'Subgroups', description: 'Specific subgroups', class: 'align-middle' },
         { key: 'booster', label: 'Booster', description: 'What does this resource say about getting a booster vaccination while pregnant?', class: 'text-center align-middle' },
+        { key: 'lactationCode', label: 'Lacation', description: 'Indicates the position of this resource on vaccination for lactating people.', class: 'text-center align-middle', sortable: true },
         { key: 'date', label: 'Date', description: 'The date this policy was published or updated.', class: 'align-middle', sortable: true },
         { key: 'link', label: '', class: 'text-center align-middle' }
       ]
