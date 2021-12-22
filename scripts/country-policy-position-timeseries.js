@@ -71,7 +71,7 @@ for (const country of comitData.countries) {
       .filter((ppEvent) => {
         return authorityTypes.includes(ppEvent.authorityType)
       })
-    // de-duplicate the events if policy positions don't change
+      // de-duplicate the events if policy positions don't change
       .reduce((accumulator, event) => {
         const sameTypeEvents = accumulator.filter(e => e.type === event.type)
         // if there are no events of this type, just add the event
@@ -83,15 +83,20 @@ for (const country of comitData.countries) {
           event.previousPolicy = previousEvent.policy
             ? policiesMap.get(previousEvent.policy)
             : undefined
+
           switch (event.type) {
             case 'pregnancyPolicyPositionChange':
-              if (currentPolicy?.pregnancyCode?.[0]?.rank !== event.previousPolicy?.pregnancyCode?.[0]?.rank) {
-                accumulator.push(event)
+              if (event.previousPolicy && currentPolicy?.pregnancyCode?.[0].rank !== 999) {
+                if (currentPolicy?.pregnancyCode?.[0]?.rank !== event.previousPolicy?.pregnancyCode?.[0]?.rank) {
+                  accumulator.push(event)
+                }              
               }
               break
             case 'lactationPolicyPositionChange':
-              if (currentPolicy?.lactationCode?.[0]?.rank !== event.previousPolicy?.lactationCode?.[0]?.rank) {
-                accumulator.push(event)
+              if (event.previousPolicy && currentPolicy?.lactationCode?.[0].rank !== 999) {
+                if (currentPolicy?.lactationCode?.[0]?.rank !== event.previousPolicy?.lactationCode?.[0]?.rank) {
+                  accumulator.push(event)
+                }
               }
               break
           }
