@@ -149,30 +149,59 @@ for (const authority of authorities) {
   authorityPolicies.forEach((policy) => {
     // create a new
     const eventDate = policy['datePublished/lastUpdated'] || policy.dateAccessed || 'unknown'
-    const pregnancyEvent = {
-      date: eventDate,
-      policy: getMostPermissivePolicy({
-        beforeDate: eventDate,
-        code: 'pregnancyCode',
-        policies: authorityPolicies
-      }),
-      type: 'pregnancyPolicyPositionChange'
+
+    const pregnancyPolicyAtDate = getMostPermissivePolicy({
+      beforeDate: eventDate,
+      code: 'pregnancyCode',
+      policies: authorityPolicies
+    })
+
+    if (pregnancyPolicyAtDate) {
+      authority.policyPositionEvents.push({
+        date: eventDate,
+        policy: pregnancyPolicyAtDate,
+        type: 'pregnancyPolicyPositionChange'
+      })
     }
 
-    const lactationEvent = {
-      date: eventDate,
-      policy: getMostPermissivePolicy({
-        beforeDate: eventDate,
-        code: 'lactationCode',
-        policies: authorityPolicies
-      }),
-      type: 'lactationPolicyPositionChange'
+    const lactationPolicyAtDate = getMostPermissivePolicy({
+      beforeDate: eventDate,
+      code: 'lactationCode',
+      policies: authorityPolicies
+    })
+
+    if (lactationPolicyAtDate) {
+      authority.policyPositionEvents.push({
+        date: eventDate,
+        policy: lactationPolicyAtDate,
+        type: 'lactationPolicyPositionChange'
+      })
     }
 
-    // add these to the authorit's policyPositionEvents array
-    authority.policyPositionEvents.push(
-      pregnancyEvent, lactationEvent
-    )
+    // const pregnancyEvent = {
+    //   date: eventDate,
+    //   policy: getMostPermissivePolicy({
+    //     beforeDate: eventDate,
+    //     code: 'pregnancyCode',
+    //     policies: authorityPolicies
+    //   }),
+    //   type: 'pregnancyPolicyPositionChange'
+    // }
+
+    // const lactationEvent = {
+    //   date: eventDate,
+    //   policy: getMostPermissivePolicy({
+    //     beforeDate: eventDate,
+    //     code: 'lactationCode',
+    //     policies: authorityPolicies
+    //   }),
+    //   type: 'lactationPolicyPositionChange'
+    // }
+
+    // // add these to the authorit's policyPositionEvents array
+    // authority.policyPositionEvents.push(
+    //   pregnancyEvent, lactationEvent
+    // )
   })
 
   authority.policyPositionEvents.sort((event1, event2) => {
