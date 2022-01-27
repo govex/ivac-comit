@@ -92,7 +92,7 @@ export default {
         { key: 'vaccines', label: 'Vaccines', description: 'Indicates any vaccines which were mentioned as part of this resource.', class: 'align-middle' },
         { key: 'pregnancyCode', label: 'Pregnancy', description: 'Indicates the position of this resource on vaccination for pregnant people.', class: 'text-center align-middle', sortable: true },
         { key: 'subgroups', label: 'Subgroups', description: 'Specific subgroups', class: 'align-middle' },
-        { key: 'booster', label: 'Booster', description: 'What does this resource say about getting a booster vaccination while pregnant?', class: 'text-center align-middle' },
+        { key: 'booster', label: 'Pregnancy Booster', description: 'What does this resource say about getting a booster vaccination while pregnant?', class: 'text-center align-middle' },
         { key: 'lactationCode', label: 'Lacation', description: 'Indicates the position of this resource on vaccination for lactating people.', class: 'text-center align-middle', sortable: true },
         { key: 'date', label: 'Date', description: 'The date this policy was published or updated.', class: 'align-middle', sortable: true },
         { key: 'link', label: '', class: 'text-center align-middle' }
@@ -111,6 +111,7 @@ export default {
         pregnancyCode: p.pregnancyCode,
         subgroups: p.pregnancyQualifications,
         vaccines: p.vaccines,
+        vaccinesNonSpecific: p.vaccinesNonSpecific,
         _showDetails: (p.documentType || []).map(dt => dt.value).includes('Media article'),
       }))
     }
