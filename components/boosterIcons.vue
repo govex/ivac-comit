@@ -3,15 +3,15 @@
     <template v-for="code of codes">
       <template v-if="code && code.value">
         <b-icon-check-all 
-          v-if="code.value.startsWith('Recommended for all pregnant people')" 
+          v-if="code.value.startsWith('Recommended for all')" 
           :key="code.value" 
           v-b-popover.hover.top="code.value"
           class="subgroup-icon"
         />
         <svg
-          v-if="code.value.startsWith('Recommended for high risk pregnancies')"
+          v-if="code.value.startsWith('Recommended for high risk')"
           :key="code.value"
-          v-b-popover.hover.top="'Recommended for pregnant people at high risk of transmission or serious disease'"
+          v-b-popover.hover.top="'Recommended for people at high risk of transmission or serious disease'"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           viewBox="0 -3 95 92"
