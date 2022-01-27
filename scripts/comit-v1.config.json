@@ -42,7 +42,6 @@
       "fields": [
         "id",
         "Authorities",
-        "Booster",
         "countries",
         "Date accessed",
         "Date published/last updated",
