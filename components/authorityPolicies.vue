@@ -47,7 +47,7 @@
         <template #cell(lactationCode)="data">
           <PregnancyLactationCodeIcons v-if="data.value" :codes="data.value" />
         </template>
-        <template #cell(booster)="data">
+        <template #cell(pregnancyBooster)="data">
           <BoosterIcons :codes="data.value | ensureArray" />
         </template>
         <template #cell(date)="data">
@@ -92,7 +92,7 @@ export default {
         { key: 'vaccines', label: 'Vaccines', description: 'Indicates any vaccines which were mentioned as part of this resource.', class: 'align-middle' },
         { key: 'pregnancyCode', label: 'Pregnancy', description: 'Indicates the position of this resource on vaccination for pregnant people.', class: 'text-center align-middle', sortable: true },
         { key: 'subgroups', label: 'Subgroups', description: 'Specific subgroups', class: 'align-middle' },
-        { key: 'booster', label: 'Pregnancy Booster', description: 'What does this resource say about getting a booster vaccination while pregnant?', class: 'text-center align-middle' },
+        { key: 'pregnancyBooster', label: 'Pregnancy Booster', description: 'What does this resource say about getting a booster vaccination while pregnant?', class: 'text-center align-middle' },
         { key: 'lactationCode', label: 'Lacation', description: 'Indicates the position of this resource on vaccination for lactating people.', class: 'text-center align-middle', sortable: true },
         { key: 'date', label: 'Date', description: 'The date this policy was published or updated.', class: 'align-middle', sortable: true },
         { key: 'link', label: '', class: 'text-center align-middle' }
@@ -102,7 +102,7 @@ export default {
   computed: {
     displayedPolicies () {
       return this.policies.map(p => ({
-        booster: p.booster,
+        pregnancyBooster: p.pregnancyBooster,
         date: p['datePublished/lastUpdated'],
         documentType: p.documentType,
         isMediaArticle: (p.documentType || []).map(dt => dt.value).includes('Media article'),

@@ -79,7 +79,7 @@
           <template #head(pregnancyTest)>
             Pregnancy test <b-icon-info-circle v-b-popover.hover="'What does the policy say about getting a pregnancy test before vaccination?'" />
           </template>
-          <template #head(booster)>
+          <template #head(pregnancyBooster)>
             Booster <b-icon-info-circle v-b-popover.hover="'What does the policy say about getting a booster vaccination while pregnant?'" />
           </template>
           <template #head(subgroups)>
@@ -108,7 +108,7 @@
           <template #cell(pregnancyTest)="data">
             <PregnancyTestLabel :codes="[data.value]" />
           </template>
-          <template #cell(booster)="data">
+          <template #cell(pregnancyBooster)="data">
             <BoosterIcons :codes="data | ensureArray" />
           </template>
           <template #cell(subgroups)="data">
@@ -158,7 +158,7 @@ export default {
             { key: 'subgroups', class: 'text-center align-middle' },
             { key: 'pregnancyProviderVisit', class: 'text-center align-middle', sortable: true },
             { key: 'pregnancyTest', class: 'text-center align-middle', sortable: true },
-            { key: 'booster', class: 'text-center align-middle' },
+            { key: 'pregnancyBooster', class: 'text-center align-middle' },
             { key: 'wbRegion', label: 'Region', class: 'align-middle text-truncate', sortable: true },
             { key: 'wbIncomeLevelName', label: 'Income Level', class: 'align-middle text-truncate', sortable: true }
           ],
@@ -255,7 +255,8 @@ export default {
               code: country.iso3166Alpha2Code ? country.iso3166Alpha2Code.toLowerCase() : undefined,
               inTransition: country.inTransition,
               subgroups: mostRecentOrPermissivePolicy?.pregnancyQualifications,
-              booster: mostRecentOrPermissivePolicy?.booster,
+              pregnancyBooster: mostRecentOrPermissivePolicy?.pregnancyBooster,
+              lactationBooster: mostRecentOrPermissivePolicy?.lactationBooster,
               mostPermissiveCode: mostRecentOrPermissivePolicy?.[this.code.policyKey],
               pregnancyTest: mostRecentOrPermissivePolicy?.pregnancyTest,
               pregnancyProviderVisit: mostRecentOrPermissivePolicy?.pregnancyCounselingAndInformation,
