@@ -160,9 +160,6 @@ export default {
   ],
 
   publicRuntimeConfig: {
-    build: {
-      devtools: process.env.HIDE_BETA_BADGE !== 'true'
-    },
     googleAnalytics: {
       id: process.env.GOOGLE_GTAG_ID
     },
