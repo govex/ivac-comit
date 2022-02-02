@@ -160,13 +160,16 @@ export default {
   ],
 
   publicRuntimeConfig: {
+    build: {
+      devtools: process.env.HIDE_BETA_BADGE !== 'true'
+    },
     googleAnalytics: {
       id: process.env.GOOGLE_GTAG_ID
     },
     gtm: {
       id: process.env.GOOGLE_GTAG_ID
     },
-    showBetaBadge: !(process.env.HIDE_BETA_BADGE === 'true')
+    showBetaBadge: process.env.HIDE_BETA_BADGE !== 'true'
   },
 
   router: {
