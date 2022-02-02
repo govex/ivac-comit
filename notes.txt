@@ -1,0 +1,18 @@
+At least one professional society covers more than one country
+  aggregate by wb region? population? birthrate?
+Each professional society can have multiple policies (just like public health authorities)
+
+
+Can we examine the relationship between PS and PHA?
+
+
+
+
+
+
+
+remove dates from vaccine-specific guidance -- done
+add booster and subgroups to resources on country page -- done
+more clearly mark when media sources is listed as a PHA policy entry -- done
+
+
