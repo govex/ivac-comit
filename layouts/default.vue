@@ -135,9 +135,6 @@ export default {
     await this.$store.commit('authorities/load', myReconstructedData.authorities)
     await this.$store.commit('policies/load', myReconstructedData.policies)
     await this.$store.commit('vaccines/load', myReconstructedData.vaccines)
-  },
-  mounted () {
-    console.log(`page updated, title: ${this.head?.title}, url: ${this.$route.path}`)
   }
 }
 </script>
