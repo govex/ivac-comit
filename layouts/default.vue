@@ -57,6 +57,9 @@
               <b-dropdown-item to="/about/comit#disclaimers">
                 Disclaimers
               </b-dropdown-item>
+              <b-dropdown-item to="/about/data">
+                Download our data
+              </b-dropdown-item>
               <b-dropdown-item to="/about/contact">
                 Contact Us
               </b-dropdown-item>
