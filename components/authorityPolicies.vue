@@ -61,7 +61,7 @@
         </template>
         <template #row-details="row">
           <template v-if="row.item.isMediaArticle">
-            <b-alert variant="warning" show><b-icon-triangle-fill /> This information was obtained from a media article, and may not accurately reflect the position of this organization.</b-alert>
+            <b-alert variant="warning" show><b-icon-triangle-fill /> This information was obtained from a media article that met COMIT curation standards, and may not fully reflect the position of this country's public health authority.</b-alert>
           </template>
         </template>
       </b-table>
@@ -101,19 +101,22 @@ export default {
   },
   computed: {
     displayedPolicies () {
-      return this.policies.map(p => ({
-        pregnancyBooster: p.pregnancyBooster,
-        date: p['datePublished/lastUpdated'],
-        documentType: p.documentType,
-        isMediaArticle: (p.documentType || []).map(dt => dt.value).includes('Media article'),
-        lactationCode: p.lactationCode,
-        link: p.link,
-        pregnancyCode: p.pregnancyCode,
-        subgroups: p.pregnancyQualifications,
-        vaccines: p.vaccines,
-        vaccinesNonSpecific: p.vaccinesNonSpecific,
-        _showDetails: (p.documentType || []).map(dt => dt.value).includes('Media article'),
-      }))
+      return this.policies.map(p => {
+        const isMediaArticle = (p.documentType || []).map(dt => dt.value).includes('Media article')
+        return {
+          pregnancyBooster: p.pregnancyBooster,
+          date: p['datePublished/lastUpdated'],
+          documentType: p.documentType,
+          isMediaArticle,
+          lactationCode: p.lactationCode,
+          link: p.link,
+          pregnancyCode: p.pregnancyCode,
+          subgroups: p.pregnancyQualifications,
+          vaccines: p.vaccines,
+          vaccinesNonSpecific: p.vaccinesNonSpecific,
+          _showDetails: isMediaArticle
+        }
+      })
     }
   }
 }
