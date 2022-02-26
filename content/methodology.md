@@ -6,7 +6,7 @@ description: "Our aim is to identify, collect, and present publicly available co
 
 Our aim is to identify, collect, and present publicly available country and global-level policies or positions on COVID-19 vaccination in pregnant and lactating people. Information from publicly available sources is obtained from departments or ministries of health, and state-sponsored COVID-19 dedicated websites. Sources include vaccine recommendations for use, consent forms, fact sheets, FAQs, press releases, government websites and official government social media posts. Where multiple sources are available for a given country and public health authority, the one with the most permissive pregnancy or lactation code is displayed on the map, regardless of vaccine product. Filtering by vaccine product retrieves the most permissive pregnancy or lactation code for that vaccine in each country. All the sources retrieved for a given country, along with their classification, date published, and vaccine specification, can be viewed on the country profile page. The tracker reflects the most currently available data at the time of each round of survey completion. <a href="/documents/comit-data-entry-survey-2021-06-14.pdf" target="_blank">View our survey</a>.
 
-For more information on our methods and procedures, view our <a href="/documents/comit-data-collection-protocol-2021-06-23.pdf" target="_blank">data collection protocol</a>.
+For more information on our methods and procedures, view our <a href="/documents/comit-data-collection-protocol-2022-02-23.pdf" target="_blank">data collection protocol</a>.
 
 
 <br>
