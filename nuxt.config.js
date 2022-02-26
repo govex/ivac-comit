@@ -101,7 +101,7 @@ export default {
         { rel: 'manifest', href: '/site.webmanifest' }
       ],
       script: [
-        { hid: 'gtm', src: `https://www.googletagmanager.com/gtag/js?id=${_gtmId}}`, async: true}
+        { hid: 'gtm', src: `https://www.googletagmanager.com/gtag/js?id=${_gtmId}`, async: true}
       ]
     }
   },
