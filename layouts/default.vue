@@ -121,14 +121,21 @@
         </b-row>
       </b-container>
     </footer>
-  </div>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ gtagId }}');
+    </script>
+  </div>  
 </template>
 
 <script>
 export default {
   data () {
     return {
-      clipboardHoverText: 'Copy link'
+      clipboardHoverText: 'Copy link',
+      gtagId: this.$config.gtagId,
     }
   },
   async fetch () {

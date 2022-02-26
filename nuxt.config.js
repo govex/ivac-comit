@@ -29,8 +29,6 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     // '@nuxtjs/eslint-module'
-    // google analytics
-    // '@nuxtjs/google-analytics'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -64,26 +62,13 @@ export default {
     devtools: true
   },
 
-  // googleAnalytics: {
-  //   id: 'G-FD6EH13JDD'
-  // },
-
-  gtm: {
-    debug: true,
-    enabled: true,
-    id: 'G-FD6EH13JDD', // Used as fallback if no runtime config is provided
-    pageTracking: true,
-  },
-
-  // google analytics configuration
-  // 'google-gtag': ,
-
   // Global page headers: https://go.nuxtjs.dev/config-head
-  head () {
+  head ({ $config }) {
     const _pageTitle = 'Covid-19 Maternal Immunization Tracker'
     const _pageDescription = 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.'
     const _pageImage = 'https://www.comitglobal.org/img/comit-dark-background.png'
     const _pageUrl = 'https://www.comitglobal.org/'
+    const _gtmId = $config.gtagId
     return {
       htmlAttrs: {
         lang: 'en'
@@ -114,6 +99,9 @@ export default {
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
         { rel: 'manifest', href: '/site.webmanifest' }
+      ],
+      script: [
+        { hid: 'gtm', src: `https://www.googletagmanager.com/gtag/js?id=${_gtmId}}`, async: true}
       ]
     }
   },
@@ -132,22 +120,7 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content',
-    // https://github.com/nuxt-community/gtm-module
-    '@nuxtjs/gtm',
-    // https://github.com/nuxt-community/google-gtag-module
-    // ['@nuxtjs/google-gtag', {
-    //   id: process.env.GOOGLE_GTAG_ID || 'G-FD6EH13JDD',
-    //   config: {
-    //     anonymize_ip: true, // anonymize IP
-    //     send_page_view: false, // might be necessary to avoid duplicated page track on page reload
-    //     linker: {
-    //       domains: ['www.comitglobal.org']
-    //     }
-    //   },
-    //   debug: true, // enable to track in dev mode
-    //   disableAutoPageTrack: false // disable if you don't want to track each page route with router.afterEach(...).
-    // }]
+    '@nuxt/content'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -163,12 +136,7 @@ export default {
     build: {
       devtools: process.env.HIDE_BETA_BADGE !== 'true'
     },
-    googleAnalytics: {
-      id: process.env.GOOGLE_GTAG_ID
-    },
-    gtm: {
-      id: process.env.GOOGLE_GTAG_ID
-    },
+    gtagId: process.env.GOOGLE_GTAG_ID,
     showBetaBadge: process.env.HIDE_BETA_BADGE !== 'true'
   },
 
