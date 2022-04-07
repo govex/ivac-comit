@@ -197,3 +197,59 @@ if (config.output.minifiedFilename) {
     process.exitCode = 1
   }
 }
+
+// generate flat file
+const flatFileData = camelizedOutput.policies
+  .map(p => {
+    const flatFileRecord = { 
+      id: p.entryNumber,
+      dateUpdated: p['datePublished/lastUpdated'],
+      dateAccessed: p.dateAccessed,
+      documentLink: p.link,
+    }
+    config.output.csv.valueRankFields?.forEach(field => {
+      if (Array.isArray(p[field])) {
+        flatFileRecord[field] = p[field].map(v => v.value).join('|')
+      } else if (p[field]) {
+        flatFileRecord[field] = p[field].value
+      } else {
+        flatFileRecord[field] = undefined
+      }
+    })
+    if (Array.isArray(p.vaccines)) {
+        flatFileRecord.vaccines = p.vaccines.map(vid => camelizedOutput.vaccines.find(v => v.id === vid).displayName).join('|')
+    } else {
+      flatFileRecord.vaccines = undefined
+    }
+    if (Array.isArray(p.authorities)) {
+      const authorities = p.authorities.map(aid => camelizedOutput.authorities.find(a => a.id === aid))
+      flatFileRecord.orgName = authorities.map(a => a.name).join('|')
+      flatFileRecord.orgType = authorities.map(a => a.authorityType).join('|')
+
+      countries = authorities.flatMap(a => a.countries || []).map(countryId =>{
+        return camelizedOutput.countries.find(c => c.id === countryId)
+      })
+      flatFileRecord.countryIso3166Alpha2 = countries.map(c => c.iso3166Alpha2Code).join('|')
+      flatFileRecord.countryName = countries.map(c => c.name).join('|')
+      flatFileRecord.wbRegion = countries.map(c => c.wbRegion).join('|')
+      flatFileRecord.wbIncomeLevel = countries.map(c => c.wbIncomeLevelName).join('|')
+    } else {
+      flatFileRecord.orgName = undefined
+      flatFileRecord.orgType = undefined
+      flatFileRecord.countryIso3166Alpha2 = undefined
+      flatFileRecord.countryName = undefined
+      flatFileRecord.wbRegion = undefined
+      flatFileRecord.wbIncomeLevel = undefined
+    }
+    return flatFileRecord
+  })
+  .sort((a,b) => {
+    return (a.dateUpdated || a.dateAccessed || 'unknown').localeCompare(b.dateUpdated || b.dateAccessed || 'unknown')
+  })
+
+const fastcsv = require('fast-csv')
+
+fastcsv.writeToPath(process.cwd() + config.output.csv.filename, flatFileData, { headers: true })
+  .on('finish', function() {
+    console.info(`${flatFileData.length} records written to ${config.output.csv.filename}`)
+  })
