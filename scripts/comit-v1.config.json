@@ -97,6 +97,20 @@
     }
   },
   "output": {
+    "csv": {
+      "filename": "/static/data/comit-v1.csv",
+      "valueRankFields": [
+        "documentType",
+        "lactationBooster",
+        "lactationCode",
+        "lactationCounselingAndInformation",
+        "lactationQualifications",
+        "pregnancyBooster",
+        "pregnancyCode",
+        "pregnancyQualifications",
+        "pregnancyTest"
+      ]
+    },
     "normalFilename": "/static/data/comit-v1.json",
     "minifiedFilename": "/static/data/comit-v1.min.json"
   }
