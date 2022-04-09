@@ -21,14 +21,20 @@ description: "Download our data to support your own research and analysis, make 
   </div>
   <div class="row bg-light mt-3 p-2">
     <div class="w-100 d-flex flex-row row-nowrap justify-content-between align-items-center py-3 border-bottom">
-      <span class="col-9">Data Dictionary (coming soon)</span>
-      <a class="btn btn-outline-primary disabled" href="/documents/TBD.pdf" target="_blank" download disabled><b-icon-file-earmark-arrow-down-fill></b-icon-file-earmark-arrow-down-fill><span class="ml-2">PDF</span></a>
+      <span class="col-9">Data Dictionary</span>
+      <a class="btn btn-outline-primary" href="/documents/comit-data-dictionary-2022-04-09.pdf" target="_blank" download="comit-data-dictionary.pdf"><b-icon-file-earmark-arrow-down-fill></b-icon-file-earmark-arrow-down-fill><span class="ml-2">PDF</span></a>
+    </div>
+    <div class="w-100 d-flex flex-row flex-nowrap justify-content-between align-items-center py-3 border-bottom">
+      <span class="col-9">
+        A CSV (comma-separated values) file is generally suitable for loading into spreadsheet software, but has limited support for multiple values in a data field. Multiple values are separated by a pipe (<code>|</code>) delimiter.
+      </span>
+      <a class="btn btn-outline-primary" href="/data/comit-v1.csv" target="_blank" download="comit-v1.csv"><b-icon-file-earmark-spreadsheet></b-icon-file-earmark-spreadsheet><span class="ml-2">CSV</span></a>
     </div>
     <div class="w-100 d-flex flex-row flex-nowrap justify-content-between align-items-center py-3">
       <span class="col-9">
         A JSON (javascript object notation) file is generally suitable for data engineers or software programmers, but has better support for multiple values in a data field. Empty/null values are not included.
       </span>
-      <a class="btn btn-outline-primary" href="/data/comit-v1.min.json" target="_blank" download><b-icon-download></b-icon-download><span class="ml-2">JSON</span></a>
+      <a class="btn btn-outline-primary" href="/data/comit-v1.min.json" target="_blank" download="comit-v1.min.json"><b-icon-download></b-icon-download><span class="ml-2">JSON</span></a>
     </div>
   </div>
   
