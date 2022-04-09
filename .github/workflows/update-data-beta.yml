@@ -36,7 +36,7 @@ jobs:
           node scripts/country-policy-position-timeseries.js static/data/comit-v1.min.json
 
       - name: add data files to commit
-        run: git add static/data/comit-v1.min.json static/data/comit-v1.jcsv
+        run: git add static/data/comit-v1.min.json static/data/comit-v1.csv
 
       - name: commit changes to git
         run: git commit -m "automated data update"
