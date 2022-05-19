@@ -44,21 +44,13 @@ jobs:
       - name: push data update
         run: git push
 
-      - name: deploy beta to heroku
-        if: ${{ github.event.lcient_payload.branch == 'beta' }}
+      - name: deploy to heroku
+        if: ${{ (github.event.client_payload.branch == "beta") || (github.event.client_payload.branch == "production") }}
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: ivac-comitglobal-beta
-          branch: beta
-
-      - name: deploy production to heroku
-        if: ${{ github.event.client_payload.branch == 'production' }}
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ivac-comitglobal-prod
-          branch: production
+          branch: ${{ github.event.client_payload.branch }}
 
       - name: send job status back to airtable
         if: ${{ always() }}
