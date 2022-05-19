@@ -50,7 +50,7 @@ jobs:
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_app_name: ivac-comitglobal-beta
+          heroku_app_name: ${{ 'ivac-comitglobal-' + github.event.client_payload.branch.slice(0,3) }}
           branch: ${{ github.event.client_payload.branch }}
 
       - name: send job status back to airtable
