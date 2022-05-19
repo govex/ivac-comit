@@ -50,8 +50,10 @@ jobs:
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          team: govex
           heroku_app_name: ivac-comitglobal-beta
           branch: ${{ github.event.client_payload.branch }}
+          dontautocreate: true
 
       - name: deploy production to heroku
         if: github.event.client_payload.branch == 'production'
@@ -59,8 +61,11 @@ jobs:
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          team: govex
           heroku_app_name: ivac-comitglobal-prod
           branch: ${{ github.event.client_payload.branch }}
+          dontautocreate: true
+
 
       - name: send job status back to airtable
         if: ${{ always() }}
