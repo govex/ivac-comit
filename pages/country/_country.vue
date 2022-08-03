@@ -5,8 +5,21 @@
       <article>
         {{ _pageDescription }}
       </article>
+      <template v-if="country.websiteNotes || showWarning">
+        <b-alert show variant="warning" class="mt-4">
+          <span>Notes</span>
+          <hr />
+          <template v-if="showWarning">
+            Although we routinely look for policy updates, our information for this country may be outdated. Please <b-link to="/about/contact">contact us</b-link> if you would like to share policy information about this country with us. 
+          </template>
+          <hr v-if="country.websiteNotes && showWarning" />
+          <template v-if="country.websiteNotes">
+            <div v-html="$md.render(country.websiteNotes)"></div>
+          </template>
+        </b-alert>
+      </template>
       <div class="d-flex flex-column align-items-baseline justify-content-between">
-        <h2 class="mt-5">Current Overview</h2>
+        <h2 class="mt-5">Overview</h2>
         <!-- <div class="w-100 d-flex flex-row justify-content-center"> -->
           <div class="w-100 d-flex flex-row text-center justify-content-between align-items-stretch">
             <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
@@ -312,33 +325,56 @@ export default {
         return false
       }
     },
-    mostPermissiveLactationCode () {
+    mostPermissiveLactationPolicy () {
       if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })?.lactationCode
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })
+      } else {
+        return undefined
+      }
+    },
+    mostPermissiveLactationCode () {
+      if (this.mostPermissiveLactationPolicy) {
+        return this.mostPermissiveLactationPolicy.lactationCode
       } else {
         return undefined
       }
     },
     mostPermissiveLactationIndicators () {
       if (this.mostPermissiveLactationCode) {
-        return this.mostPermissiveLactationCode.map(code => code.rank)
+        return this.mostPermissiveLactationCode.map(code => code.rank).sort()
       } else {
         return []
       }
     },
-    mostPermissivePregnancyCode () {
+    mostPermissivePregnancyPolicy () {
       if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })?.pregnancyCode
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })
+      } else {
+        return undefined
+      }
+    },
+    mostPermissivePregnancyCode () {
+      if (this.mostPermissivePregnancyPolicy) {
+        return this.mostPermissivePregnancyPolicy.pregnancyCode
       } else {
         return undefined
       }
     },
     mostPermissivePregnancyIndicators () {
       if (this.mostPermissivePregnancyCode) {
-        return this.mostPermissivePregnancyCode.map(code => code.rank)
+        return this.mostPermissivePregnancyCode.map(code => code.rank).sort()
       } else {
         return []
       }
+    },
+    mostRecentPhaDocumentDate () {
+      return this.authoritiesByType
+        .filter(authorityType => authorityType.authorityType === 'Public Health Authority')
+        .flatMap(authorityType => (authorityType.authorities || []))
+        .flatMap(authority => (authority.policies || []))
+        .map(p => p['datePublished/lastUpdated'] || p['dateAccessed'] || 'unknown')
+        .sort()
+        .pop()
     },
     mostRecentPhaReviewDate () {
       return this.authoritiesByType
@@ -371,6 +407,12 @@ export default {
       } else {
         return []
       }
+    },
+    showWarning () {
+      const sixMonthsAgo = (new Date(Date.now() - 15552000000)).toISOString().slice(0,10)
+      const mostPermissivePregnancyIndicator = this.mostPermissivePregnancyIndicators.slice().pop()
+      const mostPermissiveLactationIndicator = this.mostPermissiveLactationIndicators.slice().pop()
+      return this.mostRecentPhaDocumentDate < sixMonthsAgo && (mostPermissivePregnancyIndicator > 2 || mostPermissiveLactationIndicator > 2)
     }
   },
   mounted () {
