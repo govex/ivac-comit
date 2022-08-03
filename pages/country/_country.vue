@@ -135,36 +135,34 @@
       <div v-for="authorityByType of authoritiesByType" :key="authorityByType.authorityType" class="my-5">
         <h2>{{ authorityByType.displayName }}</h2>
         <template v-if="authorityByType.authorities.length > 0">
-          <template v-for="authority of authorityByType.authorities">
-            <div :key="authority.id" class="w-100 bg-light rounded p-3 mt-3">
-              <div class="d-flex justify-content-between align-items-baseline">
-                <div class="d-flex flex-row justify-content-between align-items-start">
-                  <h3>
-                    <b-link :to="`/organization/${authority.id}`">
-                      {{ authority.name }}
-                    </b-link>
-                  </h3>
-                  <!-- <b-badge variant="success" class="mx-2">
-                    {{ authority.authorityType }}
-                  </b-badge> -->
-                  <span class="mx-2">
-                    <b-link v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1" target="_blank"><b-icon-globe /></b-link>
-                    <b-link v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></b-link>
-                    <b-link v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></b-link>
-                  </span>
-                </div>
-                <span v-if="authority.reviewEvents">Most recently reviewed by us on <span style="white-space: nowrap">{{ authority.reviewEvents.slice(-1)[0] }}</span></span>
+            <div v-for="authority of authorityByType.authorities" :key="authority.id" class="w-100 bg-light rounded p-3 mt-3">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <div class="d-flex flex-row justify-content-between align-items-start">
+                <h3>
+                  <b-link :to="`/organization/${authority.id}`">
+                    {{ authority.name }}
+                  </b-link>
+                </h3>
+                <!-- <b-badge variant="success" class="mx-2">
+                  {{ authority.authorityType }}
+                </b-badge> -->
+                <span class="mx-2">
+                  <b-link v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1" target="_blank"><b-icon-globe /></b-link>
+                  <b-link v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></b-link>
+                  <b-link v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></b-link>
+                </span>
               </div>
-              <h4 class="mt-4">{{ authorityByType.vaccinePositionsLabel }}</h4>
-              <VaccinePositions :authority="authority">
-                No information available.
-              </VaccinePositions>
-              <h4 class="mt-4">Resources &amp; Guidance</h4>
-              <AuthorityPolicies :policies="authority.policies | sortedByDate">
-                No documents available.
-              </AuthorityPolicies>
+              <span v-if="authority.reviewEvents">Most recently reviewed by us on <span style="white-space: nowrap">{{ authority.reviewEvents.slice(-1)[0] }}</span></span>
             </div>
-          </template>
+            <h4 class="mt-4">{{ authorityByType.vaccinePositionsLabel }}</h4>
+            <VaccinePositions :authority="authority">
+              No information available.
+            </VaccinePositions>
+            <h4 class="mt-4">Resources &amp; Guidance</h4>
+            <AuthorityPolicies :policies="authority.policies | sortedByDate">
+              No documents available.
+            </AuthorityPolicies>
+          </div>
         </template>
         <template v-else>
           <span class="text-muted">We were unable to identify any {{ authorityByType.displayName }} associated with this country.</span>
