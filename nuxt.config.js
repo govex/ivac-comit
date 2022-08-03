@@ -108,6 +108,10 @@ export default {
     }
   },
 
+  markdownit: {
+    runtime: true // Support `$md()`
+  },
+
   module: {
     rules: [
       {
@@ -122,7 +126,9 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    // https://github.com/nuxt-community/markdownit-module
+    '@nuxtjs/markdownit'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

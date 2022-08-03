@@ -5,8 +5,21 @@
       <article>
         {{ _pageDescription }}
       </article>
+      <template v-if="country.websiteNotes || showWarning">
+        <b-alert show variant="warning" class="mt-4">
+          <span>Notes</span>
+          <hr />
+          <template v-if="showWarning">
+            Although we routinely look for policy updates, our information for this country may be outdated. Please <b-link to="/about/contact">contact us</b-link> if you would like to share policy information about this country with us. 
+          </template>
+          <hr v-if="country.websiteNotes && showWarning" />
+          <template v-if="country.websiteNotes">
+            <div v-html="$md.render(country.websiteNotes)"></div>
+          </template>
+        </b-alert>
+      </template>
       <div class="d-flex flex-column align-items-baseline justify-content-between">
-        <h2 class="mt-5">Current Overview</h2>
+        <h2 class="mt-5">Overview</h2>
         <!-- <div class="w-100 d-flex flex-row justify-content-center"> -->
           <div class="w-100 d-flex flex-row text-center justify-content-between align-items-stretch">
             <b-card v-if="country.wbPopulation2019" class="flex-fill m-2">
@@ -122,36 +135,34 @@
       <div v-for="authorityByType of authoritiesByType" :key="authorityByType.authorityType" class="my-5">
         <h2>{{ authorityByType.displayName }}</h2>
         <template v-if="authorityByType.authorities.length > 0">
-          <template v-for="authority of authorityByType.authorities">
-            <div :key="authority.id" class="w-100 bg-light rounded p-3 mt-3">
-              <div class="d-flex justify-content-between align-items-baseline">
-                <div class="d-flex flex-row justify-content-between align-items-start">
-                  <h3>
-                    <b-link :to="`/organization/${authority.id}`">
-                      {{ authority.name }}
-                    </b-link>
-                  </h3>
-                  <!-- <b-badge variant="success" class="mx-2">
-                    {{ authority.authorityType }}
-                  </b-badge> -->
-                  <span class="mx-2">
-                    <b-link v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1" target="_blank"><b-icon-globe /></b-link>
-                    <b-link v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></b-link>
-                    <b-link v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></b-link>
-                  </span>
-                </div>
-                <span v-if="authority.reviewEvents">Most recently reviewed by us on <span style="white-space: nowrap">{{ authority.reviewEvents.slice(-1)[0] }}</span></span>
+            <div v-for="authority of authorityByType.authorities" :key="authority.id" class="w-100 bg-light rounded p-3 mt-3">
+            <div class="d-flex justify-content-between align-items-baseline">
+              <div class="d-flex flex-row justify-content-between align-items-start">
+                <h3>
+                  <b-link :to="`/organization/${authority.id}`">
+                    {{ authority.name }}
+                  </b-link>
+                </h3>
+                <!-- <b-badge variant="success" class="mx-2">
+                  {{ authority.authorityType }}
+                </b-badge> -->
+                <span class="mx-2">
+                  <b-link v-if="authority.website1" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website1" target="_blank"><b-icon-globe /></b-link>
+                  <b-link v-if="authority.website2" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website2" target="_blank"><b-icon-globe /></b-link>
+                  <b-link v-if="authority.website3" v-b-popover.hover="'View website in a new browser tab'" :href="authority.website3" target="_blank"><b-icon-globe /></b-link>
+                </span>
               </div>
-              <h4 class="mt-4">{{ authorityByType.vaccinePositionsLabel }}</h4>
-              <VaccinePositions :authority="authority">
-                No information available.
-              </VaccinePositions>
-              <h4 class="mt-4">Resources &amp; Guidance</h4>
-              <AuthorityPolicies :policies="authority.policies | sortedByDate">
-                No documents available.
-              </AuthorityPolicies>
+              <span v-if="authority.reviewEvents">Most recently reviewed by us on <span style="white-space: nowrap">{{ authority.reviewEvents.slice(-1)[0] }}</span></span>
             </div>
-          </template>
+            <h4 class="mt-4">{{ authorityByType.vaccinePositionsLabel }}</h4>
+            <VaccinePositions :authority="authority">
+              No information available.
+            </VaccinePositions>
+            <h4 class="mt-4">Resources &amp; Guidance</h4>
+            <AuthorityPolicies :policies="authority.policies | sortedByDate">
+              No documents available.
+            </AuthorityPolicies>
+          </div>
         </template>
         <template v-else>
           <span class="text-muted">We were unable to identify any {{ authorityByType.displayName }} associated with this country.</span>
@@ -312,33 +323,56 @@ export default {
         return false
       }
     },
-    mostPermissiveLactationCode () {
+    mostPermissiveLactationPolicy () {
       if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })?.lactationCode
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'lactationCode' })
+      } else {
+        return undefined
+      }
+    },
+    mostPermissiveLactationCode () {
+      if (this.mostPermissiveLactationPolicy) {
+        return this.mostPermissiveLactationPolicy.lactationCode
       } else {
         return undefined
       }
     },
     mostPermissiveLactationIndicators () {
       if (this.mostPermissiveLactationCode) {
-        return this.mostPermissiveLactationCode.map(code => code.rank)
+        return this.mostPermissiveLactationCode.map(code => code.rank).sort()
       } else {
         return []
       }
     },
-    mostPermissivePregnancyCode () {
+    mostPermissivePregnancyPolicy () {
       if (this.country) {
-        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })?.pregnancyCode
+        return this.$root.$getMostRecentOrPermissivePolicy({ country: this.country, code: 'pregnancyCode' })
+      } else {
+        return undefined
+      }
+    },
+    mostPermissivePregnancyCode () {
+      if (this.mostPermissivePregnancyPolicy) {
+        return this.mostPermissivePregnancyPolicy.pregnancyCode
       } else {
         return undefined
       }
     },
     mostPermissivePregnancyIndicators () {
       if (this.mostPermissivePregnancyCode) {
-        return this.mostPermissivePregnancyCode.map(code => code.rank)
+        return this.mostPermissivePregnancyCode.map(code => code.rank).sort()
       } else {
         return []
       }
+    },
+    mostRecentPhaDocumentDate () {
+      return this.authoritiesByType
+        .filter(authorityType => authorityType.authorityType === 'Public Health Authority')
+        .flatMap(authorityType => (authorityType.authorities || []))
+        .flatMap(authority => (authority.policies || []))
+        .map(p => p['datePublished/lastUpdated'] || p['dateAccessed'] || 'unknown')
+        .sort()
+        .pop()
     },
     mostRecentPhaReviewDate () {
       return this.authoritiesByType
@@ -371,6 +405,12 @@ export default {
       } else {
         return []
       }
+    },
+    showWarning () {
+      const sixMonthsAgo = (new Date(Date.now() - 15552000000)).toISOString().slice(0,10)
+      const mostPermissivePregnancyIndicator = this.mostPermissivePregnancyIndicators.slice().pop()
+      const mostPermissiveLactationIndicator = this.mostPermissiveLactationIndicators.slice().pop()
+      return this.mostRecentPhaDocumentDate < sixMonthsAgo && (mostPermissivePregnancyIndicator > 2 || mostPermissiveLactationIndicator > 2)
     }
   },
   mounted () {
