@@ -408,9 +408,10 @@ export default {
     },
     showWarning () {
       const sixMonthsAgo = (new Date(Date.now() - 15552000000)).toISOString().slice(0,10)
-      const mostPermissivePregnancyIndicator = this.mostPermissivePregnancyIndicators.slice().pop()
-      const mostPermissiveLactationIndicator = this.mostPermissiveLactationIndicators.slice().pop()
-      return this.mostRecentPhaDocumentDate < sixMonthsAgo && (mostPermissivePregnancyIndicator > 2 || mostPermissiveLactationIndicator > 2)
+      const mostPermissivePregnancyIndicator = this.mostPermissivePregnancyIndicators.slice().pop() || 999
+      const mostPermissiveLactationIndicator = this.mostPermissiveLactationIndicators.slice().pop() || 999
+      console.log(mostPermissiveLactationIndicator, mostPermissivePregnancyIndicator)
+      return this.mostRecentPhaDocumentDate || '2021-01-01' < sixMonthsAgo && (mostPermissivePregnancyIndicator > 2 || mostPermissiveLactationIndicator > 2)
     }
   },
   mounted () {
