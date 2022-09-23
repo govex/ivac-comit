@@ -26,7 +26,7 @@
     "devDependencies": {
         "@nuxtjs/eslint-config": "^9.0.0",
         "@nuxtjs/eslint-module": "^3.0.2",
-        "airtable": "^0.11.1",
+        "airtable": "^0.11.5",
         "babel-eslint": "^10.1.0",
         "camelcase-keys": "^7.0.2",
         "dotenv": "^10.0.0",
