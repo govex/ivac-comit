@@ -24,7 +24,8 @@ export default {
         trimCustomFragments: true,
         useShortDoctype: true
       }
-    }
+    },
+    standalone: true
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
