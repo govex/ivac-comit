@@ -1,0 +1,107 @@
+{
+  "comitCodingTypes": [
+    {
+      "codingType": "pregnancy",
+      "label": "Pregnancy",
+      "lookup": {
+        "1": "recommended",
+        "2": "permitted",
+        "3": "permittedWithQualifications",
+        "4": "notRecommendedButWithExceptions",
+        "5": "notRecommended",
+        "999": "noPosition",
+        "unknown": "noPosition"
+      },
+      "codes": {
+        "recommended": {
+          "label": "Recommended for some or all",
+          "description": "An explicit recommendation that some or all pregnant people should receive vaccine.",
+          "rank": 1,
+          "color": "#3d7632"
+        },
+        "permitted": {
+          "label": "Permitted",
+          "description": "All pregnant people can receive, may receive, or can choose to receive vaccine.",
+          "rank": 2,
+          "color": "#54bcd6"
+        },
+        "permittedWithQualifications": {
+          "label": "Permitted with qualifications",
+          "description": "Only certain groups of pregnant people, e.g., pregnant health workers, pregnant people with underlying conditions, can, may, or can choose to receive vaccine.",
+          "rank": 3,
+          "color": "#fdb430"
+        },
+        "notRecommendedButWithExceptions": {
+          "label": "Not recommended but with exceptions",
+          "description": "A statement stating pregnant people should not receive vaccine, with certain exceptions.",
+          "rank": 4,
+          "color": "#fa774a"
+        },
+        "notRecommended": {
+          "label": "Not recommended",
+          "description": "People who are pregnant should not receive the vaccine or vaccine is contraindicated.",
+          "rank": 5,
+          "color": "#9b002d"
+        },
+        "noPosition": {
+          "label": "No position",
+          "description": "No positions regarding vaccinating pregnant people could be found, or where no position was clearly established.",
+          "color": "#a9a9a9",
+          "rank": 999
+        }
+      }
+    },
+    {
+      "codingType": "lactation",
+      "label": "Lactation",
+      "lookup": {
+        "1": "recommended",
+        "2": "permitted",
+        "3": "permittedWithQualifications",
+        "4": "notRecommendedButWithExceptions",
+        "5": "notRecommended",
+        "999": "noPosition",
+        "unknown": "noPosition"
+      },
+      "codes": {
+        "recommended": {
+          "label": "Recommended for some or all",
+          "description": "An explicit recommendation that some or all lactating people should receive vaccine.",
+          "rank": 1,
+          "color": "#3d7632"
+        },
+        "permitted": {
+          "label": "Permitted",
+          "description": "All lactating people can receive, may receive, or can choose to receive vaccine.",
+          "rank": 2,
+          "color": "#54bcd6"
+        },
+        "permittedWithQualifications": {
+          "label": "Permitted with qualifications",
+          "description": "Only certain groups of lactating people, e.g., health workers, people with underlying conditions, can, may, or can choose to receive vaccine.",
+          "rank": 3,
+          "color": "#fdb430"
+        },
+        "notRecommendedButWithExceptions": {
+          "label": "Not recommended but with exceptions",
+          "description": "A statement stating lactating people should not receive vaccine, with certain exceptions.",
+          "rank": 4,
+          "color": "#fa774a"
+        },
+        "notRecommended": {
+          "label": "5",
+          "description": "People who are lactating should not receive the vaccine or vaccine is contraindicated.",
+          "rank": 5,
+          "color": "#9b002d"
+        },
+        "noPosition": {
+          "label": "No position",
+          "description": "No positions regarding vaccinating lactating people could be found, or where no position was clearly established.",
+          "color": "#a9a9a9",
+          "rank": 999
+        }
+      }
+    }
+  ]
+}
+
