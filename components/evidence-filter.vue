@@ -173,7 +173,13 @@
       })
 
       this.locals.svg.on("mouseup", (e) => {
-        this.selectionRange.push(this.locals.scaleX.invert(e.offsetX))
+        const secondDate = this.locals.scaleX.invert(e.offsetX)
+
+        if (this.selectionRange[0] > secondDate ) {
+          this.selectionRange.unshift(secondDate)
+        } else {
+          this.selectionRange.push(secondDate)
+        }
         this.selecting = false
         this.updateValue()
       })
