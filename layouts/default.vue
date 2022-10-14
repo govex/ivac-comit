@@ -26,6 +26,9 @@
                 Vaccine comparison summary
               </b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-nav-item to="/evidence-timeline">
+              Evidence Timeline
+            </b-nav-item>
             <b-nav-item to="/about/methodology">
               Our Approach
             </b-nav-item>
