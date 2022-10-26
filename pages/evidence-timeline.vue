@@ -144,7 +144,7 @@ export default {
       return "Timeline of Evidence and Recommendations"
     },
     _pageDescription () {
-      return "PLACEHOLDER TEXT: WHAT'S GOING ON BELOW?"
+      return "The timeline below shows the distribution of national COVID-19 vaccine policies for pregnancy or lactation from March 13, 2021, to present day, color-coded according to COMIT score. Superimposed black lines indicate the publication dates of: (1) evidence of SARS-CoV-2 risk in pregnancy; (2) COVID-19 vaccine safety and effectiveness and newborn outcome research; and (3) WHO/SAGE COVID-19 vaccine recommendations. Detailed information on the research findings or recommendations can be found in the table below."
     },
     _pageImage () {
       return 'https://www.comitglobal.org/img/comit-dark-background.png'
