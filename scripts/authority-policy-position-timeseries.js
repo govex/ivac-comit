@@ -97,6 +97,9 @@ const getMostPermissivePolicy = (options) => {
     })
   )
 
+  // 
+  const vaccinesEvalutated = [...phaPoliciesVaccineIdSet]
+
   // we don't need to filter vaccines for this function, but leaving this code here in case we want to do it later
   // // remove any vaccine items which are being filtered out (via the 'vaccineIds' parameter in this method call)
   // if (options.vaccineIds.length > 0) {
@@ -130,11 +133,11 @@ const getMostPermissivePolicy = (options) => {
     })
   // and sort the resulting policies by policy position ranking
     .sort((policy1, policy2) => {
-      return policy1[options.code][0].rank - policy2[options.code][0].rank
+      return {policy: policy1[options.code][0].rank - policy2[options.code][0].rank, vaccines: vaccinesEvalutated}
     })
 
   // return the top item from this policy array; if the array is empty, it will return undefined
-  return phaCurrentPolicies.shift()
+  return {policy: phaCurrentPolicies.shift(), vaccines: vaccinesEvalutated}
 }
 
 const authorities = comitData.authorities
@@ -159,7 +162,7 @@ for (const authority of authorities) {
     if (pregnancyPolicyAtDate) {
       authority.policyPositionEvents.push({
         date: eventDate,
-        policy: pregnancyPolicyAtDate,
+        ...pregnancyPolicyAtDate,
         type: 'pregnancyPolicyPositionChange'
       })
     }
@@ -173,7 +176,7 @@ for (const authority of authorities) {
     if (lactationPolicyAtDate) {
       authority.policyPositionEvents.push({
         date: eventDate,
-        policy: lactationPolicyAtDate,
+        ...lactationPolicyAtDate,
         type: 'lactationPolicyPositionChange'
       })
     }
