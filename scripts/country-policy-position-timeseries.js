@@ -74,31 +74,49 @@ for (const country of comitData.countries) {
       // de-duplicate the events if policy positions don't change
       .reduce((accumulator, event) => {
         const sameTypeEvents = accumulator.filter(e => e.type === event.type)
-        // if there are no events of this type, just add the event
+        // if there are no other events of this type yet, just add this one
         if (sameTypeEvents.length === 0) {
           accumulator.push(event)
         } else {
+          // otherwise we need to compare this one and the previous one
           const previousEvent = sameTypeEvents.slice(-1)[0]
           const currentPolicy = policiesMap.get(event.policy)
           event.previousPolicy = previousEvent.policy
             ? policiesMap.get(previousEvent.policy)
             : undefined
 
+          let currentCode = 999, previousCode =999
+
           switch (event.type) {
             case 'pregnancyPolicyPositionChange':
-              if (event.previousPolicy && currentPolicy?.pregnancyCode?.[0].rank !== 999) {
-                if (currentPolicy?.pregnancyCode?.[0]?.rank !== event.previousPolicy?.pregnancyCode?.[0]?.rank) {
-                  accumulator.push(event)
-                }              
-              }
+              currentCode = currentPolicy?.pregnancyCode?.[0].rank
+              previousCode = event.previousPolicy?.pregnancyCode?.[0]?.rank
+
+              // if (event.previousPolicy && currentPolicy?.pregnancyCode?.[0].rank !== 999) {
+              //   if (currentPolicy?.pregnancyCode?.[0]?.rank !== event.previousPolicy?.pregnancyCode?.[0]?.rank) {
+              //     accumulator.push(event)
+              //   }              
+              // }
               break
             case 'lactationPolicyPositionChange':
-              if (event.previousPolicy && currentPolicy?.lactationCode?.[0].rank !== 999) {
-                if (currentPolicy?.lactationCode?.[0]?.rank !== event.previousPolicy?.lactationCode?.[0]?.rank) {
-                  accumulator.push(event)
-                }
-              }
+              currentCode = currentPolicy?.lactationCode?.[0].rank
+              previousCode = event.previousPolicy?.lactationCode?.[0]?.rank
+
+              // if (event.previousPolicy && currentPolicy?.lactationCode?.[0].rank !== 999) {
+              //   if (currentPolicy?.lactationCode?.[0]?.rank !== event.previousPolicy?.lactationCode?.[0]?.rank) {
+              //     accumulator.push(event)
+              //   }
+              // }
               break
+          }
+          if (previousCode === 999 && currentCode !== 999) {
+            accumulator.push(event)
+          } else if (currentCode < previousCode) {
+            accumulator.push(event)
+          } else if ((currentCode !== 999) && (currentCode > previousCode)) {
+            if (previousEvent.vaccines.filter(v => !event.vaccines.includes(v)).length === 0) {
+              accumulator.push(event)
+            }
           }
         }
         return accumulator
