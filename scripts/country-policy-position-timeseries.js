@@ -71,6 +71,7 @@ for (const country of comitData.countries) {
       .filter((ppEvent) => {
         return authorityTypes.includes(ppEvent.authorityType)
       })
+      .sort((a, b) => a.date.localeCompare(b.date))
       // de-duplicate the events if policy positions don't change
       .reduce((accumulator, event) => {
         const sameTypeEvents = accumulator.filter(e => e.type === event.type)
