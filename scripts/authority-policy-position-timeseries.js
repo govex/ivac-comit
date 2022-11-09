@@ -133,7 +133,7 @@ const getMostPermissivePolicy = (options) => {
     })
   // and sort the resulting policies by policy position ranking
     .sort((policy1, policy2) => {
-      return {policy: policy1[options.code][0].rank - policy2[options.code][0].rank, vaccines: vaccinesEvalutated}
+      return policy1[options.code][0].rank - policy2[options.code][0].rank
     })
 
   // return the top item from this policy array; if the array is empty, it will return undefined
