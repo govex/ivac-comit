@@ -12,7 +12,7 @@
         "generate-website-data": "node -r dotenv/config scripts/airtable-downloader.js && node scripts/generate-website-data-files.js"
     },
     "dependencies": {
-        "@nuxt/content": "^1.15.1",
+        "@nuxt/content": "^2.4.2",
         "bootstrap": "^4.6.0",
         "bootstrap-vue": "^2.21.2",
         "core-js": "^3.20.0",
