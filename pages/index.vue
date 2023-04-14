@@ -1,6 +1,9 @@
 <template>
   <div>
     <section>
+      <end-of-life-message />
+    </section>
+    <section>
       <b-overlay show blur="1px" opacity="0.85" class="my-5" no-center>
         <b-row class="flex-column">
           <GlobalMap :country-list-items="countryListItems" default-fill-color="#A0A0A0" :enable-popups="false" style-property="mostPermissivePregnancyCode" />
@@ -32,6 +35,7 @@
 </template>
 
 <script>
+
 export default {
   data () {
     return {
