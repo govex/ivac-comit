@@ -75,7 +75,9 @@ export default {
     let evidenceTimeline, policyTimeline, policyTypes = []
     let selectedPolicyType = undefined
     try {
-      evidenceTimeline = await $content('/data/comit-evidence-timeline')
+      // No leading slash: the client-side content database used in static
+      // builds does not normalize it (the SSR content API did)
+      evidenceTimeline = await $content('data/comit-evidence-timeline')
         .fetch()
         .then(data => data.body
           .map((row, index) => {
@@ -88,7 +90,7 @@ export default {
           .sort((a, b) => a.date - b.date)
         )
 
-      policyTimeline = await $content('/data/comit-v1')
+      policyTimeline = await $content('data/comit-v1')
         .fetch()
         .then(data => data.statsTimeline
           .map((row, index) => {
@@ -100,7 +102,7 @@ export default {
           .sort((a, b) => a.date - b.date)
         )
 
-      policyTypes = await $content('/data/coding-config')
+      policyTypes = await $content('data/coding-config')
         .fetch()
         .then(data => data.comitCodingTypes
           .map((codingType, index) => {

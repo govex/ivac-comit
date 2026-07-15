@@ -79,7 +79,15 @@
       <sharing-and-seo />
     </b-container>
     <b-container>
-      <Nuxt />
+      <!-- Wait for the data fetch below before mounting pages: components
+           expect the store to be populated, as it was under SSR -->
+      <Nuxt v-if="!$fetchState.pending && !$fetchState.error" />
+      <div v-else-if="$fetchState.error" class="text-center my-5">
+        <p>An error occurred while loading the tracker data. Please try reloading the page.</p>
+      </div>
+      <div v-else class="text-center my-5">
+        <b-spinner label="Loading" />
+      </div>
     </b-container>
     <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
