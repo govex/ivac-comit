@@ -1,0 +1,59 @@
+name: deploy-github-pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - production
+
+# Allow the workflow to publish to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deployment at a time
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: use nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
+      - name: install dependencies
+        run: npm ci
+
+      - name: generate static site
+        env:
+          # The site is served from the root of a custom domain
+          # (www.comitglobal.org), so no router base prefix is needed.
+          # For a github.io project URL instead, set: /<repo-name>/
+          NUXT_ROUTER_BASE: /
+          GOOGLE_GTAG_ID: ${{ secrets.GOOGLE_GTAG_ID }}
+          HIDE_BETA_BADGE: 'true'
+        run: npm run generate
+
+      - name: upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: deploy to github pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -3,7 +3,7 @@
     <b-navbar toggleable="md" variant="primary" type="dark" style="padding: 0 1rem">
       <div class="container">
         <b-navbar-brand to="/">
-          <img height="75px" src="/img/comit-dark-background.png" alt="COMIT: COVID-19 Maternal Immunization Tracker">
+          <img height="75px" :src="publicBase + 'img/comit-dark-background.png'" alt="COMIT: COVID-19 Maternal Immunization Tracker">
           <!-- <sup v-if="showBetaBadge"><b-badge variant="warning">beta</b-badge></sup> -->
           <template v-if="$config.showBetaBadge">
             <b-badge variant="warning">beta</b-badge>
@@ -82,9 +82,9 @@
     <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
         <b-row class="align-items-center justify-content-between mb-3">
-          <img width="30%" src="/img/comit-dark-background.png" alt="COMIT: COVID-19 Maternal Immunization Tracker">
+          <img width="30%" :src="publicBase + 'img/comit-dark-background.png'" alt="COMIT: COVID-19 Maternal Immunization Tracker">
           <!-- <span>A project of</span> -->
-          <img width="50%" src="/img/universitylogo-bi-cir-combined-gentona-pdflogo.svg" alt="Johns Hopkins University Berman Institute for Bioethics and Center for Immunization Research">
+          <img width="50%" :src="publicBase + 'img/universitylogo-bi-cir-combined-gentona-pdflogo.svg'" alt="Johns Hopkins University Berman Institute for Bioethics and Center for Immunization Research">
         </b-row>
         <b-row class="justify-content-start mb-5">
           <b-col>
@@ -138,8 +138,14 @@ export default {
       gtagId: this.$config.gtagId,
     }
   },
+  computed: {
+    // Router base with a guaranteed trailing slash, for linking to files in static/
+    publicBase () {
+      return (this.$router.options.base || '/').replace(/\/?$/, '/')
+    }
+  },
   async fetch () {
-    const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
+    const myData = await fetch(`${this.publicBase}data/comit-v1.min.json`).then(res => res.json())
     const myReconstructedData = this.$root.$reconstructReferences(myData)
     await this.$store.commit('countries/load', myReconstructedData.countries)
     await this.$store.commit('authorities/load', myReconstructedData.authorities)
