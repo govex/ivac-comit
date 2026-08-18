@@ -1,4 +1,22 @@
-import redirectSSL from 'redirect-ssl'
+// Set NUXT_ROUTER_BASE (e.g. "/ivac-comit/") when the site is served from a
+// subpath, as it is on GitHub Pages project sites.
+const routerBase = (process.env.NUXT_ROUTER_BASE || '/').replace(/\/?$/, '/')
+
+// Prefix root-relative links (e.g. "/documents/foo.pdf") in markdown content
+// with the router base so they resolve when the site is served from a subpath.
+function prefixContentLinks (node) {
+  if (node.props) {
+    for (const attr of ['href', 'src']) {
+      const value = node.props[attr]
+      if (typeof value === 'string' && value.startsWith('/') && !value.startsWith('//')) {
+        node.props[attr] = routerBase.replace(/\/$/, '') + value
+      }
+    }
+  }
+  if (Array.isArray(node.children)) {
+    node.children.forEach(prefixContentLinks)
+  }
+}
 
 export default {
 
@@ -24,7 +42,8 @@ export default {
         trimCustomFragments: true,
         useShortDoctype: true
       }
-    }
+    },
+    standalone: true
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -38,6 +57,12 @@ export default {
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {
+  },
+
+  // Inlined into the client bundle; head() below runs in the browser too and
+  // can only see values exposed here (not module-level variables in this file).
+  env: {
+    NUXT_ROUTER_BASE: routerBase
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -65,12 +90,14 @@ export default {
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
-  head ({ $config }) {
+  head (context) {
     const _pageTitle = 'Covid-19 Maternal Immunization Tracker'
     const _pageDescription = 'The COVID-19 Maternal Immunization Tracker (COMIT) provides a global snapshot of public health policies that influence access to COVID-19 vaccines for pregnant and lactating people. Through maps, tables, and country profiles, COMIT provides regularly updated information on global and country level policies as they respond to the dynamic state of the pandemic and emerging evidence.'
     const _pageImage = 'https://www.comitglobal.org/img/comit-dark-background.png'
     const _pageUrl = 'https://www.comitglobal.org/'
-    const _gtmId = $config.gtagId
+    // In SPA mode (ssr: false) head() is called without context at generate time
+    const _gtmId = (context && context.$config && context.$config.gtagId) || process.env.GOOGLE_GTAG_ID || ''
+    const _base = process.env.NUXT_ROUTER_BASE || '/'
     return {
       htmlAttrs: {
         lang: 'en'
@@ -96,16 +123,20 @@ export default {
         { hid: 'og:image:alt', property: 'og:image:alt', content: _pageTitle }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-        { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-        { rel: 'manifest', href: '/site.webmanifest' }
+        { rel: 'icon', type: 'image/x-icon', href: `${_base}favicon.ico` },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: `${_base}apple-touch-icon.png` },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: `${_base}favicon-32x32.png` },
+        { rel: 'icon', type: 'image/png', sizes: '16x16', href: `${_base}favicon-16x16.png` },
+        { rel: 'manifest', href: `${_base}site.webmanifest` }
       ],
       script: [
         { hid: 'gtm', src: `https://www.googletagmanager.com/gtag/js?id=${_gtmId}`, async: true}
       ]
     }
+  },
+
+  markdownit: {
+    runtime: true // Support `$md()`
   },
 
   module: {
@@ -122,7 +153,9 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/content
-    '@nuxt/content'
+    '@nuxt/content',
+    // https://github.com/nuxt-community/markdownit-module
+    '@nuxtjs/markdownit'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -142,7 +175,16 @@ export default {
     showBetaBadge: process.env.HIDE_BETA_BADGE !== 'true'
   },
 
+  hooks: {
+    'content:file:beforeInsert' (document) {
+      if (routerBase !== '/' && document.body) {
+        prefixContentLinks(document.body)
+      }
+    }
+  },
+
   router: {
+    base: routerBase,
     extendRoutes (routes, resolve) {
       routes.push({
         path: '/pregnancy',
@@ -159,14 +201,12 @@ export default {
     }
   },
 
-  serverMiddleware: [
-    redirectSSL.create({
-      enabled: process.env.NODE_ENV === 'production'
-     }),
-  ],
-  
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'server',
+  target: 'static',
+
+  // The site's data is loaded in the browser (layouts/default.vue), so pages
+  // are client-rendered; `nuxt generate` emits an app shell + 404 fallback.
+  ssr: false,
 
   render: {
     static: {

@@ -35,14 +35,30 @@ jobs:
           node scripts/authority-policy-position-timeseries.js static/data/comit-v1.min.json
           node scripts/country-policy-position-timeseries.js static/data/comit-v1.min.json
 
-      - name: add data file to commit
-        run: git add static/data/comit-v1.min.json
+      - name: add data files to commit
+        run: git add static/data/comit-v1.min.json static/data/comit-v1.csv
 
       - name: commit changes to git
         run: git commit -m "automated data update"
 
       - name: push data update
         run: git push
+
+      - name: deploy beta to heroku
+        if: github.event.lcient_payload.branch == 'beta'
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ivac-comitglobal-beta
+          branch: beta
+
+      - name: deploy production to heroku
+        if: github.event.client_payload.branch == 'production'
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ivac-comitglobal-prod
+          branch: production
 
       - name: send job status back to airtable
         if: ${{ always() }}

@@ -30,6 +30,18 @@ export default (somethingIWontUse, inject) => {
       }
     }
 
+    for (const ppe of sourceData.countries.flatMap(c => c.policyPositionEvents || []).filter(ppe => ppe)) {
+      ppe.authority = sourceData.authoritiesMap.get(ppe.authority)
+      ppe.policy = sourceData.policiesMap.get(ppe.policy)
+      ppe.previousPolicy ? sourceData.policiesMap.get(ppe.previousPolicy) : null
+    }
+
+    for (const ppe of sourceData.authorities.flatMap(a => a.policyPositionEvents || []).filter(ppe => ppe)) {
+      ppe.authority = sourceData.authoritiesMap.get(ppe.authority)
+      ppe.policy = sourceData.policiesMap.get(ppe.policy)
+      ppe.previousPolicy ? sourceData.policiesMap.get(ppe.previousPolicy) : null
+    }
+
     for (const sourceDataArrayKey of sourceDataArrayKeys) {
       delete sourceData[sourceDataArrayKey + 'Map']
     }

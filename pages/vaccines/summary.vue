@@ -2,6 +2,8 @@
   <div>
     <h2>{{ _pageTitle }}</h2>
     <p>{{ _pageDescription }}</p>
+    <label for="selectedBeforeDate">Show data as of</label>
+    <input id="selectedBeforeDate" type="date" v-model="selectedBeforeDate" />
     <b-table
       :items="vaccineList"
       primary-key="id"
@@ -56,6 +58,7 @@
 export default {
   data () {
     return {
+      selectedBeforeDate: (new Date()).toISOString().substring(0, 10),
       vaccineListFields: [
         { key: 'displayName', label: 'Name', sortable: true, class: 'align-middle' },
         { key: 'countryCount', label: 'Countries', class: 'text-center align-middle', sortable: true },
@@ -136,8 +139,8 @@ export default {
           return [country.id, {
             name: country.name,
             code: country.iso3166Alpha2Code,
-            pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id] })?.pregnancyCode,
-            lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id] })?.lactationCode
+            pregnancyCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'pregnancyCode', vaccineIds: [vaccine.id], beforeDate: this.selectedBeforeDate })?.pregnancyCode,
+            lactationCode: this.$root.$getMostRecentOrPermissivePolicy({ country, code: 'lactationCode', vaccineIds: [vaccine.id], beforeDate: this.selectedBeforeDate })?.lactationCode
           }]
         })
         .filter(([id, countryItem]) => countryItem.pregnancyCode || countryItem.lactationCode)

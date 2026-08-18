@@ -3,8 +3,11 @@
     <b-navbar toggleable="md" variant="primary" type="dark" style="padding: 0 1rem">
       <div class="container">
         <b-navbar-brand to="/">
-          <img height="75px" src="/img/comit-dark-background.png" alt="COMIT LOGO">
+          <img height="75px" :src="publicBase + 'img/comit-dark-background.png'" alt="COMIT: COVID-19 Maternal Immunization Tracker">
           <!-- <sup v-if="showBetaBadge"><b-badge variant="warning">beta</b-badge></sup> -->
+          <template v-if="$config.showBetaBadge">
+            <b-badge variant="warning">beta</b-badge>
+          </template>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse" />
         <b-collapse id="nav-collapse" is-nav>
@@ -26,6 +29,17 @@
                 Vaccine comparison summary
               </b-dropdown-item>
             </b-nav-item-dropdown>
+            <b-nav-item-dropdown text="Recommendations">
+              <b-dropdown-item to="/explore/professional-societies/pregnancy">
+                Pregnancy explorer
+              </b-dropdown-item>
+              <b-dropdown-item to="/explore/professional-societies/lactation">
+                Lactation explorer
+              </b-dropdown-item>
+            </b-nav-item-dropdown>
+            <b-nav-item to="/evidence-timeline">
+              Evidence Timeline
+            </b-nav-item>
             <b-nav-item to="/about/methodology">
               Our Approach
             </b-nav-item>
@@ -58,21 +72,29 @@
     </b-navbar>
     <b-container fluid class="bg-dark text-light mb-4">
       <b-container>
-        <em>COVID-19 Vaccine policies for pregnant and lactating people worldwide.</em>
+        <em>COVID-19 Vaccine policies and recommendations for pregnant and lactating people worldwide.</em>
       </b-container>
     </b-container>
     <b-container class="d-flex flex-row justify-content-end sticky-top">
       <sharing-and-seo />
     </b-container>
     <b-container>
-      <Nuxt />
+      <!-- Wait for the data fetch below before mounting pages: components
+           expect the store to be populated, as it was under SSR -->
+      <Nuxt v-if="!$fetchState.pending && !$fetchState.error" />
+      <div v-else-if="$fetchState.error" class="text-center my-5">
+        <p>An error occurred while loading the tracker data. Please try reloading the page.</p>
+      </div>
+      <div v-else class="text-center my-5">
+        <b-spinner label="Loading" />
+      </div>
     </b-container>
     <footer class="container-fluid text-white mt-5 bg-primary text-light">
       <b-container class="p-3">
         <b-row class="align-items-center justify-content-between mb-3">
-          <img width="30%" src="/img/comit-dark-background.png">
+          <img width="30%" :src="publicBase + 'img/comit-dark-background.png'" alt="COMIT: COVID-19 Maternal Immunization Tracker">
           <!-- <span>A project of</span> -->
-          <img width="50%" src="/img/universitylogo-bi-cir-combined-gentona-pdflogo.svg">
+          <img width="50%" :src="publicBase + 'img/universitylogo-bi-cir-combined-gentona-pdflogo.svg'" alt="Johns Hopkins University Berman Institute for Bioethics and Center for Immunization Research">
         </b-row>
         <b-row class="justify-content-start mb-5">
           <b-col>
@@ -126,8 +148,14 @@ export default {
       gtagId: this.$config.gtagId,
     }
   },
+  computed: {
+    // Router base with a guaranteed trailing slash, for linking to files in static/
+    publicBase () {
+      return (this.$router.options.base || '/').replace(/\/?$/, '/')
+    }
+  },
   async fetch () {
-    const myData = await fetch(`http://localhost:${process.env.PORT || 3000}/data/comit-v1.min.json`).then(res => res.json())
+    const myData = await fetch(`${this.publicBase}data/comit-v1.min.json`).then(res => res.json())
     const myReconstructedData = this.$root.$reconstructReferences(myData)
     await this.$store.commit('countries/load', myReconstructedData.countries)
     await this.$store.commit('authorities/load', myReconstructedData.authorities)
